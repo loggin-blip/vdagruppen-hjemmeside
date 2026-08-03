@@ -219,6 +219,10 @@ html.js .reveal.in{opacity:1;transform:none}
   letter-spacing:-.01em;margin-bottom:14px;
 }
 .project p{color:var(--text-dim);font-size:15px;max-width:56ch}
+.project-logo{height:44px;display:flex;align-items:center;margin-bottom:18px}
+.project-logo img{max-height:44px;max-width:170px;object-fit:contain;opacity:.9}
+.project-logo img.inv{filter:invert(1);opacity:.85;max-height:64px;margin:-10px 0 -10px -14px}
+.project-logo img.sq{max-height:40px}
 .project-stack{
   font-family:var(--mono);font-size:12px;color:var(--text-dim);line-height:2;padding-top:6px;
 }
@@ -252,6 +256,33 @@ html.js .reveal.in{opacity:1;transform:none}
 .fact span{color:var(--text-dim);font-family:var(--mono);font-size:12px;letter-spacing:.05em;padding-top:2px}
 .fact b{font-weight:500;text-align:right}
 @media(max-width:900px){.about-grid{grid-template-columns:1fr;gap:48px}}
+
+/* ---------- TEAM ---------- */
+.team{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:1px;
+  background:var(--line);border:1px solid var(--line);
+  margin-bottom:96px;max-width:820px;
+}
+.member{background:var(--bg);padding:0 0 24px;transition:background .3s}
+.member:hover{background:var(--bg-2)}
+.member-photo{
+  aspect-ratio:4/5;background:var(--bg-3);position:relative;overflow:hidden;
+  display:flex;align-items:center;justify-content:center;margin-bottom:20px;
+}
+.member-photo img{
+  width:100%;height:100%;object-fit:cover;
+  filter:grayscale(1) contrast(1.05);transition:filter .4s;
+}
+.member:hover .member-photo img{filter:grayscale(0) contrast(1)}
+.member-photo .ph{
+  font-family:var(--disp);font-weight:800;font-size:64px;color:var(--line-strong);
+}
+.member-name{font-family:var(--disp);font-weight:700;font-size:17px;padding:0 24px}
+.member-role{
+  font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--text-dim);padding:6px 24px 0;
+}
+@media(max-width:640px){.team{grid-template-columns:1fr}}
 
 /* ---------- MARQUEE ---------- */
 .marquee{
@@ -402,14 +433,16 @@ footer{padding:48px 0 56px;color:var(--text-dim)}
       <article class="project">
         <div class="project-id"><b>P.01</b>Agentic AI-system</div>
         <div>
-          <h3>Robins Trepaneler / Format At Wood</h3>
-          <p>Et komplett agentisk AI-system som driver hele bedriften for en énpersonsoperasjon innen custom 3D-trepaneler: AI-telefoni med egen norsk voice-agent, automatisert salg og oppfølging, betaling og SoMe-innhold — ende til ende.</p>
+          <div class="project-logo"><img src="assets/formatwood-logo-sq.png" alt="Form At Wood" class="inv"></div>
+          <h3>Format At Wood Norge</h3>
+          <p>Et komplett agentisk AI-system som driver hele bedriften innen custom 3D-trepaneler: AI-telefoni med egen norsk voice-agent, automatisert salg og oppfølging, betaling og SoMe-innhold — ende til ende.</p>
         </div>
         <div class="project-stack">Voice AI · <span>ElevenLabs + Twilio</span><br>Workflows · <span>n8n</span><br>Betaling · <span>Stripe + Vipps</span></div>
       </article>
       <article class="project">
         <div class="project-id"><b>P.02</b>Internt dashboard</div>
         <div>
+          <div class="project-logo"><img src="assets/massivlust-logo.png" alt="Massivlust"></div>
           <h3>Massivlust Dashboard</h3>
           <p>Komplett driftsdashboard for entreprenørbedriften Massivlust AS: prosjektstyring, pipeline, ressurskalender, timeføring, kvalitetssikring, avviksregister og økonomioversikt — med rollebasert tilgang for hele teamet.</p>
         </div>
@@ -426,6 +459,7 @@ footer{padding:48px 0 56px;color:var(--text-dim)}
       <article class="project">
         <div class="project-id"><b>P.04</b>CRM-system</div>
         <div>
+          <div class="project-logo"><img src="assets/nordflo-logo.svg" alt="Nordflo" class="sq"></div>
           <h3>Nordflo CRM</h3>
           <p>Skreddersydd CRM bygget for norsk salgshverdag — kundekort, pipeline og oppfølging uten støyen og kostnaden fra de store hyllevareløsningene.</p>
         </div>
@@ -458,6 +492,18 @@ footer{padding:48px 0 56px;color:var(--text-dim)}
         <div class="fact"><span>Base</span><b>Oslo, Norge</b></div>
         <div class="fact"><span>Fokus</span><b>AI-automasjon &amp; utvikling</b></div>
         <div class="fact"><span>Leverer til</span><b>Hele Norge</b></div>
+      </div>
+    </div>
+    <div class="team reveal">
+      <div class="member">
+        <div class="member-photo"><span class="ph">VDA</span></div>
+        <div class="member-name">Navn kommer</div>
+        <div class="member-role">Gründer</div>
+      </div>
+      <div class="member">
+        <div class="member-photo"><span class="ph">VDA</span></div>
+        <div class="member-name">Navn kommer</div>
+        <div class="member-role">Gründer</div>
       </div>
     </div>
   </div>
