@@ -97,6 +97,28 @@ header{
   top:-350px;right:-250px;pointer-events:none;
 }
 .hero-content{position:relative;padding-top:120px;padding-bottom:80px}
+.hero-portrait{
+  width:100%;max-width:360px;border:1px solid var(--line-strong);
+  padding:10px;background:var(--bg-2);align-self:center;justify-self:end;
+  animation:fadeUp 1s .5s both;margin:0;
+}
+.hero-portrait img{
+  display:block;width:100%;filter:grayscale(1) contrast(1.05);
+}
+.hero-portrait figcaption{
+  font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--text-dim);padding:12px 4px 2px;display:flex;justify-content:space-between;
+}
+@media(min-width:1081px){
+  .hero-content{
+    display:grid;grid-template-columns:1fr 360px;column-gap:64px;
+    align-items:center;
+  }
+  .hero-text{grid-column:1}
+  .hero-portrait{grid-column:2;grid-row:1}
+  .hero-content h1{font-size:clamp(40px,5.4vw,80px)}
+}
+@media(max-width:1080px){.hero-portrait{display:none}}
 .hero-tag{
   display:inline-flex;align-items:center;gap:10px;
   font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;
@@ -270,7 +292,7 @@ html.js .reveal.in{opacity:1;transform:none}
   display:flex;align-items:center;justify-content:center;margin-bottom:20px;
 }
 .member-photo img{
-  width:100%;height:100%;object-fit:cover;
+  width:100%;height:100%;object-fit:cover;object-position:top center;
   filter:grayscale(1) contrast(1.05);transition:filter .4s;
 }
 .member:hover .member-photo img{filter:grayscale(0) contrast(1)}
@@ -357,13 +379,19 @@ footer{padding:48px 0 56px;color:var(--text-dim)}
   <div class="hero-grid"></div>
   <div class="hero-glow"></div>
   <div class="wrap hero-content">
-    <span class="hero-tag">Westside Digital Automation AS — Oslo<span class="blink">_</span></span>
-    <h1>AI-systemer som <em>driver</em> bedriften <span class="outline">ende til ende.</span></h1>
-    <p class="hero-sub">Vi bygger <strong>AI-agenter, voice-løsninger og skreddersydde systemer</strong> som automatiserer salg, drift og kundedialog for norske bedrifter — slik at teamet ditt kan gjøre det bare mennesker kan.</p>
-    <div class="hero-actions">
-      <a class="btn btn-solid" href="#kontakt">Start et prosjekt →</a>
-      <a class="btn btn-ghost" href="#prosjekter">Se hva vi har bygget</a>
+    <div class="hero-text">
+      <span class="hero-tag">Westside Digital Automation AS — Oslo<span class="blink">_</span></span>
+      <h1>AI-systemer som <em>driver</em> bedriften <span class="outline">ende til ende.</span></h1>
+      <p class="hero-sub">Vi bygger <strong>AI-agenter, voice-løsninger og skreddersydde systemer</strong> som automatiserer salg, drift og kundedialog for norske bedrifter — slik at teamet ditt kan gjøre det bare mennesker kan.</p>
+      <div class="hero-actions">
+        <a class="btn btn-solid" href="#kontakt">Start et prosjekt →</a>
+        <a class="btn btn-ghost" href="#prosjekter">Se hva vi har bygget</a>
+      </div>
     </div>
+    <figure class="hero-portrait">
+      <img src="assets/team-duo.jpg" alt="Gründerne av VDA Gruppen">
+      <figcaption><span>Gründerne</span><span>VDA / 2026</span></figcaption>
+    </figure>
   </div>
   <div class="wrap hero-meta">
     <div class="hero-meta-inner">
@@ -496,14 +524,14 @@ footer{padding:48px 0 56px;color:var(--text-dim)}
     </div>
     <div class="team reveal">
       <div class="member">
-        <div class="member-photo"><span class="ph">VDA</span></div>
-        <div class="member-name">Navn kommer</div>
-        <div class="member-role">Gründer</div>
+        <div class="member-photo"><img src="assets/team-1.jpg" alt="Gründer i VDA Gruppen"></div>
+        <div class="member-name">Gründer</div>
+        <div class="member-role">VDA Gruppen</div>
       </div>
       <div class="member">
-        <div class="member-photo"><span class="ph">VDA</span></div>
-        <div class="member-name">Navn kommer</div>
-        <div class="member-role">Gründer</div>
+        <div class="member-photo"><img src="assets/team-2.jpg" alt="Gründer i VDA Gruppen"></div>
+        <div class="member-name">Gründer</div>
+        <div class="member-role">VDA Gruppen</div>
       </div>
     </div>
   </div>
