@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VDA Gruppen — AI-automasjon som driver bedrifter</title>
+<meta name="description" content="Westside Digital Automation AS bygger AI-agenter, voice-løsninger og skreddersydde systemer som automatiserer norske bedrifter ende-til-ende.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230a0b0d'/%3E%3Cpath d='M8 24 16 8l8 16z' fill='%23ff5c1f'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600&family=Archivo+Expanded:wght@600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0b0d;
+  --bg-2:#101216;
+  --bg-3:#16181e;
+  --line:rgba(255,255,255,.08);
+  --line-strong:rgba(255,255,255,.16);
+  --text:#eceae4;
+  --text-dim:#8a8d94;
+  --accent:#ff5c1f;
+  --accent-soft:rgba(255,92,31,.12);
+  --mono:'JetBrains Mono',monospace;
+  --sans:'Archivo',sans-serif;
+  --disp:'Archivo Expanded','Archivo',sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--sans);
+  font-size:16px;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+::selection{background:var(--accent);color:#0a0b0d}
+
+/* grain */
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:.05;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.wrap{max-width:1240px;margin:0 auto;padding:0 32px}
+@media(max-width:640px){.wrap{padding:0 20px}}
+
+/* ---------- NAV ---------- */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  border-bottom:1px solid var(--line);
+  background:rgba(10,11,13,.82);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--text)}
+.logo-mark{
+  width:30px;height:30px;border:1.5px solid var(--accent);position:relative;flex-shrink:0;
+}
+.logo-mark::after{
+  content:"";position:absolute;inset:5px;background:var(--accent);
+  clip-path:polygon(0 100%,50% 0,100% 100%);
+}
+.logo-text{font-family:var(--disp);font-weight:800;font-size:15px;letter-spacing:.06em}
+.logo-text span{color:var(--text-dim);font-weight:600}
+.nav-links{display:flex;gap:32px;align-items:center}
+.nav-links a{
+  color:var(--text-dim);text-decoration:none;font-family:var(--mono);
+  font-size:12px;letter-spacing:.08em;text-transform:uppercase;transition:color .2s;
+}
+.nav-links a:hover{color:var(--text)}
+.nav-cta{
+  border:1px solid var(--accent)!important;color:var(--accent)!important;
+  padding:8px 18px;transition:all .2s!important;
+}
+.nav-cta:hover{background:var(--accent);color:#0a0b0d!important}
+@media(max-width:780px){.nav-links a:not(.nav-cta){display:none}}
+
+/* ---------- HERO ---------- */
+header{
+  position:relative;min-height:100svh;display:flex;flex-direction:column;justify-content:center;
+  border-bottom:1px solid var(--line);overflow:hidden;
+}
+.hero-grid{
+  position:absolute;inset:0;pointer-events:none;
+  background-image:
+    linear-gradient(var(--line) 1px,transparent 1px),
+    linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:80px 80px;
+  mask-image:radial-gradient(ellipse 90% 70% at 50% 40%,black 30%,transparent 75%);
+  -webkit-mask-image:radial-gradient(ellipse 90% 70% at 50% 40%,black 30%,transparent 75%);
+}
+.hero-glow{
+  position:absolute;width:900px;height:900px;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,92,31,.13) 0%,transparent 60%);
+  top:-350px;right:-250px;pointer-events:none;
+}
+.hero-content{position:relative;padding-top:120px;padding-bottom:80px}
+.hero-tag{
+  display:inline-flex;align-items:center;gap:10px;
+  font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--accent);margin-bottom:36px;
+  animation:fadeUp .8s .1s both;
+}
+.hero-tag::before{content:"";width:32px;height:1px;background:var(--accent)}
+.blink{animation:blink 1.2s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+h1{
+  font-family:var(--disp);font-weight:800;
+  font-size:clamp(40px,7.2vw,96px);
+  line-height:1.02;letter-spacing:-.02em;
+  max-width:14ch;
+  animation:fadeUp .8s .22s both;
+}
+h1 em{font-style:normal;color:var(--accent)}
+h1 .outline{
+  color:transparent;-webkit-text-stroke:1.5px var(--text);
+}
+.hero-sub{
+  margin-top:32px;max-width:52ch;color:var(--text-dim);font-size:18px;
+  animation:fadeUp .8s .34s both;
+}
+.hero-sub strong{color:var(--text);font-weight:500}
+.hero-actions{display:flex;gap:16px;margin-top:44px;flex-wrap:wrap;animation:fadeUp .8s .46s both}
+.btn{
+  display:inline-flex;align-items:center;gap:10px;
+  font-family:var(--mono);font-size:13px;letter-spacing:.08em;text-transform:uppercase;
+  text-decoration:none;padding:16px 28px;transition:all .25s;
+}
+.btn-solid{background:var(--accent);color:#0a0b0d;font-weight:500}
+.btn-solid:hover{background:#ff7a45;transform:translateY(-2px)}
+.btn-ghost{border:1px solid var(--line-strong);color:var(--text)}
+.btn-ghost:hover{border-color:var(--accent);color:var(--accent)}
+.hero-meta{
+  position:relative;border-top:1px solid var(--line);
+  animation:fadeUp .8s .6s both;
+}
+.hero-meta-inner{
+  display:grid;grid-template-columns:repeat(4,1fr);
+}
+.hero-meta-inner div{
+  padding:22px 24px 26px 0;border-right:1px solid var(--line);
+  font-family:var(--mono);font-size:12px;color:var(--text-dim);letter-spacing:.04em;
+}
+.hero-meta-inner div:last-child{border-right:none}
+.hero-meta-inner b{display:block;color:var(--text);font-weight:500;font-size:13px;margin-bottom:4px}
+@media(max-width:780px){
+  .hero-meta-inner{grid-template-columns:1fr 1fr}
+  .hero-meta-inner div:nth-child(2){border-right:none}
+}
+@keyframes fadeUp{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
+
+/* ---------- SECTIONS ---------- */
+section{border-bottom:1px solid var(--line);position:relative}
+.sec-head{
+  display:flex;align-items:baseline;justify-content:space-between;gap:24px;
+  padding:88px 0 56px;flex-wrap:wrap;
+}
+.sec-num{
+  font-family:var(--mono);font-size:12px;color:var(--accent);letter-spacing:.14em;
+  display:block;margin-bottom:16px;
+}
+h2{
+  font-family:var(--disp);font-weight:700;font-size:clamp(30px,4.4vw,52px);
+  letter-spacing:-.015em;line-height:1.06;
+}
+.sec-desc{max-width:44ch;color:var(--text-dim);font-size:16px}
+
+/* reveal on scroll (only hidden when JS is active) */
+html.js .reveal{opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease}
+html.js .reveal.in{opacity:1;transform:none}
+
+/* ---------- SERVICES ---------- */
+.services{
+  display:grid;grid-template-columns:repeat(2,1fr);
+  border-top:1px solid var(--line);border-left:1px solid var(--line);
+  margin-bottom:96px;
+}
+.service{
+  border-right:1px solid var(--line);border-bottom:1px solid var(--line);
+  padding:44px 40px 48px;position:relative;transition:background .3s;
+}
+.service:hover{background:var(--bg-2)}
+.service:hover .service-num{color:var(--accent)}
+.service-num{
+  font-family:var(--mono);font-size:12px;color:var(--text-dim);letter-spacing:.12em;
+  transition:color .3s;display:block;margin-bottom:56px;
+}
+.service h3{
+  font-family:var(--disp);font-weight:700;font-size:22px;letter-spacing:-.01em;margin-bottom:14px;
+}
+.service p{color:var(--text-dim);font-size:15px;max-width:40ch}
+.service-tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:24px}
+.tag{
+  font-family:var(--mono);font-size:11px;letter-spacing:.05em;color:var(--text-dim);
+  border:1px solid var(--line-strong);padding:5px 10px;
+}
+@media(max-width:780px){.services{grid-template-columns:1fr}}
+
+/* ---------- PROJECTS ---------- */
+.projects{display:flex;flex-direction:column;margin-bottom:96px}
+.project{
+  display:grid;grid-template-columns:180px 1fr 340px;gap:40px;
+  padding:48px 0;border-top:1px solid var(--line);
+  transition:padding-left .3s;position:relative;
+}
+.project:last-child{border-bottom:1px solid var(--line)}
+.project::before{
+  content:"";position:absolute;left:0;top:0;bottom:0;width:0;
+  background:var(--accent);transition:width .3s;
+}
+.project:hover::before{width:3px}
+.project:hover{padding-left:28px}
+.project-id{font-family:var(--mono);font-size:12px;color:var(--text-dim);letter-spacing:.1em;padding-top:6px}
+.project-id b{display:block;color:var(--accent);margin-bottom:6px;font-weight:500}
+.project h3{
+  font-family:var(--disp);font-weight:700;font-size:clamp(20px,2.4vw,28px);
+  letter-spacing:-.01em;margin-bottom:14px;
+}
+.project p{color:var(--text-dim);font-size:15px;max-width:56ch}
+.project-stack{
+  font-family:var(--mono);font-size:12px;color:var(--text-dim);line-height:2;padding-top:6px;
+}
+.project-stack span{color:var(--text)}
+@media(max-width:980px){
+  .project{grid-template-columns:1fr;gap:18px;padding:40px 0}
+  .project-stack{padding-top:0}
+}
+
+/* ---------- PROCESS / OM OSS ---------- */
+.about-grid{
+  display:grid;grid-template-columns:1.1fr .9fr;gap:80px;padding-bottom:96px;
+}
+.about-lede{
+  font-family:var(--disp);font-weight:600;font-size:clamp(21px,2.6vw,30px);
+  line-height:1.35;letter-spacing:-.01em;
+}
+.about-lede em{font-style:normal;color:var(--accent)}
+.about-body{margin-top:28px;color:var(--text-dim);font-size:16px;max-width:56ch}
+.about-body p+p{margin-top:16px}
+.facts{border:1px solid var(--line);background:var(--bg-2);align-self:start}
+.facts-head{
+  font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--accent);padding:18px 24px;border-bottom:1px solid var(--line);
+}
+.fact{
+  display:flex;justify-content:space-between;gap:16px;padding:16px 24px;
+  border-bottom:1px solid var(--line);font-size:14px;
+}
+.fact:last-child{border-bottom:none}
+.fact span{color:var(--text-dim);font-family:var(--mono);font-size:12px;letter-spacing:.05em;padding-top:2px}
+.fact b{font-weight:500;text-align:right}
+@media(max-width:900px){.about-grid{grid-template-columns:1fr;gap:48px}}
+
+/* ---------- MARQUEE ---------- */
+.marquee{
+  overflow:hidden;border-bottom:1px solid var(--line);padding:26px 0;
+  user-select:none;
+}
+.marquee-track{
+  display:flex;gap:64px;width:max-content;
+  animation:scroll 30s linear infinite;
+  font-family:var(--mono);font-size:13px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--text-dim);white-space:nowrap;
+}
+.marquee-track i{color:var(--accent);font-style:normal}
+@keyframes scroll{to{transform:translateX(-50%)}}
+
+/* ---------- CONTACT ---------- */
+.contact{padding:110px 0 120px;text-align:left;position:relative;overflow:hidden}
+.contact-glow{
+  position:absolute;width:700px;height:700px;border-radius:50%;left:50%;bottom:-500px;transform:translateX(-50%);
+  background:radial-gradient(circle,rgba(255,92,31,.14) 0%,transparent 60%);pointer-events:none;
+}
+.contact h2{font-size:clamp(36px,6vw,76px);max-width:16ch}
+.contact h2 em{font-style:normal;color:var(--accent)}
+.contact-sub{color:var(--text-dim);margin-top:24px;max-width:48ch;font-size:17px}
+.contact-actions{display:flex;gap:16px;margin-top:44px;flex-wrap:wrap}
+.contact-mail{
+  font-family:var(--mono);font-size:13px;color:var(--text-dim);margin-top:36px;letter-spacing:.04em;
+}
+.contact-mail a{color:var(--text);text-decoration:none;border-bottom:1px solid var(--line-strong);transition:all .2s}
+.contact-mail a:hover{color:var(--accent);border-color:var(--accent)}
+
+/* ---------- FOOTER ---------- */
+footer{padding:48px 0 56px;color:var(--text-dim)}
+.footer-inner{
+  display:flex;justify-content:space-between;gap:32px;flex-wrap:wrap;align-items:flex-start;
+}
+.footer-left{font-family:var(--mono);font-size:12px;letter-spacing:.05em;line-height:2}
+.footer-left b{color:var(--text);font-weight:500}
+.socials{display:flex;gap:12px}
+.socials a{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:44px;height:44px;border:1px solid var(--line-strong);color:var(--text-dim);
+  transition:all .25s;
+}
+.socials a:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-3px)}
+.socials svg{width:18px;height:18px;fill:currentColor}
+.footer-bottom{
+  margin-top:44px;padding-top:24px;border-top:1px solid var(--line);
+  display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;
+  font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap nav-inner">
+    <a class="logo" href="#top">
+      <span class="logo-mark"></span>
+      <span class="logo-text">VDA GRUPPEN <span>/ WDA</span></span>
+    </a>
+    <div class="nav-links">
+      <a href="#tjenester">Tjenester</a>
+      <a href="#prosjekter">Prosjekter</a>
+      <a href="#om">Om oss</a>
+      <a href="#kontakt" class="nav-cta">Ta kontakt</a>
+    </div>
+  </div>
+</nav>
+
+<header id="top">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="wrap hero-content">
+    <span class="hero-tag">Westside Digital Automation AS — Oslo<span class="blink">_</span></span>
+    <h1>AI-systemer som <em>driver</em> bedriften <span class="outline">ende til ende.</span></h1>
+    <p class="hero-sub">Vi bygger <strong>AI-agenter, voice-løsninger og skreddersydde systemer</strong> som automatiserer salg, drift og kundedialog for norske bedrifter — slik at teamet ditt kan gjøre det bare mennesker kan.</p>
+    <div class="hero-actions">
+      <a class="btn btn-solid" href="#kontakt">Start et prosjekt →</a>
+      <a class="btn btn-ghost" href="#prosjekter">Se hva vi har bygget</a>
+    </div>
+  </div>
+  <div class="wrap hero-meta">
+    <div class="hero-meta-inner">
+      <div><b>AI-agenter</b>Automatisert arbeidsflyt 24/7</div>
+      <div><b>Voice AI</b>Telefoni som snakker norsk</div>
+      <div><b>Skreddersøm</b>Systemer bygget for din drift</div>
+      <div><b>Rådgivning</b>Fra strategi til produksjon</div>
+    </div>
+  </div>
+</header>
+
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    <span>AI-automasjon</span><i>●</i><span>Voice-agenter</span><i>●</i><span>n8n-workflows</span><i>●</i><span>Web &amp; app</span><i>●</i><span>CRM-systemer</span><i>●</i><span>AI-rådgivning</span><i>●</i>
+    <span>AI-automasjon</span><i>●</i><span>Voice-agenter</span><i>●</i><span>n8n-workflows</span><i>●</i><span>Web &amp; app</span><i>●</i><span>CRM-systemer</span><i>●</i><span>AI-rådgivning</span><i>●</i>
+  </div>
+</div>
+
+<section id="tjenester">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div>
+        <span class="sec-num">01 / TJENESTER</span>
+        <h2>Hva vi gjør</h2>
+      </div>
+      <p class="sec-desc">Fire disipliner, ett mål: at teknologien jobber for deg — ikke omvendt.</p>
+    </div>
+    <div class="services reveal">
+      <div class="service">
+        <span class="service-num">S.01</span>
+        <h3>AI-automasjon &amp; agenter</h3>
+        <p>Autonome AI-agenter og arbeidsflyter som håndterer leads, tilbud, oppfølging og rapportering — automatisk, døgnet rundt.</p>
+        <div class="service-tags"><span class="tag">n8n</span><span class="tag">Claude</span><span class="tag">Agenter</span><span class="tag">Integrasjoner</span></div>
+      </div>
+      <div class="service">
+        <span class="service-num">S.02</span>
+        <h3>AI-telefoni &amp; voice</h3>
+        <p>Voice-agenter som svarer telefonen, kvalifiserer kunder og booker møter — på flytende norsk, uten ventetid.</p>
+        <div class="service-tags"><span class="tag">ElevenLabs</span><span class="tag">Twilio</span><span class="tag">Conversational AI</span></div>
+      </div>
+      <div class="service">
+        <span class="service-num">S.03</span>
+        <h3>Web- &amp; app-utvikling</h3>
+        <p>Nettsider, dashboards og skreddersydde systemer bygget på moderne teknologi — raske, sikre og laget for å skalere.</p>
+        <div class="service-tags"><span class="tag">Next.js</span><span class="tag">Supabase</span><span class="tag">TypeScript</span></div>
+      </div>
+      <div class="service">
+        <span class="service-num">S.04</span>
+        <h3>Konsulent &amp; rådgivning</h3>
+        <p>Vi kartlegger hvor AI faktisk gir gevinst i din bedrift, og tar deg fra idé til fungerende system — uten buzzord.</p>
+        <div class="service-tags"><span class="tag">Strategi</span><span class="tag">Kartlegging</span><span class="tag">Implementering</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="prosjekter">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div>
+        <span class="sec-num">02 / PROSJEKTER</span>
+        <h2>Hva vi har bygget</h2>
+      </div>
+      <p class="sec-desc">Ekte systemer i drift hos ekte bedrifter — fra énpersonsforetak til etablerte team.</p>
+    </div>
+    <div class="projects reveal">
+      <article class="project">
+        <div class="project-id"><b>P.01</b>Agentic AI-system</div>
+        <div>
+          <h3>Robins Trepaneler / Format At Wood</h3>
+          <p>Et komplett agentisk AI-system som driver hele bedriften for en énpersonsoperasjon innen custom 3D-trepaneler: AI-telefoni med egen norsk voice-agent, automatisert salg og oppfølging, betaling og SoMe-innhold — ende til ende.</p>
+        </div>
+        <div class="project-stack">Voice AI · <span>ElevenLabs + Twilio</span><br>Workflows · <span>n8n</span><br>Betaling · <span>Stripe + Vipps</span></div>
+      </article>
+      <article class="project">
+        <div class="project-id"><b>P.02</b>Internt dashboard</div>
+        <div>
+          <h3>Massivlust Dashboard</h3>
+          <p>Komplett driftsdashboard for entreprenørbedriften Massivlust AS: prosjektstyring, pipeline, ressurskalender, timeføring, kvalitetssikring, avviksregister og økonomioversikt — med rollebasert tilgang for hele teamet.</p>
+        </div>
+        <div class="project-stack">Frontend · <span>Next.js</span><br>Auth &amp; DB · <span>Supabase</span><br>UI · <span>Tailwind, dark theme</span></div>
+      </article>
+      <article class="project">
+        <div class="project-id"><b>P.03</b>Content-plattform</div>
+        <div>
+          <h3>WDA Content OS</h3>
+          <p>Vår egen plattform for content intelligence og automatisert innholdsproduksjon: analyserer hva som fungerer, genererer og rendrer innhold, og publiserer — koblet mot AI-modeller og automasjonsverktøy.</p>
+        </div>
+        <div class="project-stack">Plattform · <span>Next.js + Supabase</span><br>AI · <span>Claude</span><br>Render · <span>Egen worker</span></div>
+      </article>
+      <article class="project">
+        <div class="project-id"><b>P.04</b>CRM-system</div>
+        <div>
+          <h3>Nordflo CRM</h3>
+          <p>Skreddersydd CRM bygget for norsk salgshverdag — kundekort, pipeline og oppfølging uten støyen og kostnaden fra de store hyllevareløsningene.</p>
+        </div>
+        <div class="project-stack">Type · <span>Skreddersydd CRM</span><br>Stack · <span>Moderne webstack</span></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="om">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div>
+        <span class="sec-num">03 / OM OSS</span>
+        <h2>Om VDA Gruppen</h2>
+      </div>
+    </div>
+    <div class="about-grid reveal">
+      <div>
+        <p class="about-lede">Vi tror ikke på AI som pynt. Vi bygger systemer som <em>faktisk tar over arbeid</em> — og beviser det i drift.</p>
+        <div class="about-body">
+          <p>VDA Gruppen er teknologiselskapet bak Westside Digital Automation AS, basert i Oslo. Vi jobber tett med små og mellomstore norske bedrifter som vil bruke AI til noe konkret: flere salg, mindre manuelt arbeid og bedre kundeopplevelse.</p>
+          <p>Vi tar hele reisen selv — fra kartlegging og strategi, via utvikling av agenter, voice-løsninger og systemer, til drift og videreutvikling. Ett team, ett ansvar, ferdig levert.</p>
+        </div>
+      </div>
+      <div class="facts">
+        <div class="facts-head">Fakta</div>
+        <div class="fact"><span>Selskap</span><b>Westside Digital Automation AS</b></div>
+        <div class="fact"><span>Org.nr</span><b>936 993 222</b></div>
+        <div class="fact"><span>Base</span><b>Oslo, Norge</b></div>
+        <div class="fact"><span>Fokus</span><b>AI-automasjon &amp; utvikling</b></div>
+        <div class="fact"><span>Leverer til</span><b>Hele Norge</b></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="kontakt" class="contact">
+  <div class="contact-glow"></div>
+  <div class="wrap reveal">
+    <span class="sec-num">04 / KONTAKT</span>
+    <h2>Klar for å <em>automatisere</em> det kjedelige?</h2>
+    <p class="contact-sub">Fortell oss hva som stjeler tid i bedriften din, så viser vi hva et AI-system kan ta over. Første prat er uforpliktende.</p>
+    <div class="contact-actions">
+      <a class="btn btn-solid" href="mailto:kontakt@vdagruppen.com">Send oss en e-post →</a>
+      <a class="btn btn-ghost" href="https://www.instagram.com/vda.gruppen/" target="_blank" rel="noopener">Følg oss på Instagram</a>
+    </div>
+    <p class="contact-mail">E-POST → <a href="mailto:kontakt@vdagruppen.com">kontakt@vdagruppen.com</a></p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap footer-inner">
+    <div class="footer-left">
+      <b>VDA GRUPPEN</b><br>
+      Westside Digital Automation AS<br>
+      Org.nr 936 993 222 · Oslo, Norge
+    </div>
+    <div class="socials">
+      <a href="https://www.instagram.com/vda.gruppen/" target="_blank" rel="noopener" aria-label="Instagram">
+        <svg viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.8.1 1.2.1 1.8.2 2.2.4.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.2.4.4 1 .4 2.2.1 1.2.1 1.6.1 4.8s0 3.6-.1 4.8c-.1 1.2-.2 1.8-.4 2.2-.2.6-.5 1-.9 1.4-.4.4-.8.7-1.4.9-.4.2-1 .4-2.2.4-1.2.1-1.6.1-4.8.1s-3.6 0-4.8-.1c-1.2-.1-1.8-.2-2.2-.4-.6-.2-1-.5-1.4-.9-.4-.4-.7-.8-.9-1.4-.2-.4-.4-1-.4-2.2-.1-1.2-.1-1.6-.1-4.8s0-3.6.1-4.8c.1-1.2.2-1.8.4-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.2 1-.4 2.2-.4 1.2-.1 1.6-.1 4.8-.1M12 0C8.7 0 8.3 0 7.1.1 5.8.1 4.9.3 4.1.6c-.8.3-1.5.7-2.2 1.4C1.3 2.6.9 3.3.6 4.1.3 4.9.1 5.8.1 7.1 0 8.3 0 8.7 0 12s0 3.7.1 4.9c0 1.3.2 2.2.5 3 .3.8.7 1.5 1.4 2.2.7.7 1.4 1.1 2.2 1.4.8.3 1.7.5 3 .5 1.2.1 1.6.1 4.9.1s3.7 0 4.9-.1c1.3 0 2.2-.2 3-.5.8-.3 1.5-.7 2.2-1.4.7-.7 1.1-1.4 1.4-2.2.3-.8.5-1.7.5-3 .1-1.2.1-1.6.1-4.9s0-3.7-.1-4.9c0-1.3-.2-2.2-.5-3-.3-.8-.7-1.5-1.4-2.2C21.4 1.3 20.7.9 19.9.6c-.8-.3-1.7-.5-3-.5C15.7 0 15.3 0 12 0zm0 5.8a6.2 6.2 0 1 0 0 12.4 6.2 6.2 0 0 0 0-12.4zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.4-11.8a1.4 1.4 0 1 0 0 2.9 1.4 1.4 0 0 0 0-2.9z"/></svg>
+      </a>
+      <a href="https://www.tiktok.com/@vda.gruppen" target="_blank" rel="noopener" aria-label="TikTok">
+        <svg viewBox="0 0 24 24"><path d="M19.6 5.8a5 5 0 0 1-3.5-4.2V1h-3.4v13.7a2.9 2.9 0 1 1-2.1-2.8V8.4a6.3 6.3 0 1 0 5.5 6.3V8.6a8.3 8.3 0 0 0 4.8 1.5V6.7c-.4 0-.9 0-1.3-.2z"/></svg>
+      </a>
+    </div>
+  </div>
+  <div class="wrap footer-bottom">
+    <span>© 2026 Westside Digital Automation AS</span>
+    <span>vdagruppen.com</span>
+  </div>
+</footer>
+
+<script>
+document.documentElement.classList.add('js');
+const io = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+},{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+
+</body>
+</html>
