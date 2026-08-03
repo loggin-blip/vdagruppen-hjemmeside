@@ -560,6 +560,35 @@ footer{padding:48px 0 56px;color:var(--text-dim)}
 </footer>
 
 <script>
+/* --- VDA Analytics --- */
+(function(){
+  if(/localhost|127\.0\.0\.1/.test(location.hostname)) return;
+  var SB='https://mvichoussxfcstizvlwx.supabase.co';
+  var KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im12aWNob3Vzc3hmY3N0aXp2bHd4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM1ODkxMTAsImV4cCI6MjA4OTE2NTExMH0.L75gHWwhm3AzJ2jmfYHB7ZU_sJErgMCh0_sZ0abaBkc';
+  var H={'Content-Type':'application/json','apikey':KEY,'Authorization':'Bearer '+KEY};
+  var sid=localStorage.getItem('vda_sid');
+  if(!sid){sid=(crypto.randomUUID?crypto.randomUUID():String(Math.random()).slice(2));localStorage.setItem('vda_sid',sid);}
+  var device=/Mobi|Android/i.test(navigator.userAgent)?'mobil':(/iPad|Tablet/i.test(navigator.userAgent)?'nettbrett':'desktop');
+  var view=null,secs=0;
+  (async function(){
+    var country=null;
+    try{country=(await (await fetch('https://api.country.is',{signal:AbortSignal.timeout(3000)})).json()).country;}catch(e){}
+    try{
+      var r=await fetch(SB+'/rest/v1/rpc/vda_track',{method:'POST',headers:H,body:JSON.stringify({
+        p_session_id:sid,p_path:location.pathname,p_referrer:document.referrer||null,
+        p_country:country,p_device:device,p_lang:navigator.language,p_screen_w:screen.width})});
+      view=await r.json();
+    }catch(e){}
+  })();
+  function beat(){
+    if(!view||!view.id)return;
+    fetch(SB+'/rest/v1/rpc/vda_heartbeat',{method:'POST',headers:H,keepalive:true,
+      body:JSON.stringify({p_id:view.id,p_secret:view.secret,p_seconds:secs})}).catch(function(){});
+  }
+  setInterval(function(){if(document.visibilityState==='visible'){secs+=15;beat();}},15000);
+  addEventListener('pagehide',beat);
+})();
+
 document.documentElement.classList.add('js');
 const io = new IntersectionObserver(entries=>{
   entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });

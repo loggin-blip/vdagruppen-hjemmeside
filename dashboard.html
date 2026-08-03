@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>VDA Dashbord — Statistikk</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230a0b0d'/%3E%3Cpath d='M8 24 16 8l8 16z' fill='%23c3ccd9'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600&family=Archivo+Expanded:wght@600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0b0d;--bg-2:#101216;--bg-3:#16181e;
+  --line:rgba(255,255,255,.08);--line-strong:rgba(255,255,255,.16);
+  --text:#eceae4;--text-dim:#8a8d94;--accent:#c3ccd9;
+  --mono:'JetBrains Mono',monospace;--sans:'Archivo',sans-serif;
+  --disp:'Archivo Expanded','Archivo',sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1240px;margin:0 auto;padding:0 32px}
+@media(max-width:640px){.wrap{padding:0 16px}}
+
+nav{border-bottom:1px solid var(--line);background:rgba(10,11,13,.9)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{display:flex;align-items:center;gap:12px;color:var(--text);text-decoration:none}
+.logo-mark{width:28px;height:28px;border:1.5px solid var(--accent);position:relative}
+.logo-mark::after{content:"";position:absolute;inset:5px;background:var(--accent);clip-path:polygon(0 100%,50% 0,100% 100%)}
+.logo b{font-family:var(--disp);font-weight:800;font-size:14px;letter-spacing:.06em}
+.logo span{color:var(--text-dim);font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;margin-left:4px}
+#logout{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;background:none;border:1px solid var(--line-strong);color:var(--text-dim);padding:8px 16px;cursor:pointer;transition:all .2s}
+#logout:hover{border-color:var(--accent);color:var(--accent)}
+
+/* login */
+#login-view{min-height:calc(100vh - 65px);display:flex;align-items:center;justify-content:center;padding:32px}
+.login-box{width:100%;max-width:400px;border:1px solid var(--line);background:var(--bg-2);padding:40px}
+.login-box h1{font-family:var(--disp);font-size:22px;font-weight:700;margin-bottom:6px}
+.login-box p{color:var(--text-dim);font-size:13px;margin-bottom:28px}
+.field{margin-bottom:16px}
+.field label{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-dim);margin-bottom:8px}
+.field input{width:100%;background:var(--bg);border:1px solid var(--line-strong);color:var(--text);font-family:var(--sans);font-size:15px;padding:13px 14px;outline:none;transition:border-color .2s}
+.field input:focus{border-color:var(--accent)}
+#login-btn{width:100%;background:var(--accent);color:#0a0b0d;border:none;font-family:var(--mono);font-size:13px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;padding:15px;cursor:pointer;margin-top:8px;transition:background .2s}
+#login-btn:hover{background:#e2e8f2}
+#login-err{color:#e07b6a;font-size:13px;margin-top:14px;display:none}
+
+/* dashboard */
+#dash-view{display:none;padding:40px 0 80px}
+.dash-head{display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:32px}
+.dash-head h1{font-family:var(--disp);font-size:clamp(24px,3.5vw,36px);font-weight:700}
+.dash-head .updated{font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--text-dim)}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin-bottom:40px}
+.kpi{background:var(--bg-2);padding:24px}
+.kpi .label{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-dim);margin-bottom:12px}
+.kpi .value{font-family:var(--disp);font-size:clamp(26px,3vw,38px);font-weight:800;line-height:1}
+.kpi .sub{font-family:var(--mono);font-size:11px;color:var(--text-dim);margin-top:10px}
+@media(max-width:900px){.kpis{grid-template-columns:1fr 1fr}}
+
+.panel{border:1px solid var(--line);background:var(--bg-2);margin-bottom:32px}
+.panel-head{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);padding:16px 24px;border-bottom:1px solid var(--line)}
+.panel-body{padding:24px}
+#chart{width:100%;height:220px;display:block}
+
+.cols{display:grid;grid-template-columns:1fr 1fr 1fr;gap:32px}
+@media(max-width:900px){.cols{grid-template-columns:1fr}}
+.bar-row{display:flex;align-items:center;gap:12px;padding:9px 0;border-bottom:1px solid var(--line);font-size:13px}
+.bar-row:last-child{border-bottom:none}
+.bar-row .name{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bar-row .bar{height:4px;background:var(--accent);opacity:.55;min-width:2px}
+.bar-row .n{font-family:var(--mono);font-size:12px;color:var(--text-dim);min-width:34px;text-align:right}
+.empty{color:var(--text-dim);font-size:13px;font-family:var(--mono)}
+
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-dim);text-align:left;padding:10px 16px;border-bottom:1px solid var(--line)}
+td{padding:10px 16px;border-bottom:1px solid var(--line);color:var(--text)}
+tr:last-child td{border-bottom:none}
+td.dim{color:var(--text-dim);font-family:var(--mono);font-size:12px}
+.table-scroll{overflow-x:auto}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap nav-inner">
+    <a class="logo" href="/"><span class="logo-mark"></span><b>VDA GRUPPEN</b><span>Dashbord</span></a>
+    <button id="logout" style="display:none">Logg ut</button>
+  </div>
+</nav>
+
+<div id="login-view">
+  <form class="login-box" id="login-form">
+    <h1>Logg inn</h1>
+    <p>Statistikk for vdagruppen.com</p>
+    <div class="field">
+      <label for="email">E-post</label>
+      <input type="email" id="email" autocomplete="username" required>
+    </div>
+    <div class="field">
+      <label for="password">Passord</label>
+      <input type="password" id="password" autocomplete="current-password" required>
+    </div>
+    <button id="login-btn" type="submit">Logg inn →</button>
+    <div id="login-err"></div>
+  </form>
+</div>
+
+<div id="dash-view">
+  <div class="wrap">
+    <div class="dash-head">
+      <h1>Statistikk</h1>
+      <span class="updated" id="updated"></span>
+    </div>
+
+    <div class="kpis">
+      <div class="kpi"><div class="label">Besøk i dag</div><div class="value" id="k-today">–</div><div class="sub" id="k-today-sub"></div></div>
+      <div class="kpi"><div class="label">Siste 7 dager</div><div class="value" id="k-week">–</div><div class="sub" id="k-week-sub"></div></div>
+      <div class="kpi"><div class="label">Siste 30 dager</div><div class="value" id="k-month">–</div><div class="sub" id="k-month-sub"></div></div>
+      <div class="kpi"><div class="label">Snitt besøkstid</div><div class="value" id="k-dur">–</div><div class="sub">av besøk med aktivitet</div></div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-head">Besøk siste 30 dager</div>
+      <div class="panel-body"><svg id="chart" preserveAspectRatio="none"></svg></div>
+    </div>
+
+    <div class="cols">
+      <div class="panel">
+        <div class="panel-head">Hvor de kommer fra</div>
+        <div class="panel-body" id="referrers"></div>
+      </div>
+      <div class="panel">
+        <div class="panel-head">Land</div>
+        <div class="panel-body" id="countries"></div>
+      </div>
+      <div class="panel">
+        <div class="panel-head">Enheter</div>
+        <div class="panel-body" id="devices"></div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-head">Siste besøk</div>
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>Tidspunkt</th><th>Side</th><th>Kilde</th><th>Land</th><th>Enhet</th><th>Varighet</th></tr></thead>
+          <tbody id="recent"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const SB='https://mvichoussxfcstizvlwx.supabase.co';
+const KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im12aWNob3Vzc3hmY3N0aXp2bHd4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM1ODkxMTAsImV4cCI6MjA4OTE2NTExMH0.L75gHWwhm3AzJ2jmfYHB7ZU_sJErgMCh0_sZ0abaBkc';
+let token=sessionStorage.getItem('vda_dash_token')||null;
+
+const $=id=>document.getElementById(id);
+const fmtDur=s=>s>=3600?Math.floor(s/3600)+'t '+Math.floor(s%3600/60)+'m':s>=60?Math.floor(s/60)+'m '+(s%60)+'s':s+'s';
+
+$('login-form').addEventListener('submit',async e=>{
+  e.preventDefault();
+  $('login-err').style.display='none';
+  try{
+    const r=await fetch(SB+'/auth/v1/token?grant_type=password',{
+      method:'POST',headers:{'Content-Type':'application/json','apikey':KEY},
+      body:JSON.stringify({email:$('email').value,password:$('password').value})});
+    const j=await r.json();
+    if(!r.ok||!j.access_token) throw new Error(j.error_description||j.msg||'Feil e-post eller passord');
+    token=j.access_token;
+    sessionStorage.setItem('vda_dash_token',token);
+    showDash();
+  }catch(err){
+    $('login-err').textContent=err.message;
+    $('login-err').style.display='block';
+  }
+});
+
+$('logout').addEventListener('click',()=>{
+  sessionStorage.removeItem('vda_dash_token');token=null;
+  $('dash-view').style.display='none';$('logout').style.display='none';
+  $('login-view').style.display='flex';
+});
+
+async function q(query){
+  const r=await fetch(SB+'/rest/v1/vda_page_views?'+query,{
+    headers:{'apikey':KEY,'Authorization':'Bearer '+token}});
+  if(r.status===401){throw new Error('utlopt');}
+  return r.json();
+}
+
+async function showDash(){
+  $('login-view').style.display='none';
+  $('dash-view').style.display='block';
+  $('logout').style.display='inline-block';
+  try{ await load(); }catch(e){
+    if(e.message==='utlopt'){ $('logout').click(); }
+  }
+}
+
+async function load(){
+  const since=new Date(Date.now()-30*864e5).toISOString();
+  const rows=await q('select=session_id,path,referrer,country,device,started_at,duration_seconds&started_at=gte.'+since+'&order=started_at.desc&limit=10000');
+  if(!Array.isArray(rows)) throw new Error('utlopt');
+
+  const now=new Date();
+  const dayKey=d=>{const x=new Date(d);return x.getFullYear()+'-'+String(x.getMonth()+1).padStart(2,'0')+'-'+String(x.getDate()).padStart(2,'0');};
+  const todayKey=dayKey(now);
+  const weekAgo=Date.now()-7*864e5;
+
+  const today=rows.filter(r=>dayKey(r.started_at)===todayKey);
+  const week=rows.filter(r=>new Date(r.started_at).getTime()>weekAgo);
+
+  const uniq=a=>new Set(a.map(r=>r.session_id)).size;
+  $('k-today').textContent=today.length;
+  $('k-today-sub').textContent=uniq(today)+' unike';
+  $('k-week').textContent=week.length;
+  $('k-week-sub').textContent=uniq(week)+' unike';
+  $('k-month').textContent=rows.length;
+  $('k-month-sub').textContent=uniq(rows)+' unike';
+  const durs=rows.filter(r=>r.duration_seconds>0).map(r=>r.duration_seconds);
+  $('k-dur').textContent=durs.length?fmtDur(Math.round(durs.reduce((a,b)=>a+b,0)/durs.length)):'–';
+
+  // graf: besøk per dag, 30 dager
+  const days=[];
+  for(let i=29;i>=0;i--){days.push(dayKey(new Date(Date.now()-i*864e5)));}
+  const perDay=days.map(d=>rows.filter(r=>dayKey(r.started_at)===d).length);
+  drawChart(days,perDay);
+
+  // topplister
+  const tally=(arr,fn,label)=>{
+    const m={};arr.forEach(r=>{const k=fn(r)||label;m[k]=(m[k]||0)+1;});
+    return Object.entries(m).sort((a,b)=>b[1]-a[1]).slice(0,8);
+  };
+  const refName=r=>{
+    if(!r.referrer)return 'Direkte / skrevet inn';
+    try{const h=new URL(r.referrer).hostname.replace('www.','');return h===location.hostname?'Intern':h;}catch(e){return r.referrer;}
+  };
+  renderBars('referrers',tally(rows,refName));
+  renderBars('countries',tally(rows,r=>r.country,'Ukjent'));
+  renderBars('devices',tally(rows,r=>r.device,'Ukjent'));
+
+  // siste besøk
+  $('recent').innerHTML=rows.slice(0,25).map(r=>{
+    const t=new Date(r.started_at);
+    const ts=t.toLocaleDateString('nb-NO',{day:'2-digit',month:'2-digit'})+' '+t.toLocaleTimeString('nb-NO',{hour:'2-digit',minute:'2-digit'});
+    return '<tr><td class="dim">'+ts+'</td><td>'+esc(r.path)+'</td><td>'+esc(refName(r))+'</td><td class="dim">'+esc(r.country||'–')+'</td><td class="dim">'+esc(r.device||'–')+'</td><td class="dim">'+(r.duration_seconds?fmtDur(r.duration_seconds):'–')+'</td></tr>';
+  }).join('')||'<tr><td colspan="6" class="dim">Ingen besøk ennå</td></tr>';
+
+  $('updated').textContent='Oppdatert '+now.toLocaleTimeString('nb-NO',{hour:'2-digit',minute:'2-digit'});
+}
+
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+
+function renderBars(id,entries){
+  const max=entries.length?entries[0][1]:1;
+  $(id).innerHTML=entries.length?entries.map(([k,v])=>
+    '<div class="bar-row"><span class="name" title="'+esc(k)+'">'+esc(k)+'</span><span class="bar" style="width:'+Math.round(v/max*90)+'px"></span><span class="n">'+v+'</span></div>'
+  ).join(''):'<div class="empty">Ingen data ennå</div>';
+}
+
+function drawChart(days,vals){
+  const svg=$('chart');
+  const W=1100,H=220,P=28;
+  svg.setAttribute('viewBox','0 0 '+W+' '+H);
+  const max=Math.max(...vals,4);
+  const bw=(W-P*2)/vals.length;
+  let out='';
+  // horisontale hjelpelinjer
+  for(let i=0;i<=3;i++){
+    const y=P+((H-P*2)/3)*i;
+    out+='<line x1="'+P+'" y1="'+y+'" x2="'+(W-P)+'" y2="'+y+'" stroke="rgba(255,255,255,.06)"/>';
+    out+='<text x="'+(P-8)+'" y="'+(y+4)+'" fill="#8a8d94" font-size="10" font-family="monospace" text-anchor="end">'+Math.round(max-(max/3)*i)+'</text>';
+  }
+  vals.forEach((v,i)=>{
+    const h=v/max*(H-P*2);
+    const x=P+i*bw+bw*0.18, y=H-P-h;
+    out+='<rect x="'+x+'" y="'+y+'" width="'+(bw*0.64)+'" height="'+Math.max(h,v>0?2:0)+'" fill="#c3ccd9" opacity="'+(v?0.75:0.15)+'">'+
+         '<title>'+days[i]+': '+v+' besøk</title></rect>';
+    if(i%5===0){
+      const d=days[i].slice(8)+'.'+days[i].slice(5,7);
+      out+='<text x="'+(P+i*bw+bw/2)+'" y="'+(H-8)+'" fill="#8a8d94" font-size="10" font-family="monospace" text-anchor="middle">'+d+'</text>';
+    }
+  });
+  svg.innerHTML=out;
+}
+
+if(token) showDash();
+</script>
+</body>
+</html>
