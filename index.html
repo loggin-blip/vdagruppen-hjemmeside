@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>VDA Gruppen — AI-automasjon som driver bedrifter</title>
 <meta name="description" content="Westside Digital Automation AS bygger AI-agenter, voice-løsninger og skreddersydde systemer som automatiserer norske bedrifter ende-til-ende.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230a0b0d'/%3E%3Cpath d='M8 24 16 8l8 16z' fill='%23c3ccd9'/%3E%3C/svg%3E">
+<link rel="icon" type="image/png" href="assets/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600&family=Archivo+Expanded:wght@600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -55,13 +55,7 @@ nav{
 }
 .nav-inner{display:flex;align-items:center;justify-content:space-between;height:64px}
 .logo{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--text)}
-.logo-mark{
-  width:30px;height:30px;border:1.5px solid var(--accent);position:relative;flex-shrink:0;
-}
-.logo-mark::after{
-  content:"";position:absolute;inset:5px;background:var(--accent);
-  clip-path:polygon(0 100%,50% 0,100% 100%);
-}
+.logo-img{height:24px;width:auto;display:block;opacity:.95}
 .logo-text{font-family:var(--disp);font-weight:800;font-size:15px;letter-spacing:.06em}
 .logo-text span{color:var(--text-dim);font-weight:600}
 .nav-links{display:flex;gap:32px;align-items:center}
@@ -91,6 +85,11 @@ header{
   mask-image:radial-gradient(ellipse 90% 70% at 50% 40%,black 30%,transparent 75%);
   -webkit-mask-image:radial-gradient(ellipse 90% 70% at 50% 40%,black 30%,transparent 75%);
 }
+.hero-ghost{
+  position:absolute;right:-4%;top:50%;transform:translateY(-52%);
+  height:min(58vh,520px);width:auto;opacity:.05;pointer-events:none;user-select:none;
+}
+@media(max-width:780px){.hero-ghost{height:40vh;right:-20%}}
 .hero-glow{
   position:absolute;width:900px;height:900px;border-radius:50%;
   background:radial-gradient(circle,rgba(195,204,217,.10) 0%,transparent 60%);
@@ -315,8 +314,8 @@ footer{padding:48px 0 56px;color:var(--text-dim)}
 <nav>
   <div class="wrap nav-inner">
     <a class="logo" href="#top">
-      <span class="logo-mark"></span>
-      <span class="logo-text">VDA GRUPPEN <span>/ WDA</span></span>
+      <img class="logo-img" src="assets/vda-mark-light.png" alt="VDA">
+      <span class="logo-text">GRUPPEN <span>/ WDA</span></span>
     </a>
     <div class="nav-links">
       <a href="#tjenester">Tjenester</a>
@@ -330,6 +329,7 @@ footer{padding:48px 0 56px;color:var(--text-dim)}
 <header id="top">
   <div class="hero-grid"></div>
   <div class="hero-glow"></div>
+  <img class="hero-ghost" src="assets/vda-mark-light.png" alt="" aria-hidden="true">
   <div class="wrap hero-content">
     <div class="hero-text">
       <span class="hero-tag">Westside Digital Automation AS — Oslo<span class="blink">_</span></span>
@@ -490,7 +490,7 @@ footer{padding:48px 0 56px;color:var(--text-dim)}
 <footer>
   <div class="wrap footer-inner">
     <div class="footer-left">
-      <b>VDA GRUPPEN</b><br>
+      <img src="assets/vda-logo-light.png" alt="VDA Gruppen" style="height:64px;width:auto;display:block;margin-bottom:18px;opacity:.95">
       Westside Digital Automation AS<br>
       Org.nr 936 993 222 · Oslo, Norge
     </div>
