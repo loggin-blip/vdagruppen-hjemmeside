@@ -510,7 +510,7 @@ footer{padding:48px 0 56px;color:var(--text-dim)}
 </footer>
 
 <script>
-/* --- VDA Analytics --- */
+/* --- VDA Analytics v2 --- */
 (function(){
   if(/localhost|127\.0\.0\.1/.test(location.hostname)) return;
   var SB='https://mvichoussxfcstizvlwx.supabase.co';
@@ -518,22 +518,75 @@ footer{padding:48px 0 56px;color:var(--text-dim)}
   var H={'Content-Type':'application/json','apikey':KEY,'Authorization':'Bearer '+KEY};
   var sid=localStorage.getItem('vda_sid');
   if(!sid){sid=(crypto.randomUUID?crypto.randomUUID():String(Math.random()).slice(2));localStorage.setItem('vda_sid',sid);}
-  var device=/Mobi|Android/i.test(navigator.userAgent)?'mobil':(/iPad|Tablet/i.test(navigator.userAgent)?'nettbrett':'desktop');
-  var view=null,secs=0;
+  // besøkstelling (ny økt = ny fane/omstart av nettleser)
+  var visits=parseInt(localStorage.getItem('vda_visits')||'0',10);
+  if(!sessionStorage.getItem('vda_counted')){visits++;localStorage.setItem('vda_visits',String(visits));sessionStorage.setItem('vda_counted','1');}
+
+  var ua=navigator.userAgent;
+  function parseUA(){
+    var os='Ukjent', br='Ukjent', model=null;
+    if(/Windows NT 10/.test(ua)) os='Windows 10/11';
+    else if(/Windows/.test(ua)) os='Windows';
+    else if(/iPhone/.test(ua)) {os='iOS'; model='iPhone';}
+    else if(/iPad/.test(ua)) {os='iPadOS'; model='iPad';}
+    else if(/Android ([\d.]+)/.test(ua)){os='Android '+RegExp.$1.split('.')[0];
+      var m=ua.match(/Android [\d.]+; ([^);]+)/); if(m) model=m[1].replace(/ Build.*/,'').trim();}
+    else if(/Mac OS X/.test(ua)) os='macOS';
+    else if(/Linux/.test(ua)) os='Linux';
+    if(/Edg\//.test(ua)) br='Edge';
+    else if(/SamsungBrowser/.test(ua)) br='Samsung Internet';
+    else if(/OPR\//.test(ua)) br='Opera';
+    else if(/Chrome\//.test(ua)) br='Chrome';
+    else if(/Safari/.test(ua)&&/Version\//.test(ua)) br='Safari';
+    else if(/Firefox\//.test(ua)) br='Firefox';
+    var iosv=ua.match(/OS (\d+)_/); if(iosv&&os==='iOS') os='iOS '+iosv[1];
+    return {os:os,br:br,model:model};
+  }
+  var info=parseUA();
+  var device=/Mobi|Android|iPhone/.test(ua)?'mobil':(/iPad|Tablet/.test(ua)?'nettbrett':'desktop');
+  var qs=new URLSearchParams(location.search);
+  var conn=(navigator.connection&&navigator.connection.effectiveType)||null;
+  var view=null,secs=0,maxScroll=0,clicks=0;
+
+  addEventListener('scroll',function(){
+    var d=document.documentElement;
+    var p=Math.round((scrollY+innerHeight)/d.scrollHeight*100);
+    if(p>maxScroll)maxScroll=Math.min(p,100);
+  },{passive:true});
+  addEventListener('click',function(){clicks++;},true);
+
   (async function(){
-    var country=null;
-    try{country=(await (await fetch('https://api.country.is',{signal:AbortSignal.timeout(3000)})).json()).country;}catch(e){}
+    // presis modell fra Chromium-nettlesere
+    try{
+      if(navigator.userAgentData&&navigator.userAgentData.getHighEntropyValues){
+        var he=await navigator.userAgentData.getHighEntropyValues(['model','platformVersion']);
+        if(he.model) info.model=he.model;
+      }
+    }catch(e){}
+    var geo={};
+    try{
+      var g=await (await fetch('https://ipwho.is/',{signal:AbortSignal.timeout(4000)})).json();
+      if(g&&g.success!==false) geo={country:g.country_code,city:g.city,region:g.region,isp:(g.connection&&g.connection.isp)||null,tz:(g.timezone&&g.timezone.id)||null};
+    }catch(e){
+      try{geo.country=(await (await fetch('https://api.country.is',{signal:AbortSignal.timeout(3000)})).json()).country;}catch(e2){}
+    }
     try{
       var r=await fetch(SB+'/rest/v1/rpc/vda_track',{method:'POST',headers:H,body:JSON.stringify({
         p_session_id:sid,p_path:location.pathname,p_referrer:document.referrer||null,
-        p_country:country,p_device:device,p_lang:navigator.language,p_screen_w:screen.width})});
+        p_country:geo.country||null,p_device:device,p_lang:navigator.language,
+        p_screen_w:screen.width,p_screen_h:screen.height,p_dpr:devicePixelRatio||null,
+        p_os:info.os,p_browser:info.br,p_device_model:info.model,
+        p_city:geo.city||null,p_region:geo.region||null,p_isp:geo.isp||null,
+        p_timezone:geo.tz||Intl.DateTimeFormat().resolvedOptions().timeZone||null,
+        p_utm_source:qs.get('utm_source'),p_utm_medium:qs.get('utm_medium'),p_utm_campaign:qs.get('utm_campaign'),
+        p_visit_count:visits,p_connection:conn})});
       view=await r.json();
     }catch(e){}
   })();
   function beat(){
     if(!view||!view.id)return;
     fetch(SB+'/rest/v1/rpc/vda_heartbeat',{method:'POST',headers:H,keepalive:true,
-      body:JSON.stringify({p_id:view.id,p_secret:view.secret,p_seconds:secs})}).catch(function(){});
+      body:JSON.stringify({p_id:view.id,p_secret:view.secret,p_seconds:secs,p_scroll_pct:maxScroll,p_clicks:clicks})}).catch(function(){});
   }
   setInterval(function(){if(document.visibilityState==='visible'){secs+=15;beat();}},15000);
   addEventListener('pagehide',beat);

@@ -50,7 +50,7 @@ nav{border-bottom:1px solid var(--line);background:rgba(10,11,13,.9)}
 .dash-head{display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:32px}
 .dash-head h1{font-family:var(--disp);font-size:clamp(24px,3.5vw,36px);font-weight:700}
 .dash-head .updated{font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--text-dim)}
-.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin-bottom:40px}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin-bottom:40px}
 .kpi{background:var(--bg-2);padding:24px}
 .kpi .label{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-dim);margin-bottom:12px}
 .kpi .value{font-family:var(--disp);font-size:clamp(26px,3vw,38px);font-weight:800;line-height:1}
@@ -113,6 +113,8 @@ td.dim{color:var(--text-dim);font-family:var(--mono);font-size:12px}
       <div class="kpi"><div class="label">Siste 7 dager</div><div class="value" id="k-week">–</div><div class="sub" id="k-week-sub"></div></div>
       <div class="kpi"><div class="label">Siste 30 dager</div><div class="value" id="k-month">–</div><div class="sub" id="k-month-sub"></div></div>
       <div class="kpi"><div class="label">Snitt besøkstid</div><div class="value" id="k-dur">–</div><div class="sub">av besøk med aktivitet</div></div>
+      <div class="kpi"><div class="label">Tilbakevendende</div><div class="value" id="k-return">–</div><div class="sub">har besøkt siden før</div></div>
+      <div class="kpi"><div class="label">Snitt scroll-dybde</div><div class="value" id="k-scroll">–</div><div class="sub">hvor langt ned folk leser</div></div>
     </div>
 
     <div class="panel">
@@ -130,8 +132,36 @@ td.dim{color:var(--text-dim);font-family:var(--mono);font-size:12px}
         <div class="panel-body" id="countries"></div>
       </div>
       <div class="panel">
-        <div class="panel-head">Enheter</div>
+        <div class="panel-head">Byer</div>
+        <div class="panel-body" id="cities"></div>
+      </div>
+    </div>
+    <div class="cols">
+      <div class="panel">
+        <div class="panel-head">Telefoner &amp; enheter</div>
         <div class="panel-body" id="devices"></div>
+      </div>
+      <div class="panel">
+        <div class="panel-head">Operativsystem</div>
+        <div class="panel-body" id="oses"></div>
+      </div>
+      <div class="panel">
+        <div class="panel-head">Nettlesere</div>
+        <div class="panel-body" id="browsers"></div>
+      </div>
+    </div>
+    <div class="cols">
+      <div class="panel">
+        <div class="panel-head">Internettleverandør</div>
+        <div class="panel-body" id="isps"></div>
+      </div>
+      <div class="panel">
+        <div class="panel-head">Kampanjer (UTM)</div>
+        <div class="panel-body" id="utms"></div>
+      </div>
+      <div class="panel">
+        <div class="panel-head">Skjermstørrelser</div>
+        <div class="panel-body" id="screens"></div>
       </div>
     </div>
 
@@ -139,7 +169,7 @@ td.dim{color:var(--text-dim);font-family:var(--mono);font-size:12px}
       <div class="panel-head">Siste besøk</div>
       <div class="table-scroll">
         <table>
-          <thead><tr><th>Tidspunkt</th><th>Side</th><th>Kilde</th><th>Land</th><th>Enhet</th><th>Varighet</th></tr></thead>
+          <thead><tr><th>Tidspunkt</th><th>By</th><th>Enhet</th><th>OS / Nettleser</th><th>Kilde</th><th>Varighet</th><th>Scroll</th><th>Besøk nr</th></tr></thead>
           <tbody id="recent"></tbody>
         </table>
       </div>
@@ -233,14 +263,28 @@ async function load(){
   };
   renderBars('referrers',tally(rows,refName));
   renderBars('countries',tally(rows,r=>r.country,'Ukjent'));
-  renderBars('devices',tally(rows,r=>r.device,'Ukjent'));
+  renderBars('cities',tally(rows,r=>r.city?(r.city+(r.country?' ('+r.country+')':'')):null,'Ukjent'));
+  renderBars('devices',tally(rows,r=>r.device_model||(r.device==='desktop'?'Desktop/Mac':null),'Ukjent'));
+  renderBars('oses',tally(rows,r=>r.os,'Ukjent'));
+  renderBars('browsers',tally(rows,r=>r.browser,'Ukjent'));
+  renderBars('isps',tally(rows,r=>r.isp,'Ukjent'));
+  renderBars('utms',tally(rows.filter(r=>r.utm_source),r=>r.utm_source+(r.utm_campaign?' / '+r.utm_campaign:'')));
+  renderBars('screens',tally(rows,r=>r.screen_w?(r.screen_w+'×'+(r.screen_h||'?')):null,'Ukjent'));
+
+  const returning=rows.filter(r=>(r.visit_count||1)>1);
+  $('k-return').textContent=rows.length?Math.round(returning.length/rows.length*100)+'%':'–';
+  const scrolls=rows.filter(r=>r.scroll_pct>0).map(r=>r.scroll_pct);
+  $('k-scroll').textContent=scrolls.length?Math.round(scrolls.reduce((a,b)=>a+b,0)/scrolls.length)+'%':'–';
 
   // siste besøk
   $('recent').innerHTML=rows.slice(0,25).map(r=>{
     const t=new Date(r.started_at);
     const ts=t.toLocaleDateString('nb-NO',{day:'2-digit',month:'2-digit'})+' '+t.toLocaleTimeString('nb-NO',{hour:'2-digit',minute:'2-digit'});
-    return '<tr><td class="dim">'+ts+'</td><td>'+esc(r.path)+'</td><td>'+esc(refName(r))+'</td><td class="dim">'+esc(r.country||'–')+'</td><td class="dim">'+esc(r.device||'–')+'</td><td class="dim">'+(r.duration_seconds?fmtDur(r.duration_seconds):'–')+'</td></tr>';
-  }).join('')||'<tr><td colspan="6" class="dim">Ingen besøk ennå</td></tr>';
+    const enhet=r.device_model||r.device||'–';
+    const osbr=(r.os||'–')+' · '+(r.browser||'–');
+    const by=r.city?(r.city+', '+(r.country||'')):(r.country||'–');
+    return '<tr><td class="dim">'+ts+'</td><td>'+esc(by)+'</td><td>'+esc(enhet)+'</td><td class="dim">'+esc(osbr)+'</td><td>'+esc(refName(r))+'</td><td class="dim">'+(r.duration_seconds?fmtDur(r.duration_seconds):'–')+'</td><td class="dim">'+(r.scroll_pct?r.scroll_pct+'%':'–')+'</td><td class="dim">'+(r.visit_count||1)+'</td></tr>';
+  }).join('')||'<tr><td colspan="8" class="dim">Ingen besøk ennå</td></tr>';
 
   $('updated').textContent='Oppdatert '+now.toLocaleTimeString('nb-NO',{hour:'2-digit',minute:'2-digit'});
 }
