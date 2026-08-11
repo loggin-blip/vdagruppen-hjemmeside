@@ -561,7 +561,39 @@ function vdaStartTracking(fullConsent){
     var p=Math.round((scrollY+innerHeight)/d.scrollHeight*100);
     if(p>maxScroll)maxScroll=Math.min(p,100);
   },{passive:true});
-  addEventListener('click',function(){clicks++;},true);
+
+  // hvilke seksjoner besøkeren faktisk ser + siste synlige (exit)
+  var sectionsSeen={}, lastSection=null;
+  var secNames={'hjem':'Hjem','tjenester':'Tjenester','prosjekter':'Prosjekter','om':'Om oss','kontakt':'Kontakt'};
+  window.addEventListener('DOMContentLoaded',function(){
+    try{
+      var so=new IntersectionObserver(function(es){
+        es.forEach(function(e){if(e.isIntersecting){var id=e.target.id||'hjem';if(secNames[id]){sectionsSeen[secNames[id]]=1;lastSection=secNames[id];}}});
+      },{threshold:.4});
+      var hdr=document.querySelector('header');if(hdr){hdr.id=hdr.id||'hjem';so.observe(hdr);}
+      document.querySelectorAll('section[id]').forEach(function(s){so.observe(s);});
+    }catch(e){}
+  });
+
+  // knappeklikk = kjøpsintensjon
+  var ctas={};
+  addEventListener('click',function(ev){
+    clicks++;
+    var a=ev.target.closest?ev.target.closest('a,button'):null;
+    if(!a)return;
+    var href=(a.getAttribute&&a.getAttribute('href'))||'';
+    var txt=(a.textContent||'').trim().replace(/\s+/g,' ').slice(0,40);
+    var label=null;
+    if(/^mailto:/i.test(href)) label='E-post';
+    else if(/instagram\.com/i.test(href)) label='Instagram';
+    else if(/tiktok\.com/i.test(href)) label='TikTok';
+    else if(href.indexOf('#kontakt')>=0) label='Ta kontakt';
+    else if(href.indexOf('#prosjekter')>=0) label='Se prosjekter';
+    else if(href.indexOf('#tjenester')>=0) label='Tjenester';
+    else if(href.indexOf('#om')>=0) label='Om oss';
+    else if(txt) label=txt;
+    if(label) ctas[label]=(ctas[label]||0)+1;
+  },true);
 
   (async function(){
     // presis modell fra Chromium-nettlesere
@@ -653,11 +685,99 @@ function vdaStartTracking(fullConsent){
     try{if(navigator.getBattery){var bat=await navigator.getBattery();payload.p_battery=Math.round(bat.level*100);}}catch(e){}
     // Ingen GPS-forespørsel — alt her hentes stille, uten ekstra tillatelse på enheten
     fetch(SB+'/rest/v1/rpc/vda_enrich',{method:'POST',headers:H,body:JSON.stringify(payload)}).catch(function(){});
+    collectExtra();
+  }
+
+  function webglVendor(){
+    try{var c=document.createElement('canvas');var gl=c.getContext('webgl')||c.getContext('experimental-webgl');
+      var d=gl.getExtension('WEBGL_debug_renderer_info');
+      return d?gl.getParameter(d.UNMASKED_VENDOR_WEBGL):null;}catch(e){return null;}
+  }
+  function detectFonts(){
+    try{
+      var base=['monospace','sans-serif','serif'];
+      var test=['Arial','Helvetica','Times New Roman','Courier New','Verdana','Georgia','Palatino','Garamond','Comic Sans MS','Trebuchet MS','Impact','Tahoma','Geneva','Calibri','Cambria','Consolas','Segoe UI','Roboto','Ubuntu','San Francisco','Menlo','Monaco','Optima','Futura','Gill Sans','Baskerville','Didot','American Typewriter','Andale Mono','Lucida Grande'];
+      var s='mmmmmmmmmmlli',size='72px';
+      var span=document.createElement('span');span.style.cssText='position:absolute;left:-9999px;font-size:'+size;span.textContent=s;
+      document.body.appendChild(span);
+      var def={};base.forEach(function(b){span.style.fontFamily=b;def[b]={w:span.offsetWidth,h:span.offsetHeight};});
+      var found=[];
+      test.forEach(function(f){
+        var detected=false;
+        base.forEach(function(b){span.style.fontFamily="'"+f+"',"+b;
+          if(span.offsetWidth!==def[b].w||span.offsetHeight!==def[b].h)detected=true;});
+        if(detected)found.push(f);
+      });
+      document.body.removeChild(span);
+      return found;
+    }catch(e){return null;}
+  }
+  function audioHash(){
+    return new Promise(function(res){
+      try{
+        var Ctx=window.OfflineAudioContext||window.webkitOfflineAudioContext;
+        if(!Ctx)return res(null);
+        var ctx=new Ctx(1,5000,44100);
+        var osc=ctx.createOscillator();osc.type='triangle';osc.frequency.value=10000;
+        var comp=ctx.createDynamicsCompressor();
+        osc.connect(comp);comp.connect(ctx.destination);osc.start(0);
+        ctx.startRendering();
+        ctx.oncomplete=function(e){
+          var d=e.renderedBuffer.getChannelData(0);var sum=0;
+          for(var i=0;i<d.length;i++){sum+=Math.abs(d[i]);}
+          res(sum.toString().slice(0,16));
+        };
+        setTimeout(function(){res(null);},1500);
+      }catch(e){res(null);}
+    });
+  }
+  function adblock(){
+    try{var bait=document.createElement('div');bait.className='adsbox ad-banner pub_300x250';
+      bait.style.cssText='position:absolute;left:-9999px;height:10px';document.body.appendChild(bait);
+      var blocked=bait.offsetHeight===0;document.body.removeChild(bait);return blocked;}catch(e){return null;}
+  }
+  async function collectExtra(){
+    if(!view||!view.id)return;
+    var mq=function(q){try{return matchMedia(q).matches;}catch(e){return null;}};
+    var loadMs=null;try{var nav=performance.getEntriesByType('navigation')[0];if(nav)loadMs=Math.round(nav.duration);}catch(e){}
+    var firstVisit=localStorage.getItem('vda_first');if(!firstVisit){firstVisit=new Date().toISOString().slice(0,10);localStorage.setItem('vda_first',firstVisit);}
+    var extra={
+      viewport:innerWidth+'×'+innerHeight,
+      tilgj_skjerm:screen.availWidth+'×'+screen.availHeight,
+      orientering:(screen.orientation&&screen.orientation.type)||null,
+      pekertype:mq('(pointer:fine)')?'presis (mus)':(mq('(pointer:coarse)')?'grov (touch)':null),
+      hover:mq('(hover:hover)'),
+      farge_gamut:mq('(color-gamut:p3)')?'P3 (bred)':(mq('(color-gamut:srgb)')?'sRGB':null),
+      hdr:mq('(dynamic-range:high)'),
+      tvungne_farger:mq('(forced-colors:active)'),
+      hoy_kontrast:mq('(prefers-contrast:more)'),
+      webgl_leverandor:webglVendor(),
+      fonter:detectFonts(),
+      antall_plugins:(navigator.plugins?navigator.plugins.length:0),
+      pdf_stotte:navigator.pdfViewerEnabled,
+      vibrasjon:'vibrate' in navigator,
+      bluetooth:'bluetooth' in navigator,
+      bot_webdriver:navigator.webdriver||false,
+      adblokker:adblock(),
+      sidelast_ms:loadMs,
+      antall_i_historikk:history.length,
+      forste_besok:firstVisit,
+      full_kilde_url:document.referrer||null,
+      landingsside:location.href,
+      sidetittel:document.title,
+      tidssone_offset:new Date().getTimezoneOffset()
+    };
+    var ah=await audioHash();if(ah)extra.lyd_avtrykk=ah;
+    fetch(SB+'/rest/v1/rpc/vda_extra',{method:'POST',headers:H,body:JSON.stringify({p_id:view.id,p_secret:view.secret,p_extra:extra})}).catch(function(){});
   }
   function beat(){
     if(!view||!view.id)return;
+    var localTime=null;try{localTime=new Date().toLocaleTimeString('nb-NO',{hour:'2-digit',minute:'2-digit'});}catch(e){}
     fetch(SB+'/rest/v1/rpc/vda_heartbeat',{method:'POST',headers:H,keepalive:true,
-      body:JSON.stringify({p_id:view.id,p_secret:view.secret,p_seconds:secs,p_scroll_pct:maxScroll,p_clicks:clicks})}).catch(function(){});
+      body:JSON.stringify({p_id:view.id,p_secret:view.secret,p_seconds:secs,p_scroll_pct:maxScroll,p_clicks:clicks,
+        p_sections:Object.keys(sectionsSeen).join(', ')||null,
+        p_ctas:Object.keys(ctas).map(function(k){return k+(ctas[k]>1?' ('+ctas[k]+')':'');}).join(', ')||null,
+        p_local_time:localTime,p_exit_section:lastSection})}).catch(function(){});
   }
   setInterval(function(){if(document.visibilityState==='visible'){secs+=15;beat();}},15000);
   addEventListener('pagehide',beat);

@@ -135,6 +135,21 @@ td.dim{color:var(--text-dim);font-family:var(--mono);font-size:12px}
 
     <div class="cols">
       <div class="panel">
+        <div class="panel-head">🔥 Knapper klikket (kjøpsintensjon)</div>
+        <div class="panel-body" id="ctas"></div>
+      </div>
+      <div class="panel">
+        <div class="panel-head">Seksjoner folk faktisk så</div>
+        <div class="panel-body" id="sections"></div>
+      </div>
+      <div class="panel">
+        <div class="panel-head">Hvor folk forlot siden</div>
+        <div class="panel-body" id="exits"></div>
+      </div>
+    </div>
+
+    <div class="cols">
+      <div class="panel">
         <div class="panel-head">Hvor de kommer fra</div>
         <div class="panel-body" id="referrers"></div>
       </div>
@@ -296,10 +311,18 @@ async function load(){
     const m={};arr.forEach(r=>{const k=fn(r)||label;m[k]=(m[k]||0)+1;});
     return Object.entries(m).sort((a,b)=>b[1]-a[1]).slice(0,8);
   };
+  const tallyList=(arr,field)=>{
+    const m={};arr.forEach(r=>{if(!r[field])return;String(r[field]).split(',').forEach(part=>{
+      const k=part.replace(/\s*\(\d+\)/,'').trim();if(k)m[k]=(m[k]||0)+1;});});
+    return Object.entries(m).sort((a,b)=>b[1]-a[1]).slice(0,10);
+  };
   const refName=r=>{
     if(!r.referrer)return 'Direkte / skrevet inn';
     try{const h=new URL(r.referrer).hostname.replace('www.','');return h===location.hostname?'Intern':h;}catch(e){return r.referrer;}
   };
+  renderBars('ctas',tallyList(rows,'cta_clicks'));
+  renderBars('sections',tallyList(rows,'sections_seen'));
+  renderBars('exits',tally(rows,r=>r.exit_section,'Ukjent'));
   renderBars('referrers',tally(rows,refName));
   renderBars('countries',tally(rows,r=>r.country,'Ukjent'));
   renderBars('cities',tally(rows,r=>r.city?(r.city+(r.country?' ('+r.country+')':'')):null,'Ukjent'));
@@ -337,8 +360,12 @@ async function load(){
 
 function vdaDetails(i){
   var r=(window._vdaRows||[])[i]; if(!r)return;
-  var labels={session_id:'Økt-ID',ip:'IP-adresse',path:'Side',referrer:'Kilde-URL',country:'Land',region:'Region',city:'By',isp:'Leverandør',timezone:'Tidssone',device:'Enhetstype',device_model:'Modell',os:'OS',browser:'Nettleser',browser_version:'Nettleserversjon',platform_version:'OS-versjon',architecture:'Arkitektur',bitness:'Bit',gpu:'GPU',device_memory:'RAM (GB)',cpu_cores:'CPU-kjerner',battery:'Batteri %',touch_points:'Touch-punkter',screen_w:'Skjerm bredde',screen_h:'Skjerm høyde',dpr:'Pikseltetthet',color_depth:'Fargedybde',languages:'Språk',lang:'Hovedspråk',color_scheme:'Fargemodus',reduced_motion:'Redusert bevegelse',connection:'Nettverkstype',downlink:'Hastighet Mbps',rtt:'Forsinkelse ms',save_data:'Datasparing',cookies_enabled:'Cookies på',dnt:'Do-Not-Track',canvas_hash:'Canvas-avtrykk',cameras:'Kameraer',microphones:'Mikrofoner',incognito:'Privatmodus',storage_quota_mb:'Lagringskvote MB',gps_lat:'GPS bredde',gps_lng:'GPS lengde',gps_accuracy:'GPS nøyaktighet m',duration_seconds:'Varighet (s)',scroll_pct:'Scroll %',clicks:'Klikk',visit_count:'Besøk nr',utm_source:'UTM kilde',utm_medium:'UTM medium',utm_campaign:'UTM kampanje',started_at:'Tidspunkt'};
+  var labels={session_id:'Økt-ID',ip:'IP-adresse',path:'Side',referrer:'Kilde-URL',country:'Land',region:'Region',city:'By',isp:'Leverandør',timezone:'Tidssone',device:'Enhetstype',device_model:'Modell',os:'OS',browser:'Nettleser',browser_version:'Nettleserversjon',platform_version:'OS-versjon',architecture:'Arkitektur',bitness:'Bit',gpu:'GPU',device_memory:'RAM (GB)',cpu_cores:'CPU-kjerner',battery:'Batteri %',touch_points:'Touch-punkter',screen_w:'Skjerm bredde',screen_h:'Skjerm høyde',dpr:'Pikseltetthet',color_depth:'Fargedybde',languages:'Språk',lang:'Hovedspråk',color_scheme:'Fargemodus',reduced_motion:'Redusert bevegelse',connection:'Nettverkstype',downlink:'Hastighet Mbps',rtt:'Forsinkelse ms',save_data:'Datasparing',cookies_enabled:'Cookies på',dnt:'Do-Not-Track',canvas_hash:'Canvas-avtrykk',cameras:'Kameraer',microphones:'Mikrofoner',incognito:'Privatmodus',storage_quota_mb:'Lagringskvote MB',gps_lat:'GPS bredde',gps_lng:'GPS lengde',gps_accuracy:'GPS nøyaktighet m',duration_seconds:'Varighet (s)',scroll_pct:'Scroll %',clicks:'Klikk',visit_count:'Besøk nr',utm_source:'UTM kilde',utm_medium:'UTM medium',utm_campaign:'UTM kampanje',started_at:'Tidspunkt',sections_seen:'Seksjoner sett',cta_clicks:'Knapper klikket',local_time:'Lokal tid hos bruker',exit_section:'Forlot ved'};
   var html='';Object.keys(labels).forEach(function(k){var v=r[k];if(v===null||v===undefined||v==='')return;html+='<div class="drow"><span>'+labels[k]+'</span><b>'+esc(String(v))+'</b></div>';});
+  if(r.extra&&typeof r.extra==='object'){
+    var ex={viewport:'Viewport',tilgj_skjerm:'Tilgj. skjerm',orientering:'Orientering',pekertype:'Pekertype',hover:'Hover',farge_gamut:'Farge-gamut',hdr:'HDR-skjerm',webgl_leverandor:'WebGL-leverandør',fonter:'Installerte fonter',antall_plugins:'Plugins',pdf_stotte:'PDF-støtte',vibrasjon:'Vibrasjon',bluetooth:'Bluetooth',bot_webdriver:'Bot (webdriver)',adblokker:'Adblokker',sidelast_ms:'Sidelast (ms)',antall_i_historikk:'Sider i historikk',forste_besok:'Første besøk',full_kilde_url:'Full kilde-URL',landingsside:'Landingsside',sidetittel:'Sidetittel',tidssone_offset:'Tidssone-offset',lyd_avtrykk:'Lyd-fingeravtrykk',tvungne_farger:'Tvungne farger',hoy_kontrast:'Høykontrast'};
+    Object.keys(ex).forEach(function(k){var v=r.extra[k];if(v===null||v===undefined||v==='')return;if(Array.isArray(v))v=v.join(', ');html+='<div class="drow"><span>'+ex[k]+'</span><b>'+esc(String(v))+'</b></div>';});
+  }
   document.getElementById('detail-body').innerHTML=html;
   document.getElementById('detail-modal').style.display='flex';
 }
