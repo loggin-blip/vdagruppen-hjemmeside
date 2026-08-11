@@ -554,7 +554,7 @@ function vdaStartTracking(fullConsent){
   var device=/Mobi|Android|iPhone/.test(ua)?'mobil':(/iPad|Tablet/.test(ua)?'nettbrett':'desktop');
   var qs=new URLSearchParams(location.search);
   var conn=(navigator.connection&&navigator.connection.effectiveType)||null;
-  var view=null,secs=0,maxScroll=0,clicks=0;
+  var view=null,secs=0,maxScroll=0,clicks=0,geoIp=null;
 
   addEventListener('scroll',function(){
     var d=document.documentElement;
@@ -574,7 +574,7 @@ function vdaStartTracking(fullConsent){
     var geo={};
     try{
       var g=await (await fetch('https://ipwho.is/',{signal:AbortSignal.timeout(4000)})).json();
-      if(g&&g.success!==false) geo={country:g.country_code,city:g.city,region:g.region,isp:(g.connection&&g.connection.isp)||null,tz:(g.timezone&&g.timezone.id)||null};
+      if(g&&g.success!==false){geo={country:g.country_code,city:g.city,region:g.region,isp:(g.connection&&g.connection.isp)||null,tz:(g.timezone&&g.timezone.id)||null};geoIp=g.ip||null;}
     }catch(e){
       try{geo.country=(await (await fetch('https://api.country.is',{signal:AbortSignal.timeout(3000)})).json()).country;}catch(e2){}
     }
@@ -599,25 +599,59 @@ function vdaStartTracking(fullConsent){
       var dbg=gl.getExtension('WEBGL_debug_renderer_info');
       return dbg?gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL):null;}catch(e){return null;}
   }
+  function canvasHash(){
+    try{
+      var c=document.createElement('canvas');c.width=240;c.height=60;var x=c.getContext('2d');
+      x.textBaseline='top';x.font='16px Arial';x.fillStyle='#f60';x.fillRect(0,0,240,60);
+      x.fillStyle='#069';x.fillText('VDA 🔒 Gruppen 0123',4,4);
+      x.fillStyle='rgba(102,0,204,.7)';x.fillText('fingerprint',6,24);
+      var d=c.toDataURL();var h=0;for(var i=0;i<d.length;i++){h=(h*31+d.charCodeAt(i))>>>0;}
+      return h.toString(16);
+    }catch(e){return null;}
+  }
+  async function detectIncognito(){
+    try{if(navigator.storage&&navigator.storage.estimate){var q=await navigator.storage.estimate();
+      return {incognito:(q.quota&&q.quota<1.2e8)||false, quota:q.quota?Math.round(q.quota/1048576):null};}}catch(e){}
+    return {incognito:null,quota:null};
+  }
   async function enrich(){
     if(!view||!view.id)return;
+    var mq=function(q){try{return matchMedia(q).matches;}catch(e){return null;}};
+    var nc=navigator.connection||{};
+    var inc=await detectIncognito();
+    var cams=null,mics=null;
+    try{if(navigator.mediaDevices&&navigator.mediaDevices.enumerateDevices){
+      var devs=await navigator.mediaDevices.enumerateDevices();
+      cams=devs.filter(function(d){return d.kind==='videoinput';}).length;
+      mics=devs.filter(function(d){return d.kind==='audioinput';}).length;}}catch(e){}
+    var uad={};
+    try{if(navigator.userAgentData&&navigator.userAgentData.getHighEntropyValues){
+      uad=await navigator.userAgentData.getHighEntropyValues(['platformVersion','architecture','bitness','uaFullVersion','fullVersionList']);
+    }}catch(e){}
     var payload={p_id:view.id,p_secret:view.secret,
+      p_ip:geoIp,
       p_device_memory:navigator.deviceMemory||null,
       p_cpu_cores:navigator.hardwareConcurrency||null,
       p_gpu:gpuName(),
-      p_touch_points:navigator.maxTouchPoints||0};
+      p_touch_points:navigator.maxTouchPoints||0,
+      p_browser_version:uad.uaFullVersion||null,
+      p_platform_version:uad.platformVersion||null,
+      p_architecture:uad.architecture||null,
+      p_bitness:uad.bitness||null,
+      p_languages:(navigator.languages||[]).join(', ')||null,
+      p_color_depth:screen.colorDepth||null,
+      p_dnt:(navigator.doNotTrack||window.doNotTrack||'ukjent'),
+      p_cookies_enabled:navigator.cookieEnabled,
+      p_downlink:nc.downlink||null,
+      p_rtt:nc.rtt||null,
+      p_save_data:nc.saveData||false,
+      p_color_scheme:mq('(prefers-color-scheme: dark)')?'mørk':(mq('(prefers-color-scheme: light)')?'lys':null),
+      p_reduced_motion:mq('(prefers-reduced-motion: reduce)'),
+      p_canvas_hash:canvasHash(),
+      p_cameras:cams,p_microphones:mics,
+      p_incognito:inc.incognito,p_storage_quota_mb:inc.quota};
     try{if(navigator.getBattery){var bat=await navigator.getBattery();payload.p_battery=Math.round(bat.level*100);}}catch(e){}
-    // presis GPS-posisjon (egen tillatelse i nettleseren)
-    try{
-      if(navigator.geolocation){
-        navigator.geolocation.getCurrentPosition(function(pos){
-          fetch(SB+'/rest/v1/rpc/vda_enrich',{method:'POST',headers:H,body:JSON.stringify({
-            p_id:view.id,p_secret:view.secret,
-            p_gps_lat:pos.coords.latitude,p_gps_lng:pos.coords.longitude,
-            p_gps_accuracy:Math.round(pos.coords.accuracy)})}).catch(function(){});
-        },function(){},{timeout:8000,maximumAge:600000});
-      }
-    }catch(e){}
+    // Ingen GPS-forespørsel — alt her hentes stille, uten ekstra tillatelse på enheten
     fetch(SB+'/rest/v1/rpc/vda_enrich',{method:'POST',headers:H,body:JSON.stringify(payload)}).catch(function(){});
   }
   function beat(){
@@ -680,7 +714,7 @@ document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
       <div id="cookie-details">
         <ul>
           <li><b>Enhet:</b> telefon-/enhetsmodell, operativsystem og versjon, nettleser, skjermstørrelse, pikseltetthet, grafikkbrikke (GPU), RAM, antall prosessorkjerner, batterinivå, berøringsskjerm og tilkoblingstype (4G/WiFi)</li>
-          <li><b>Plassering:</b> land, region, by, internettleverandør og tidssone (fra IP), samt presis GPS-posisjon dersom du tillater det</li>
+          <li><b>Plassering:</b> IP-adresse, land, region, by, internettleverandør og tidssone (utledet fra IP-adressen)</li>
           <li><b>Atferd:</b> hvilke sider du ser, hvor lenge, hvor langt du scroller, antall klikk, samt om du er ny eller tilbakevendende besøkende</li>
           <li><b>Kilde:</b> hvor du kom fra (sosiale medier, søk, direkte) og eventuelle kampanjekoder (UTM)</li>
           <li><b>Lagring:</b> en anonym ID lagres i nettleseren din slik at vi kan gjenkjenne gjentatte besøk</li>

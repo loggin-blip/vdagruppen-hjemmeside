@@ -77,6 +77,17 @@ td{padding:10px 16px;border-bottom:1px solid var(--line);color:var(--text)}
 tr:last-child td{border-bottom:none}
 td.dim{color:var(--text-dim);font-family:var(--mono);font-size:12px}
 .table-scroll{overflow-x:auto}
+#recent tr:hover td{background:var(--bg-3)}
+#detail-modal{display:none;position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,.7);align-items:center;justify-content:center;padding:24px}
+.detail-box{background:var(--bg-2);border:1px solid var(--line-strong);max-width:560px;width:100%;max-height:82vh;overflow-y:auto}
+.detail-head{display:flex;justify-content:space-between;align-items:center;padding:18px 24px;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--bg-2)}
+.detail-head b{font-family:var(--disp);font-size:15px}
+.detail-head button{background:none;border:1px solid var(--line-strong);color:var(--text-dim);width:32px;height:32px;cursor:pointer;font-size:16px}
+.detail-head button:hover{color:var(--text);border-color:var(--accent)}
+.drow{display:flex;justify-content:space-between;gap:16px;padding:10px 24px;border-bottom:1px solid var(--line);font-size:13px}
+.drow:last-child{border-bottom:none}
+.drow span{color:var(--text-dim);font-family:var(--mono);font-size:11px;letter-spacing:.04em;flex-shrink:0}
+.drow b{font-weight:500;text-align:right;word-break:break-word}
 </style>
 </head>
 <body>
@@ -174,8 +185,22 @@ td.dim{color:var(--text-dim);font-family:var(--mono);font-size:12px}
         <div class="panel-body" id="hardware"></div>
       </div>
       <div class="panel">
-        <div class="panel-head">GPS-posisjon (kart)</div>
-        <div class="panel-body" id="gps"></div>
+        <div class="panel-head">Nettverkshastighet</div>
+        <div class="panel-body" id="network"></div>
+      </div>
+    </div>
+    <div class="cols">
+      <div class="panel">
+        <div class="panel-head">Språk</div>
+        <div class="panel-body" id="langs"></div>
+      </div>
+      <div class="panel">
+        <div class="panel-head">Fargemodus / privatmodus</div>
+        <div class="panel-body" id="schemes"></div>
+      </div>
+      <div class="panel">
+        <div class="panel-head">IP-adresser</div>
+        <div class="panel-body" id="ips"></div>
       </div>
     </div>
 
@@ -286,11 +311,10 @@ async function load(){
   renderBars('screens',tally(rows,r=>r.screen_w?(r.screen_w+'×'+(r.screen_h||'?')):null,'Ukjent'));
   renderBars('gpus',tally(rows,r=>r.gpu,'Ukjent'));
   renderBars('hardware',tally(rows,r=>r.device_memory||r.cpu_cores?((r.device_memory?r.device_memory+' GB':'? GB')+' / '+(r.cpu_cores||'?')+' kjerner'):null,'Ukjent'));
-  var gpsRows=rows.filter(r=>r.gps_lat&&r.gps_lng);
-  $('gps').innerHTML=gpsRows.length?gpsRows.slice(0,12).map(function(r){
-    var ll=r.gps_lat.toFixed(4)+', '+r.gps_lng.toFixed(4);
-    return '<div class="bar-row"><a class="name" style="color:var(--accent);text-decoration:none" target="_blank" href="https://www.google.com/maps?q='+r.gps_lat+','+r.gps_lng+'">'+esc((r.city||'Ukjent')+' — '+ll)+' ↗</a><span class="n">±'+(r.gps_accuracy||'?')+'m</span></div>';
-  }).join(''):'<div class="empty">Ingen har delt GPS ennå</div>';
+  renderBars('langs',tally(rows,r=>r.languages||r.lang,'Ukjent'));
+  renderBars('schemes',tally(rows,r=>r.color_scheme?(r.color_scheme+(r.incognito?' · privat':'')):null,'Ukjent'));
+  renderBars('ips',tally(rows,r=>r.ip,'Ukjent'));
+  renderBars('network',tally(rows,r=>r.downlink?(r.downlink+' Mbps'+(r.rtt?' / '+r.rtt+'ms':'')):r.connection,'Ukjent'));
 
   const returning=rows.filter(r=>(r.visit_count||1)>1);
   $('k-return').textContent=rows.length?Math.round(returning.length/rows.length*100)+'%':'–';
@@ -298,18 +322,27 @@ async function load(){
   $('k-scroll').textContent=scrolls.length?Math.round(scrolls.reduce((a,b)=>a+b,0)/scrolls.length)+'%':'–';
 
   // siste besøk
-  $('recent').innerHTML=rows.slice(0,25).map(r=>{
+  window._vdaRows=rows;
+  $('recent').innerHTML=rows.slice(0,40).map((r,idx)=>{
     const t=new Date(r.started_at);
     const ts=t.toLocaleDateString('nb-NO',{day:'2-digit',month:'2-digit'})+' '+t.toLocaleTimeString('nb-NO',{hour:'2-digit',minute:'2-digit'});
     const enhet=r.device_model||r.device||'–';
     const osbr=(r.os||'–')+' · '+(r.browser||'–');
     const by=r.city?(r.city+', '+(r.country||'')):(r.country||'–');
-    return '<tr><td class="dim">'+ts+'</td><td>'+esc(by)+'</td><td>'+esc(enhet)+'</td><td class="dim">'+esc(osbr)+'</td><td>'+esc(refName(r))+'</td><td class="dim">'+(r.duration_seconds?fmtDur(r.duration_seconds):'–')+'</td><td class="dim">'+(r.scroll_pct?r.scroll_pct+'%':'–')+'</td><td class="dim">'+(r.visit_count||1)+'</td></tr>';
+    return '<tr style="cursor:pointer" onclick="vdaDetails('+idx+')"><td class="dim">'+ts+'</td><td>'+esc(by)+'</td><td>'+esc(enhet)+'</td><td class="dim">'+esc(osbr)+'</td><td>'+esc(refName(r))+'</td><td class="dim">'+(r.duration_seconds?fmtDur(r.duration_seconds):'–')+'</td><td class="dim">'+(r.scroll_pct?r.scroll_pct+'%':'–')+'</td><td class="dim">'+(r.visit_count||1)+'</td></tr>';
   }).join('')||'<tr><td colspan="8" class="dim">Ingen besøk ennå</td></tr>';
 
   $('updated').textContent='Oppdatert '+now.toLocaleTimeString('nb-NO',{hour:'2-digit',minute:'2-digit'});
 }
 
+function vdaDetails(i){
+  var r=(window._vdaRows||[])[i]; if(!r)return;
+  var labels={session_id:'Økt-ID',ip:'IP-adresse',path:'Side',referrer:'Kilde-URL',country:'Land',region:'Region',city:'By',isp:'Leverandør',timezone:'Tidssone',device:'Enhetstype',device_model:'Modell',os:'OS',browser:'Nettleser',browser_version:'Nettleserversjon',platform_version:'OS-versjon',architecture:'Arkitektur',bitness:'Bit',gpu:'GPU',device_memory:'RAM (GB)',cpu_cores:'CPU-kjerner',battery:'Batteri %',touch_points:'Touch-punkter',screen_w:'Skjerm bredde',screen_h:'Skjerm høyde',dpr:'Pikseltetthet',color_depth:'Fargedybde',languages:'Språk',lang:'Hovedspråk',color_scheme:'Fargemodus',reduced_motion:'Redusert bevegelse',connection:'Nettverkstype',downlink:'Hastighet Mbps',rtt:'Forsinkelse ms',save_data:'Datasparing',cookies_enabled:'Cookies på',dnt:'Do-Not-Track',canvas_hash:'Canvas-avtrykk',cameras:'Kameraer',microphones:'Mikrofoner',incognito:'Privatmodus',storage_quota_mb:'Lagringskvote MB',gps_lat:'GPS bredde',gps_lng:'GPS lengde',gps_accuracy:'GPS nøyaktighet m',duration_seconds:'Varighet (s)',scroll_pct:'Scroll %',clicks:'Klikk',visit_count:'Besøk nr',utm_source:'UTM kilde',utm_medium:'UTM medium',utm_campaign:'UTM kampanje',started_at:'Tidspunkt'};
+  var html='';Object.keys(labels).forEach(function(k){var v=r[k];if(v===null||v===undefined||v==='')return;html+='<div class="drow"><span>'+labels[k]+'</span><b>'+esc(String(v))+'</b></div>';});
+  document.getElementById('detail-body').innerHTML=html;
+  document.getElementById('detail-modal').style.display='flex';
+}
+function vdaCloseDetails(){document.getElementById('detail-modal').style.display='none';}
 function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 
 function renderBars(id,entries){
@@ -347,5 +380,11 @@ function drawChart(days,vals){
 
 if(pin) showDash();
 </script>
+<div id="detail-modal" onclick="if(event.target===this)vdaCloseDetails()">
+  <div class="detail-box">
+    <div class="detail-head"><b>Full besøksinfo</b><button onclick="vdaCloseDetails()">×</button></div>
+    <div id="detail-body"></div>
+  </div>
+</div>
 </body>
 </html>
