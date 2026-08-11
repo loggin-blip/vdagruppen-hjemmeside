@@ -93,14 +93,10 @@ td.dim{color:var(--text-dim);font-family:var(--mono);font-size:12px}
     <h1>Logg inn</h1>
     <p>Statistikk for vdagruppen.com</p>
     <div class="field">
-      <label for="email">E-post</label>
-      <input type="email" id="email" autocomplete="username" required>
+      <label for="pin">Kode</label>
+      <input type="password" id="pin" inputmode="numeric" autocomplete="off" placeholder="••••" required>
     </div>
-    <div class="field">
-      <label for="password">Passord</label>
-      <input type="password" id="password" autocomplete="current-password" required>
-    </div>
-    <button id="login-btn" type="submit">Logg inn →</button>
+    <button id="login-btn" type="submit">Åpne dashbord →</button>
     <div id="login-err"></div>
   </form>
 </div>
@@ -154,7 +150,7 @@ td.dim{color:var(--text-dim);font-family:var(--mono);font-size:12px}
 <script>
 const SB='https://mvichoussxfcstizvlwx.supabase.co';
 const KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im12aWNob3Vzc3hmY3N0aXp2bHd4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM1ODkxMTAsImV4cCI6MjA4OTE2NTExMH0.L75gHWwhm3AzJ2jmfYHB7ZU_sJErgMCh0_sZ0abaBkc';
-let token=sessionStorage.getItem('vda_dash_token')||null;
+let pin=sessionStorage.getItem('vda_dash_pin')||null;
 
 const $=id=>document.getElementById(id);
 const fmtDur=s=>s>=3600?Math.floor(s/3600)+'t '+Math.floor(s%3600/60)+'m':s>=60?Math.floor(s/60)+'m '+(s%60)+'s':s+'s';
@@ -162,47 +158,45 @@ const fmtDur=s=>s>=3600?Math.floor(s/3600)+'t '+Math.floor(s%3600/60)+'m':s>=60?
 $('login-form').addEventListener('submit',async e=>{
   e.preventDefault();
   $('login-err').style.display='none';
+  const p=$('pin').value.trim();
   try{
-    const r=await fetch(SB+'/auth/v1/token?grant_type=password',{
-      method:'POST',headers:{'Content-Type':'application/json','apikey':KEY},
-      body:JSON.stringify({email:$('email').value,password:$('password').value})});
-    const j=await r.json();
-    if(!r.ok||!j.access_token) throw new Error(j.error_description||j.msg||'Feil e-post eller passord');
-    token=j.access_token;
-    sessionStorage.setItem('vda_dash_token',token);
+    await fetchData(p);          // kaster ved feil kode
+    pin=p;
+    sessionStorage.setItem('vda_dash_pin',pin);
     showDash();
   }catch(err){
-    $('login-err').textContent=err.message;
+    $('login-err').textContent='Feil kode';
     $('login-err').style.display='block';
   }
 });
 
 $('logout').addEventListener('click',()=>{
-  sessionStorage.removeItem('vda_dash_token');token=null;
+  sessionStorage.removeItem('vda_dash_pin');pin=null;
   $('dash-view').style.display='none';$('logout').style.display='none';
   $('login-view').style.display='flex';
 });
 
-async function q(query){
-  const r=await fetch(SB+'/rest/v1/vda_page_views?'+query,{
-    headers:{'apikey':KEY,'Authorization':'Bearer '+token}});
-  if(r.status===401){throw new Error('utlopt');}
-  return r.json();
+let _rows=null;
+async function fetchData(p){
+  const r=await fetch(SB+'/rest/v1/rpc/vda_dashboard_data',{
+    method:'POST',headers:{'Content-Type':'application/json','apikey':KEY,'Authorization':'Bearer '+KEY},
+    body:JSON.stringify({p_pin:p})});
+  const j=await r.json();
+  if(!r.ok||!Array.isArray(j)) throw new Error('feil kode');
+  _rows=j;
+  return j;
 }
 
 async function showDash(){
   $('login-view').style.display='none';
   $('dash-view').style.display='block';
   $('logout').style.display='inline-block';
-  try{ await load(); }catch(e){
-    if(e.message==='utlopt'){ $('logout').click(); }
-  }
+  try{ await load(); }catch(e){ $('logout').click(); }
 }
 
 async function load(){
-  const since=new Date(Date.now()-30*864e5).toISOString();
-  const rows=await q('select=session_id,path,referrer,country,device,started_at,duration_seconds&started_at=gte.'+since+'&order=started_at.desc&limit=10000');
-  if(!Array.isArray(rows)) throw new Error('utlopt');
+  const rows=_rows||await fetchData(pin);
+  _rows=null;
 
   const now=new Date();
   const dayKey=d=>{const x=new Date(d);return x.getFullYear()+'-'+String(x.getMonth()+1).padStart(2,'0')+'-'+String(x.getDate()).padStart(2,'0');};
@@ -286,7 +280,7 @@ function drawChart(days,vals){
   svg.innerHTML=out;
 }
 
-if(token) showDash();
+if(pin) showDash();
 </script>
 </body>
 </html>
