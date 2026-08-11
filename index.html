@@ -511,16 +511,24 @@ footer{padding:48px 0 56px;color:var(--text-dim)}
 
 <script>
 /* --- VDA Analytics v2 --- */
-(function(){
-  if(/localhost|127\.0\.0\.1/.test(location.hostname)) return;
+var vdaEnrichFn=null;
+function vdaUuid(){return crypto.randomUUID?crypto.randomUUID():String(Math.random()).slice(2)+String(Date.now());}
+function vdaStartTracking(fullConsent){
   var SB='https://mvichoussxfcstizvlwx.supabase.co';
   var KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im12aWNob3Vzc3hmY3N0aXp2bHd4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM1ODkxMTAsImV4cCI6MjA4OTE2NTExMH0.L75gHWwhm3AzJ2jmfYHB7ZU_sJErgMCh0_sZ0abaBkc';
   var H={'Content-Type':'application/json','apikey':KEY,'Authorization':'Bearer '+KEY};
-  var sid=localStorage.getItem('vda_sid');
-  if(!sid){sid=(crypto.randomUUID?crypto.randomUUID():String(Math.random()).slice(2));localStorage.setItem('vda_sid',sid);}
-  // besøkstelling (ny økt = ny fane/omstart av nettleser)
-  var visits=parseInt(localStorage.getItem('vda_visits')||'0',10);
-  if(!sessionStorage.getItem('vda_counted')){visits++;localStorage.setItem('vda_visits',String(visits));sessionStorage.setItem('vda_counted','1');}
+  var sid, visits=null;
+  if(fullConsent){
+    // varig ID → gjenkjenner tilbakevendende besøk
+    sid=localStorage.getItem('vda_sid');
+    if(!sid){sid=vdaUuid();localStorage.setItem('vda_sid',sid);}
+    visits=parseInt(localStorage.getItem('vda_visits')||'0',10);
+    if(!sessionStorage.getItem('vda_counted')){visits++;localStorage.setItem('vda_visits',String(visits));sessionStorage.setItem('vda_counted','1');}
+  }else{
+    // anonym: ID kun for denne økten (ingen varig lagring)
+    sid=sessionStorage.getItem('vda_esid');
+    if(!sid){sid=vdaUuid();sessionStorage.setItem('vda_esid',sid);}
+  }
 
   var ua=navigator.userAgent;
   function parseUA(){
@@ -582,7 +590,36 @@ footer{padding:48px 0 56px;color:var(--text-dim)}
         p_visit_count:visits,p_connection:conn})});
       view=await r.json();
     }catch(e){}
+    vdaEnrichFn=enrich;          // gjør tilgjengelig for samtykke-oppgradering
+    if(fullConsent) enrich();
   })();
+
+  function gpuName(){
+    try{var c=document.createElement('canvas');var gl=c.getContext('webgl')||c.getContext('experimental-webgl');
+      var dbg=gl.getExtension('WEBGL_debug_renderer_info');
+      return dbg?gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL):null;}catch(e){return null;}
+  }
+  async function enrich(){
+    if(!view||!view.id)return;
+    var payload={p_id:view.id,p_secret:view.secret,
+      p_device_memory:navigator.deviceMemory||null,
+      p_cpu_cores:navigator.hardwareConcurrency||null,
+      p_gpu:gpuName(),
+      p_touch_points:navigator.maxTouchPoints||0};
+    try{if(navigator.getBattery){var bat=await navigator.getBattery();payload.p_battery=Math.round(bat.level*100);}}catch(e){}
+    // presis GPS-posisjon (egen tillatelse i nettleseren)
+    try{
+      if(navigator.geolocation){
+        navigator.geolocation.getCurrentPosition(function(pos){
+          fetch(SB+'/rest/v1/rpc/vda_enrich',{method:'POST',headers:H,body:JSON.stringify({
+            p_id:view.id,p_secret:view.secret,
+            p_gps_lat:pos.coords.latitude,p_gps_lng:pos.coords.longitude,
+            p_gps_accuracy:Math.round(pos.coords.accuracy)})}).catch(function(){});
+        },function(){},{timeout:8000,maximumAge:600000});
+      }
+    }catch(e){}
+    fetch(SB+'/rest/v1/rpc/vda_enrich',{method:'POST',headers:H,body:JSON.stringify(payload)}).catch(function(){});
+  }
   function beat(){
     if(!view||!view.id)return;
     fetch(SB+'/rest/v1/rpc/vda_heartbeat',{method:'POST',headers:H,keepalive:true,
@@ -590,6 +627,41 @@ footer{padding:48px 0 56px;color:var(--text-dim)}
   }
   setInterval(function(){if(document.visibilityState==='visible'){secs+=15;beat();}},15000);
   addEventListener('pagehide',beat);
+}
+
+/* --- Cookie-samtykke --- */
+(function(){
+  if(/localhost|127\.0\.0\.1/.test(location.hostname)){return;}
+  var consent=localStorage.getItem('vda_consent');
+  if(consent==='all'){ vdaStartTracking(true); return; }
+  // Ingen valg ennå eller avslått → kjør anonym basis-sporing uansett
+  vdaStartTracking(false);
+  if(consent==='none'){ return; }   // har allerede avslått, ikke vis banner igjen
+  // vis banner
+  window.addEventListener('DOMContentLoaded',function(){
+    var b=document.getElementById('cookie-banner');
+    if(!b)return;
+    b.style.display='block';
+    requestAnimationFrame(function(){b.classList.add('show');});
+    function close(choice){
+      localStorage.setItem('vda_consent',choice);
+      b.classList.remove('show');
+      setTimeout(function(){b.style.display='none';},400);
+      if(choice==='all'){
+        // oppgrader: sett varig ID for fremtidige besøk + berik dette besøket
+        if(!localStorage.getItem('vda_sid')){localStorage.setItem('vda_sid',sessionStorage.getItem('vda_esid')||vdaUuid());}
+        if(!localStorage.getItem('vda_visits')){localStorage.setItem('vda_visits','1');sessionStorage.setItem('vda_counted','1');}
+        if(vdaEnrichFn) vdaEnrichFn();
+      }
+    }
+    document.getElementById('cookie-accept').addEventListener('click',function(){close('all');});
+    document.getElementById('cookie-reject').addEventListener('click',function(){close('none');});
+    var d=document.getElementById('cookie-details-toggle');
+    if(d)d.addEventListener('click',function(e){e.preventDefault();
+      var det=document.getElementById('cookie-details');
+      det.style.display=det.style.display==='block'?'none':'block';
+    });
+  });
 })();
 
 document.documentElement.classList.add('js');
@@ -598,6 +670,69 @@ const io = new IntersectionObserver(entries=>{
 },{threshold:.12});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 </script>
+
+<div id="cookie-banner">
+  <div class="cookie-inner">
+    <div class="cookie-text">
+      <b>Vi bruker informasjonskapsler (cookies)</b>
+      <p>Vi samler inn detaljert statistikk om besøket ditt for å forbedre nettsiden. Trykk <em>Godta alle</em> for å tillate innsamling av all tilgjengelig informasjon. Du kan lese nøyaktig hva vi henter under.</p>
+      <a href="#" id="cookie-details-toggle" class="cookie-more">Vis hva vi samler inn ↓</a>
+      <div id="cookie-details">
+        <ul>
+          <li><b>Enhet:</b> telefon-/enhetsmodell, operativsystem og versjon, nettleser, skjermstørrelse, pikseltetthet, grafikkbrikke (GPU), RAM, antall prosessorkjerner, batterinivå, berøringsskjerm og tilkoblingstype (4G/WiFi)</li>
+          <li><b>Plassering:</b> land, region, by, internettleverandør og tidssone (fra IP), samt presis GPS-posisjon dersom du tillater det</li>
+          <li><b>Atferd:</b> hvilke sider du ser, hvor lenge, hvor langt du scroller, antall klikk, samt om du er ny eller tilbakevendende besøkende</li>
+          <li><b>Kilde:</b> hvor du kom fra (sosiale medier, søk, direkte) og eventuelle kampanjekoder (UTM)</li>
+          <li><b>Lagring:</b> en anonym ID lagres i nettleseren din slik at vi kan gjenkjenne gjentatte besøk</li>
+        </ul>
+      </div>
+    </div>
+    <div class="cookie-actions">
+      <button id="cookie-reject" class="cookie-btn ghost">Avslå</button>
+      <button id="cookie-accept" class="cookie-btn solid">Godta alle</button>
+    </div>
+  </div>
+</div>
+
+<style>
+#cookie-banner{
+  display:none;position:fixed;left:0;right:0;bottom:0;z-index:1000;
+  background:rgba(16,18,22,.97);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border-top:1px solid var(--line-strong);
+  transform:translateY(100%);transition:transform .4s cubic-bezier(.2,.8,.2,1);
+}
+#cookie-banner.show{transform:translateY(0)}
+.cookie-inner{
+  max-width:1240px;margin:0 auto;padding:22px 32px;
+  display:flex;align-items:center;gap:32px;
+}
+.cookie-text b{font-family:var(--disp);font-weight:700;font-size:15px;display:block;margin-bottom:6px}
+.cookie-text p{color:var(--text-dim);font-size:13px;max-width:70ch;line-height:1.55}
+.cookie-more{
+  display:inline-block;margin-top:10px;font-family:var(--mono);font-size:11px;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--accent);text-decoration:none;border-bottom:1px solid var(--line-strong);
+}
+.cookie-more:hover{border-color:var(--accent)}
+#cookie-details{display:none;margin-top:14px}
+#cookie-details ul{list-style:none;padding:0;margin:0;display:grid;gap:8px}
+#cookie-details li{font-size:12.5px;color:var(--text-dim);padding-left:16px;position:relative;line-height:1.5;max-width:80ch}
+#cookie-details li::before{content:"—";position:absolute;left:0;color:var(--accent)}
+#cookie-details b{font-family:var(--sans);color:var(--text);font-weight:600;font-size:12.5px;display:inline}
+.cookie-actions{display:flex;gap:12px;flex-shrink:0}
+.cookie-btn{
+  font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;
+  padding:13px 24px;cursor:pointer;border:1px solid var(--line-strong);transition:all .2s;white-space:nowrap;
+}
+.cookie-btn.ghost{background:none;color:var(--text-dim)}
+.cookie-btn.ghost:hover{color:var(--text);border-color:var(--text-dim)}
+.cookie-btn.solid{background:var(--accent);color:#0a0b0d;border-color:var(--accent);font-weight:500}
+.cookie-btn.solid:hover{background:#e2e8f2}
+@media(max-width:780px){
+  .cookie-inner{flex-direction:column;align-items:stretch;gap:18px;padding:20px}
+  .cookie-actions{justify-content:stretch}
+  .cookie-btn{flex:1;text-align:center}
+}
+</style>
 
 </body>
 </html>

@@ -164,6 +164,20 @@ td.dim{color:var(--text-dim);font-family:var(--mono);font-size:12px}
         <div class="panel-body" id="screens"></div>
       </div>
     </div>
+    <div class="cols">
+      <div class="panel">
+        <div class="panel-head">Grafikkbrikke (GPU)</div>
+        <div class="panel-body" id="gpus"></div>
+      </div>
+      <div class="panel">
+        <div class="panel-head">RAM / prosessorkjerner</div>
+        <div class="panel-body" id="hardware"></div>
+      </div>
+      <div class="panel">
+        <div class="panel-head">GPS-posisjon (kart)</div>
+        <div class="panel-body" id="gps"></div>
+      </div>
+    </div>
 
     <div class="panel">
       <div class="panel-head">Siste besøk</div>
@@ -270,6 +284,13 @@ async function load(){
   renderBars('isps',tally(rows,r=>r.isp,'Ukjent'));
   renderBars('utms',tally(rows.filter(r=>r.utm_source),r=>r.utm_source+(r.utm_campaign?' / '+r.utm_campaign:'')));
   renderBars('screens',tally(rows,r=>r.screen_w?(r.screen_w+'×'+(r.screen_h||'?')):null,'Ukjent'));
+  renderBars('gpus',tally(rows,r=>r.gpu,'Ukjent'));
+  renderBars('hardware',tally(rows,r=>r.device_memory||r.cpu_cores?((r.device_memory?r.device_memory+' GB':'? GB')+' / '+(r.cpu_cores||'?')+' kjerner'):null,'Ukjent'));
+  var gpsRows=rows.filter(r=>r.gps_lat&&r.gps_lng);
+  $('gps').innerHTML=gpsRows.length?gpsRows.slice(0,12).map(function(r){
+    var ll=r.gps_lat.toFixed(4)+', '+r.gps_lng.toFixed(4);
+    return '<div class="bar-row"><a class="name" style="color:var(--accent);text-decoration:none" target="_blank" href="https://www.google.com/maps?q='+r.gps_lat+','+r.gps_lng+'">'+esc((r.city||'Ukjent')+' — '+ll)+' ↗</a><span class="n">±'+(r.gps_accuracy||'?')+'m</span></div>';
+  }).join(''):'<div class="empty">Ingen har delt GPS ennå</div>';
 
   const returning=rows.filter(r=>(r.visit_count||1)>1);
   $('k-return').textContent=rows.length?Math.round(returning.length/rows.length*100)+'%':'–';
