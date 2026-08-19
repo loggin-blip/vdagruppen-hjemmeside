@@ -203,7 +203,13 @@ nav.krympet .nav-logo-sub{opacity:0;height:0;margin-top:0}
 header{
   padding:120px 0 110px;
   border-bottom:var(--vda-border-w) solid var(--vda-border);
+  position:relative;overflow:hidden;
 }
+header .wrap{position:relative}
+/* stort merke i bakgrunnen av hero-en: navy på lav opasitet blir tone-i-tone mot creme */
+.hero-merke{position:absolute;top:50%;right:-90px;transform:translateY(-50%);width:min(46vw,720px);opacity:.05;pointer-events:none}
+.hero-merke img{width:100%;height:auto;display:block}
+@media(max-width:900px){.hero-merke{display:none}}
 h1{
   font-size:clamp(30px,4.4vw,52px);
   line-height:1.28;
@@ -397,6 +403,7 @@ footer{background:var(--vda-navy);color:var(--vda-on-navy-dim);padding:72px 0 56
 </script>
 
 <header id="top">
+  <div class="hero-merke" aria-hidden="true"><img src="assets/brand/vda-merke-navy.svg" alt=""></div>
   <div class="wrap">
     <h1>Vi er AI-konsulenter som identifiserer hva bedriften din faktisk trenger, og bygger nøyaktig det.</h1>
     <p class="hero-sub">Et partnerskap som varer — ikke en engangsjobb.</p>
