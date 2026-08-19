@@ -178,9 +178,14 @@ nav{
   background:var(--vda-creme);
   border-bottom:var(--vda-border-w) solid var(--vda-border);
 }
-.nav-inner{display:flex;align-items:center;justify-content:space-between;height:72px}
-.nav-logo{display:flex;align-items:center;text-decoration:none}
-.nav-logo img{height:30px;width:auto;display:block}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:104px;transition:height .35s ease}
+nav.krympet .nav-inner{height:72px}
+.nav-logo{display:flex;flex-direction:column;align-items:center;text-decoration:none}
+.nav-logo img{width:97px;height:auto;display:block;transition:width .35s ease}
+nav.krympet .nav-logo img{width:58px}
+/* GRUPPEN som i offisiell lockup: bokstavene fordelt over nøyaktig merkets bredde */
+.nav-logo-sub{display:flex;justify-content:space-between;width:97px;margin-top:7px;height:13px;overflow:hidden;font-family:var(--vda-font-display);font-size:9.5px;line-height:1.35;color:var(--vda-grey);transition:opacity .22s ease,height .35s ease,margin-top .35s ease}
+nav.krympet .nav-logo-sub{opacity:0;height:0;margin-top:0}
 .nav-links{display:flex;gap:36px;align-items:center}
 .nav-links a{
   color:var(--vda-navy);text-decoration:none;font-size:14px;transition:color .2s;
@@ -361,6 +366,7 @@ footer{background:var(--vda-navy);color:var(--vda-on-navy-dim);padding:72px 0 56
   <div class="wrap nav-inner">
     <a class="nav-logo" href="#top" aria-label="VDA Gruppen — til toppen">
       <img src="assets/brand/vda-merke-navy.svg" alt="VDA Gruppen">
+      <span class="nav-logo-sub" aria-hidden="true"><span>G</span><span>R</span><span>U</span><span>P</span><span>P</span><span>E</span><span>N</span></span>
     </a>
     <div class="nav-links">
       <a href="#metode">Slik jobber vi</a>
@@ -372,6 +378,18 @@ footer{background:var(--vda-navy);color:var(--vda-on-navy-dim);padding:72px 0 56
     </div>
   </div>
 </nav>
+<script>
+(function(){
+  // hysterese (krymp ved 64, voks først under 8) så nav-en ikke flimrer rundt terskelen
+  var nav=document.querySelector('nav'),krympet=false;
+  function sjekk(){
+    var s=krympet?(scrollY>8):(scrollY>64);
+    if(s!==krympet){krympet=s;nav.classList.toggle('krympet',s);}
+  }
+  addEventListener('scroll',sjekk,{passive:true});
+  sjekk();
+})();
+</script>
 
 <header id="top">
   <div class="wrap">
