@@ -1,0 +1,6 @@
+# Interne filer — skal aldri publiseres på vdagruppen.com
+CLAUDE.md
+.claude/
+.mirror/
+*.log
+.DS_Store
