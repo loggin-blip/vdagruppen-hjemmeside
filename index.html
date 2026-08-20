@@ -307,6 +307,24 @@ h2{font-size:clamp(25px,3vw,34px);line-height:1.3;max-width:26ch}
 .person-kontakt{margin-top:12px;font-size:13.5px}
 .person-kontakt a{color:var(--vda-grey);text-decoration:none}
 .person-kontakt a:hover{color:var(--vda-brass)}
+/* klikk på et kompaktkort åpner hele kortet stort i overlay (glir opp) */
+.person{cursor:pointer}
+.person-modal{position:fixed;inset:0;z-index:300;display:flex;align-items:center;justify-content:center;padding:24px}
+.person-modal[hidden]{display:none}
+.person-scrim{position:absolute;inset:0;background:rgba(20,39,63,.55);opacity:0;transition:opacity .3s ease}
+.person-stor{position:relative;background:var(--vda-creme);border:var(--vda-border-w) solid var(--vda-dust);width:min(920px,100%);max-height:calc(100dvh - 48px);overflow:auto;padding:40px;transform:translateY(48px);opacity:0;transition:transform .38s cubic-bezier(.2,.8,.2,1),opacity .3s ease}
+.person-modal.apen .person-scrim{opacity:1}
+.person-modal.apen .person-stor{transform:none;opacity:1}
+.person-lukk{position:absolute;top:14px;right:14px;width:36px;height:36px;background:none;border:var(--vda-border-w) solid var(--vda-dust);color:var(--vda-navy);font-size:20px;line-height:1;cursor:pointer;font-family:var(--vda-font-body)}
+.person-lukk:hover{color:var(--vda-brass);border-color:var(--vda-brass)}
+.person-stor-innhold{display:grid;grid-template-columns:340px 1fr;gap:36px;align-items:start}
+.person-stor-innhold .person-foto{width:100%}
+.person-stor-innhold h3{font-size:clamp(26px,2.6vw,34px);margin-top:0}
+.person-stor-innhold .person-rolle{font-size:12px;margin-top:8px}
+.person-stor-innhold .person-bio{font-size:16px;margin-top:14px;max-width:none}
+.person-stor-innhold .person-tags{margin-top:18px}
+.person-stor-innhold .person-kontakt{margin-top:16px;font-size:15px}
+@media (prefers-reduced-motion:reduce){.person-scrim,.person-stor{transition:none}}
 .person h3{font-size:clamp(20px,1.8vw,25px);margin-top:0}
 .person-rolle{font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--vda-dust);margin-top:5px}
 .person-bio{font-size:14.5px;color:var(--vda-grey);margin-top:9px;max-width:44ch}
@@ -317,6 +335,10 @@ h2{font-size:clamp(25px,3vw,34px);line-height:1.3;max-width:26ch}
   .person{grid-template-columns:124px 1fr;gap:16px}
   .person h3{font-size:19px}
   .person-bio{font-size:14px}
+  .person-modal{padding:14px}
+  .person-stor{padding:26px 20px}
+  .person-stor-innhold{grid-template-columns:1fr;gap:20px}
+  .person-stor-innhold .person-foto{max-width:220px}
 }
 
 /* ---------- FAQ ---------- */
@@ -569,8 +591,51 @@ footer{background:var(--vda-navy);color:var(--vda-on-navy-dim);padding:72px 0 56
         </div>
       </div>
     </div>
+    <div class="person-modal" id="person-modal" hidden>
+      <div class="person-scrim"></div>
+      <div class="person-stor" role="dialog" aria-modal="true" aria-label="Om konsulenten">
+        <button class="person-lukk" type="button" aria-label="Lukk">&times;</button>
+        <div class="person-stor-innhold"></div>
+      </div>
+    </div>
   </div>
 </section>
+<script>
+(function(){
+  var modal=document.getElementById('person-modal');
+  if(!modal)return;
+  var innhold=modal.querySelector('.person-stor-innhold'),
+      lukkBtn=modal.querySelector('.person-lukk'),
+      scrim=modal.querySelector('.person-scrim'),
+      sist=null;
+  function apne(kort){
+    innhold.innerHTML='';
+    var foto=kort.querySelector('.person-foto'),info=kort.querySelector('.person-info');
+    if(foto)innhold.appendChild(foto.cloneNode(true));
+    if(info)innhold.appendChild(info.cloneNode(true));
+    modal.hidden=false;
+    // dobbel rAF: la display-endringen lande før .apen, ellers hopper animasjonen over
+    requestAnimationFrame(function(){requestAnimationFrame(function(){modal.classList.add('apen');});});
+    document.body.style.overflow='hidden';
+    sist=kort;lukkBtn.focus();
+  }
+  function lukk(){
+    modal.classList.remove('apen');
+    document.body.style.overflow='';
+    setTimeout(function(){modal.hidden=true;},380);
+    if(sist)sist.focus();
+  }
+  document.querySelectorAll('.person').forEach(function(kort){
+    kort.setAttribute('tabindex','0');
+    kort.setAttribute('role','button');
+    kort.addEventListener('click',function(e){if(e.target.closest('a'))return;apne(kort);});
+    kort.addEventListener('keydown',function(e){if((e.key==='Enter'||e.key===' ')&&e.target===kort){e.preventDefault();apne(kort);}});
+  });
+  lukkBtn.addEventListener('click',lukk);
+  scrim.addEventListener('click',lukk);
+  addEventListener('keydown',function(e){if(e.key==='Escape'&&!modal.hidden)lukk();});
+})();
+</script>
 
 <section id="faq">
   <div class="wrap sec">
