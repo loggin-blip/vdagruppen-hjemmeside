@@ -196,6 +196,18 @@ nav.krympet .nav-logo-sub{opacity:0;height:0;margin-top:0}
   font-family:var(--vda-font-display);font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;
 }
 .nav-links a:hover{color:var(--vda-brass)}
+/* nedtrekk for artikler */
+.nav-drop{position:relative}
+.nav-drop-knapp{font-family:var(--vda-font-display);font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--vda-navy);background:none;border:none;cursor:pointer;padding:0;display:inline-flex;align-items:center;gap:6px;transition:color .2s}
+.nav-drop-knapp:hover{color:var(--vda-brass)}
+.drop-pil{font-size:9px;transition:transform .2s}
+/* usynlig bro mellom knapp og meny så hover overlever gapet */
+.nav-drop::after{content:"";position:absolute;left:-20px;right:-20px;top:100%;height:22px}
+.nav-drop-meny{position:absolute;top:calc(100% + 18px);left:50%;transform:translate(-50%,4px);min-width:290px;background:var(--vda-creme);border:var(--vda-border-w) solid var(--vda-dust);padding:8px 0;opacity:0;visibility:hidden;transition:opacity .18s ease,transform .18s ease,visibility .18s}
+.nav-drop:hover .nav-drop-meny,.nav-drop:focus-within .nav-drop-meny,.nav-drop.apen .nav-drop-meny{opacity:1;visibility:visible;transform:translate(-50%,0)}
+.nav-drop:hover .drop-pil,.nav-drop.apen .drop-pil{transform:rotate(180deg)}
+.nav-links .nav-drop-meny a{display:block;padding:11px 20px;font-family:var(--vda-font-body);font-size:14px;letter-spacing:0;text-transform:none}
+.nav-links .nav-drop-meny a:hover{background:var(--vda-creme-deep);color:var(--vda-navy)}
 .nav-cta{
   border:var(--vda-border-w) solid var(--vda-navy);
   border-radius:var(--vda-radius-sm);
@@ -406,6 +418,14 @@ footer{background:var(--vda-navy);color:var(--vda-on-navy-dim);padding:72px 0 56
       <a href="#caser">Caser</a>
       <a href="#pris">Pris</a>
       <a href="#om">Om oss</a>
+      <div class="nav-drop">
+        <button class="nav-drop-knapp" type="button" aria-haspopup="true" aria-expanded="false">Artikler <span class="drop-pil">&#9662;</span></button>
+        <div class="nav-drop-meny">
+          <a href="/hva-koster-ai-konsulent/">Hva koster en AI-konsulent?</a>
+          <a href="/hvordan-ta-i-bruk-ai-i-bedriften/">Hvordan ta i bruk AI i bedriften</a>
+          <a href="/automatisering-av-bedrift/">Automatisering av bedrift</a>
+        </div>
+      </div>
       <a href="#kontakt" class="nav-cta">Book samtale</a>
     </div>
   </div>
@@ -420,6 +440,14 @@ footer{background:var(--vda-navy);color:var(--vda-on-navy-dim);padding:72px 0 56
   }
   addEventListener('scroll',sjekk,{passive:true});
   sjekk();
+  var drop=document.querySelector('.nav-drop');
+  if(drop){
+    var kn=drop.querySelector('.nav-drop-knapp');
+    function lukk(){drop.classList.remove('apen');kn.setAttribute('aria-expanded','false');}
+    kn.addEventListener('click',function(e){e.stopPropagation();var a=drop.classList.toggle('apen');kn.setAttribute('aria-expanded',a?'true':'false');});
+    addEventListener('click',function(e){if(!drop.contains(e.target))lukk();});
+    addEventListener('keydown',function(e){if(e.key==='Escape')lukk();});
+  }
 })();
 </script>
 
