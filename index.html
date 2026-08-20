@@ -366,28 +366,14 @@ h2{font-size:clamp(25px,3vw,34px);line-height:1.3;max-width:26ch}
 .contact-mail a:hover{border-color:var(--vda-on-navy)}
 
 /* ---------- OM OSS ---------- */
-.about-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:72px;margin-top:44px}
 .about-lede{
   font-family:var(--vda-font-display);font-size:clamp(19px,2.2vw,24px);
-  line-height:1.5;color:var(--vda-navy);
+  line-height:1.5;color:var(--vda-navy);margin-top:44px;max-width:60ch;
 }
-.about-body{margin-top:24px;color:var(--vda-grey);font-size:16px;max-width:54ch}
+.about-body{margin-top:24px;color:var(--vda-grey);font-size:16px;max-width:66ch}
 .about-body p+p{margin-top:16px}
-.facts{
-  border:var(--vda-border-w) solid var(--vda-dust);
-  background:var(--vda-creme-deep);align-self:start;
-}
-.facts-head{
-  padding:16px 24px;border-bottom:var(--vda-border-w) solid var(--vda-dust);
-}
-.fact{
-  display:flex;justify-content:space-between;gap:16px;padding:14px 24px;
-  border-bottom:var(--vda-border-w) solid var(--vda-border);font-size:14px;
-}
-.fact:last-child{border-bottom:none}
-.fact span{color:var(--vda-grey);font-size:13px;padding-top:1px}
-.fact b{font-weight:500;text-align:right;color:var(--vda-navy)}
-@media(max-width:900px){.about-grid{grid-template-columns:1fr;gap:48px}}
+/* faktaene som én rolig linje — samme sperrede stil som rollelinjene på kortene */
+.fakta-stripe{margin-top:24px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--vda-dust)}
 
 /* ---------- FOOTER ---------- */
 footer{background:var(--vda-navy);color:var(--vda-on-navy-dim);padding:72px 0 56px}
@@ -576,23 +562,12 @@ footer{background:var(--vda-navy);color:var(--vda-on-navy-dim);padding:72px 0 56
       </div>
     </div>
     <div class="om-firma">
-      <div class="about-grid">
-        <div>
-          <p class="about-lede">VDA Gruppen drives av Westside Digital Automation AS i Oslo. Vi hjelper norske bedrifter med å ta i bruk AI der det er noe å hente.</p>
-          <div class="about-body">
-            <p>Kundene våre er små og mellomstore bedrifter. De færreste av dem er spesielt opptatt av AI i seg selv, og det er helt greit. De vil bli kvitt dobbeltarbeid og manuelle rutiner, og det er det vi leverer.</p>
-            <p>Vi tar ansvar for hele løpet: kartleggingen, byggingen og driften etterpå. Når noe ryker en fredag ettermiddag, er det oss dere ringer.</p>
-          </div>
-        </div>
-        <div class="facts">
-          <div class="facts-head"><span class="label">Fakta</span></div>
-          <div class="fact"><span>Selskap</span><b>Westside Digital Automation AS</b></div>
-          <div class="fact"><span>Org.nr</span><b>936 993 222</b></div>
-          <div class="fact"><span>Base</span><b>Oslo, Norge</b></div>
-          <div class="fact"><span>Fokus</span><b>AI-rådgivning og utvikling</b></div>
-          <div class="fact"><span>Leverer til</span><b>Hele Norge</b></div>
-        </div>
+      <p class="about-lede">VDA Gruppen drives av Westside Digital Automation AS i Oslo. Vi hjelper norske bedrifter med å ta i bruk AI der det er noe å hente.</p>
+      <div class="about-body">
+        <p>Kundene våre er små og mellomstore bedrifter. De færreste av dem er spesielt opptatt av AI i seg selv, og det er helt greit. De vil bli kvitt dobbeltarbeid og manuelle rutiner, og det er det vi leverer.</p>
+        <p>Vi tar ansvar for hele løpet: kartleggingen, byggingen og driften etterpå. Når noe ryker en fredag ettermiddag, er det oss dere ringer.</p>
       </div>
+      <p class="fakta-stripe">Westside Digital Automation AS · Org.nr 936&nbsp;993&nbsp;222 · Oslo · Leverer til hele Norge</p>
     </div>
     <div class="person-modal" id="person-modal" hidden>
       <div class="person-scrim"></div>
