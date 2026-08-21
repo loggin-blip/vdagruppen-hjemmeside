@@ -1,0 +1,76 @@
+/* VDA motion-språk — portet fra nvent-nettsiden.
+   Én easing, faste avstander (16/24px), scroll-reveals med IntersectionObserver.
+   Alle skjulte starttilstander gates på html.mo (settes av motion.js) så
+   innholdet alltid er synlig uten JavaScript. */
+:root{--mo-ease:cubic-bezier(.16,1,.3,1)}
+
+/* ---------- Reveal: fade-opp 24px, .7s ---------- */
+.mo .mo-reveal{opacity:0;transform:translateY(24px);
+  transition:opacity .7s var(--mo-ease),transform .7s var(--mo-ease);
+  transition-delay:var(--mo-d,0s)}
+.mo .mo-reveal.mo-in{opacity:1;transform:none}
+
+/* ---------- Stagger: fade-opp 16px, .7s, 0.08s mellom hvert barn ---------- */
+.mo .mo-item{opacity:0;transform:translateY(16px);
+  transition:opacity .7s var(--mo-ease),transform .7s var(--mo-ease);
+  transition-delay:var(--mo-d,0s)}
+.mo .mo-in>.mo-item,.mo .mo-item.mo-in{opacity:1;transform:none}
+
+/* ---------- WordRise: hero-tittelen stiger ord for ord fra en maske ---------- */
+.mo-w{display:inline-block;overflow:hidden;vertical-align:bottom;padding-bottom:.08em;margin-bottom:-.08em}
+.mo .mo-w>span{display:inline-block;transform:translateY(100%);opacity:0;
+  transition:transform .7s var(--mo-ease),opacity .7s var(--mo-ease);
+  transition-delay:var(--mo-d,0s)}
+.mo .mo-w.mo-in>span{transform:none;opacity:1}
+
+/* ---------- PhotoReveal: gardintrekk venstre→høyre + rolig zoom-landing ---------- */
+.mo .mo-photo{clip-path:inset(0 100% 0 0);transition:clip-path .9s var(--mo-ease);will-change:clip-path}
+.mo .mo-photo img{transform:scale(1.08);transition:transform 1.1s var(--mo-ease)}
+.mo .mo-photo.mo-in{clip-path:inset(0 0% 0 0)}
+.mo .mo-photo.mo-in img{transform:none}
+
+/* ---------- Kort-løft og knappe-fjæring (ren CSS, virker uten JS) ---------- */
+.person{transition:transform .22s var(--mo-ease),box-shadow .22s var(--mo-ease)}
+.person:hover{transform:translateY(-6px);box-shadow:0 16px 32px -12px rgba(20,39,63,.22)}
+.person:active{transform:translateY(-6px) scale(.985)}
+.btn{transition:background .2s,color .2s,border-color .2s,transform .3s cubic-bezier(.34,1.56,.64,1)}
+.btn:hover{transform:scale(1.02)}
+.btn:active{transform:scale(.97)}
+.cookie-btn:active{transform:scale(.97)}
+.faq-item,.case,.step{transition:border-color .3s var(--mo-ease)}
+.faq-item:hover,.case:hover,.step:hover{border-top-color:var(--vda-brass)}
+
+/* ---------- Glidende nav-understrek ---------- */
+.nav-links{position:relative}
+.mo-navstrek{position:absolute;bottom:-6px;height:1.5px;background:var(--vda-brass);
+  opacity:0;pointer-events:none;
+  transition:left .35s var(--mo-ease),width .35s var(--mo-ease),opacity .15s ease}
+.mo-navstrek.mo-vis{opacity:1}
+
+/* ---------- Luftstrøm-bakteppe i heroen (dekor, fanger ingen klikk) ---------- */
+header#top{position:relative}
+header#top>.wrap{position:relative}
+.mo-flyt{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;color:var(--vda-dust)}
+.mo-flyt path{stroke:currentColor;fill:none;stroke-dasharray:90 240}
+.mo-flyt circle{fill:currentColor;opacity:.2}
+@keyframes mo-strom{to{stroke-dashoffset:-660}}
+@keyframes mo-driv{50%{transform:translate(var(--dx,26px),calc(var(--dx,26px)/-2))}}
+.mo-flyt .s1{animation:mo-strom 26s linear infinite}
+.mo-flyt .s2{animation:mo-strom 21s linear infinite}
+.mo-flyt .s3{animation:mo-strom 31s linear infinite}
+.mo-flyt .p1{animation:mo-driv 11s ease-in-out infinite;--dx:26px}
+.mo-flyt .p2{animation:mo-driv 13s ease-in-out infinite;--dx:32px}
+.mo-flyt .p3{animation:mo-driv 15s ease-in-out infinite;--dx:22px}
+.mo-flyt .p4{animation:mo-driv 12s ease-in-out infinite;--dx:30px}
+.mo-flyt .p5{animation:mo-driv 14s ease-in-out infinite;--dx:26px}
+
+/* ---------- Redusert bevegelse: alt synlig, ingenting flytter seg ---------- */
+@media (prefers-reduced-motion:reduce){
+  .mo .mo-reveal,.mo .mo-item,.mo .mo-w>span{opacity:1!important;transform:none!important;transition:none!important}
+  .mo .mo-photo{clip-path:none!important;transition:none!important}
+  .mo .mo-photo img{transform:none!important;transition:none!important}
+  .mo-flyt path,.mo-flyt circle{animation:none!important}
+  .mo-flyt circle{display:none}
+  .person:hover,.btn:hover,.btn:active{transform:none}
+  .mo-navstrek{transition:none}
+}
