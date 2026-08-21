@@ -4,22 +4,22 @@
    innholdet alltid er synlig uten JavaScript. */
 :root{--mo-ease:cubic-bezier(.16,1,.3,1)}
 
-/* ---------- Reveal: fade-opp 24px, .7s ---------- */
-.mo .mo-reveal{opacity:0;transform:translateY(24px);
-  transition:opacity .7s var(--mo-ease),transform .7s var(--mo-ease);
+/* ---------- Reveal: fade-opp 24px, .9s, med et snev av uskarphet som løses opp ---------- */
+.mo .mo-reveal{opacity:0;transform:translateY(24px);filter:blur(6px);
+  transition:opacity .9s var(--mo-ease),transform .9s var(--mo-ease),filter .9s var(--mo-ease);
   transition-delay:var(--mo-d,0s)}
-.mo .mo-reveal.mo-in{opacity:1;transform:none}
+.mo .mo-reveal.mo-in{opacity:1;transform:none;filter:none}
 
-/* ---------- Stagger: fade-opp 16px, .7s, 0.08s mellom hvert barn ---------- */
-.mo .mo-item{opacity:0;transform:translateY(16px);
-  transition:opacity .7s var(--mo-ease),transform .7s var(--mo-ease);
+/* ---------- Stagger: fade-opp 16px, .9s, 0.08s mellom hvert barn ---------- */
+.mo .mo-item{opacity:0;transform:translateY(16px);filter:blur(5px);
+  transition:opacity .9s var(--mo-ease),transform .9s var(--mo-ease),filter .9s var(--mo-ease);
   transition-delay:var(--mo-d,0s)}
-.mo .mo-in>.mo-item,.mo .mo-item.mo-in{opacity:1;transform:none}
+.mo .mo-in>.mo-item,.mo .mo-item.mo-in{opacity:1;transform:none;filter:none}
 
 /* ---------- WordRise: hero-tittelen stiger ord for ord fra en maske ---------- */
 .mo-w{display:inline-block;overflow:hidden;vertical-align:bottom;padding-bottom:.08em;margin-bottom:-.08em}
 .mo .mo-w>span{display:inline-block;transform:translateY(100%);opacity:0;
-  transition:transform .7s var(--mo-ease),opacity .7s var(--mo-ease);
+  transition:transform .9s var(--mo-ease),opacity .9s var(--mo-ease);
   transition-delay:var(--mo-d,0s)}
 .mo .mo-w.mo-in>span{transform:none;opacity:1}
 
@@ -50,7 +50,8 @@
 /* ---------- Luftstrøm-bakteppe i heroen (dekor, fanger ingen klikk) ---------- */
 header#top{position:relative}
 header#top>.wrap{position:relative}
-.mo-flyt{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;color:var(--vda-dust)}
+.mo-flyt{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;color:var(--vda-dust);will-change:transform}
+.mo-par{will-change:transform}
 .mo-flyt path{stroke:currentColor;fill:none;stroke-dasharray:90 240}
 .mo-flyt circle{fill:currentColor;opacity:.2}
 @keyframes mo-strom{to{stroke-dashoffset:-660}}

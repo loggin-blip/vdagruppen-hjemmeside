@@ -119,6 +119,56 @@
         });
       }
       hero.insertBefore(svg,hero.firstChild);
+
+      /* ---------- Parallakse med lerp: bakteppet driver, innholdet henger rolig etter ---------- */
+      if(!redusert&&matchMedia('(pointer:fine)').matches){
+        var wrap=hero.querySelector('.wrap');
+        var mål=[{el:svg,rate:.18,y:0},{el:wrap,rate:-.06,y:0}];
+        mål.forEach(function(m){if(m.el)m.el.classList.add('mo-par');});
+        var aktiv=false;
+        function steg(){
+          var i_ro=true;
+          mål.forEach(function(m){
+            if(!m.el)return;
+            var vil=scrollY*m.rate;
+            m.y+=(vil-m.y)*.08;
+            if(Math.abs(vil-m.y)>.1)i_ro=false;else m.y=vil;
+            m.el.style.transform='translate3d(0,'+m.y.toFixed(2)+'px,0)';
+          });
+          if(i_ro){aktiv=false;return;}
+          requestAnimationFrame(steg);
+        }
+        addEventListener('scroll',function(){
+          if(!aktiv){aktiv=true;requestAnimationFrame(steg);}
+        },{passive:true});
+      }
+    }
+
+    /* ---------- Myk, eased scrolling til ankere (lengre og roligere enn nettleserens) ---------- */
+    if(!redusert){
+      d.addEventListener('click',function(ev){
+        var a=ev.target.closest?ev.target.closest('a[href^="#"]'):null;
+        if(!a)return;
+        var id=a.getAttribute('href').slice(1);
+        var t=id?d.getElementById(id):d.body;
+        if(!t&&id!=='top')return;
+        ev.preventDefault();
+        var fra=scrollY;
+        var til=id==='top'||!t?0:t.getBoundingClientRect().top+scrollY;
+        var navH=d.querySelector('nav');til-=navH?navH.offsetHeight:0;
+        til=Math.max(0,Math.min(til,d.documentElement.scrollHeight-innerHeight));
+        var start=null,DUR=900;
+        function ease(x){return 1-Math.pow(1-x,5);} /* easeOutQuint — rolig landing */
+        function frame(ts){
+          if(start===null)start=ts;
+          var p=Math.min((ts-start)/DUR,1);
+          /* behavior:'instant' så CSS scroll-behavior:smooth ikke sloss med easingen vår */
+          scrollTo({top:fra+(til-fra)*ease(p),behavior:'instant'});
+          if(p<1)requestAnimationFrame(frame);
+          else if(id)history.replaceState(null,'','#'+id);
+        }
+        requestAnimationFrame(frame);
+      });
     }
   });
 })();
