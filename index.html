@@ -230,6 +230,32 @@ h1{
   margin-top:28px;font-size:19px;color:var(--vda-grey);max-width:60ch;
 }
 .hero-actions{margin-top:44px}
+/* hero-grid: tekst venstre, menneskene bak til høyre */
+.hero-grid{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:64px;align-items:center}
+.hero-folk{display:flex;gap:26px;align-items:flex-start}
+/* to portrettkort, lett rotert fra hverandre som utlagte fotografier */
+.hero-kort{display:block;width:212px;text-decoration:none;background:var(--vda-creme);border:var(--vda-border-w) solid var(--vda-dust);box-shadow:0 18px 40px -22px rgba(20,39,63,.28);transform:rotate(-2deg);transition:transform .35s cubic-bezier(.16,1,.3,1),box-shadow .35s ease,border-color .25s ease}
+.hero-kort:nth-child(2){transform:rotate(2deg);margin-top:72px}
+.hero-kort:hover{transform:rotate(0deg) translateY(-6px);box-shadow:0 26px 48px -20px rgba(20,39,63,.35);border-color:var(--vda-brass)}
+.hero-kort-foto{aspect-ratio:4/5;background:var(--vda-creme-deep);overflow:hidden;display:flex;align-items:flex-end}
+.hero-kort-foto img{width:100%;display:block}
+.hero-kort-tekst{display:block;padding:13px 16px 15px;border-top:var(--vda-border-w) solid var(--vda-dust)}
+.hero-kort-navn{display:block;font-family:var(--vda-font-display);font-size:16px;line-height:1.3;color:var(--vda-navy)}
+.hero-kort-rolle{display:block;font-family:var(--vda-font-body);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;white-space:nowrap;color:var(--vda-grey);margin-top:5px}
+@media(max-width:1060px){
+  .hero-grid{grid-template-columns:1fr;gap:48px}
+  .hero-kort{width:176px}
+  .hero-kort:nth-child(2){margin-top:44px}
+}
+@media(max-width:480px){
+  .hero-folk{gap:16px}
+  .hero-kort{width:calc(50% - 8px);min-width:0}
+  .hero-kort:nth-child(2){margin-top:32px}
+  .hero-kort-tekst{padding:10px 12px 12px}
+  .hero-kort-navn{font-size:14px}
+  .hero-kort-rolle{font-size:8.5px;letter-spacing:.08em;white-space:normal}
+}
+@media (prefers-reduced-motion:reduce){.hero-kort,.hero-kort:hover{transform:none;transition:none}}
 .btn{
   display:inline-block;
   font-family:var(--vda-font-body);font-size:15px;font-weight:500;
@@ -455,10 +481,30 @@ footer{background:var(--vda-navy);color:var(--vda-on-navy-dim);padding:72px 0 56
 
 <header id="top">
   <div class="wrap">
-    <h1>AI-konsulenter som bygger det bedriften din faktisk trenger.</h1>
-    <p class="hero-sub">Først finner vi ut hvor dere taper mest tid. Så bygger vi bare det.</p>
-    <div class="hero-actions">
-      <a class="btn btn-navy" href="#kontakt">Book en uforpliktende samtale <span class="pil">→</span></a>
+    <div class="hero-grid">
+      <div class="hero-tekst">
+        <h1>AI-konsulenter som bygger det bedriften din faktisk trenger.</h1>
+        <p class="hero-sub">Først finner vi ut hvor dere taper mest tid. Så bygger vi bare det.</p>
+        <div class="hero-actions">
+          <a class="btn btn-navy" href="#kontakt">Book en uforpliktende samtale <span class="pil">→</span></a>
+        </div>
+      </div>
+      <div class="hero-folk mo-reveal" style="--mo-d:.5s" aria-label="Menneskene bak VDA Gruppen">
+        <a class="hero-kort" href="#om">
+          <span class="hero-kort-foto mo-photo"><img src="assets/team/max.webp" alt="Max Wilhelm Lien"></span>
+          <span class="hero-kort-tekst">
+            <span class="hero-kort-navn">Max Wilhelm Lien</span>
+            <span class="hero-kort-rolle">Medgründer · AI-konsulent</span>
+          </span>
+        </a>
+        <a class="hero-kort" href="#om">
+          <span class="hero-kort-foto mo-photo"><img src="assets/team/leon-sol.webp" alt="Leon Alfred Falldorf"></span>
+          <span class="hero-kort-tekst">
+            <span class="hero-kort-navn">Leon Alfred Falldorf</span>
+            <span class="hero-kort-rolle">Medgründer · AI-konsulent</span>
+          </span>
+        </a>
+      </div>
     </div>
     <div class="clients">
       <div class="marquee">
