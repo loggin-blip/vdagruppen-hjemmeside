@@ -309,6 +309,8 @@ h2{font-size:clamp(25px,3vw,34px);line-height:1.3;max-width:26ch}
 }
 .step h3{font-size:21px;line-height:1.4;margin-bottom:14px}
 .step p{font-size:15px;color:var(--vda-grey);max-width:38ch}
+/* luft mellom avsnitt der lange blokker er delt opp (global reset nuller marginene) */
+.step p+p,.metode-hvorfor p+p,.case p+p,.faq-item p+p{margin-top:14px}
 .metode-hvorfor{margin-top:48px;border-top:var(--vda-border-w) solid var(--vda-dust);padding-top:24px;max-width:60ch}
 .metode-hvorfor h3{font-size:19px;margin-bottom:10px}
 .metode-hvorfor p{font-size:15.5px;color:var(--vda-grey)}
@@ -543,22 +545,26 @@ footer{background:var(--vda-navy);color:var(--vda-on-navy-dim);padding:72px 0 56
       <div class="step">
         <span class="step-num">1.</span>
         <h3>Kartlegging</h3>
-        <p>Det begynner med en uforpliktende samtale. Så ser vi på hvordan dere jobber i dag: hvor timene forsvinner, hvilke oppgaver som gjøres to ganger, hva som aldri blir fulgt opp. Etter et par uker har dere et konkret forslag på bordet: hvor dere taper mest, hva som bør bygges først, og hva det koster. Alt frem til forslaget er gratis.</p>
+        <p>Det begynner med en uforpliktende samtale. Så ser vi på hvordan dere jobber i dag: hvor timene forsvinner, hvilke oppgaver som gjøres to ganger, hva som aldri blir fulgt opp.</p>
+        <p>Etter et par uker har dere et konkret forslag på bordet: hvor dere taper mest, hva som bør bygges først, og hva det koster. Alt frem til forslaget er gratis.</p>
       </div>
       <div class="step">
         <span class="step-num">2.</span>
         <h3>Bygging</h3>
-        <p>Vi bygger det kartleggingen viste at dere trenger. Noen ganger er det et lite verktøy, andre ganger et helt system. Vi jobber tett med folkene som gjør jobben, for det er de som vet hvor skoen trykker. Og finner vi mer å hente underveis, går det inn i køen og prioriteres sammen med dere.</p>
+        <p>Vi bygger det kartleggingen viste at dere trenger. Noen ganger er det et lite verktøy, andre ganger et helt system.</p>
+        <p>Vi jobber tett med folkene som gjør jobben, for det er de som vet hvor skoen trykker. Og finner vi mer å hente underveis, går det inn i køen og prioriteres sammen med dere.</p>
       </div>
       <div class="step">
         <span class="step-num">3.</span>
         <h3>Partnerskap</h3>
-        <p>Dere betaler en fast månedspris, omtrent som for en ansatt. Vi drifter og måler det som er bygget, justerer til det virker, og bygger videre når driften endrer seg. Og dere lærer selv hvordan det henger sammen, for jo bedre dere forstår systemene, jo mer får dere ut av dem.</p>
+        <p>Dere betaler en fast månedspris, omtrent som for en ansatt. Vi drifter og måler det som er bygget, justerer til det virker, og bygger videre når driften endrer seg.</p>
+        <p>Og dere lærer selv hvordan det henger sammen, for jo bedre dere forstår systemene, jo mer får dere ut av dem.</p>
       </div>
     </div>
     <div class="metode-hvorfor">
       <h3>Hvordan vet vi hvor vi skal lete?</h3>
-      <p>Fordi vi har gjort det før. Vi har bygget telefoni for en produsent, driftssystem for en entreprenør og en AI-selger for en håndverksbedrift, og vi drifter dem fortsatt. Lekkasjene ligner på tvers av bransjer, og vi har lært oss å kjenne dem igjen. To av dem møter du lenger ned.</p>
+      <p>Fordi vi har gjort det før. Vi har bygget telefoni for en produsent, driftssystem for en entreprenør og en AI-selger for en håndverksbedrift, og vi drifter dem fortsatt.</p>
+      <p>Lekkasjene ligner på tvers av bransjer, og vi har lært oss å kjenne dem igjen. To av dem møter du lenger ned.</p>
     </div>
     <p class="sec-cta"><a href="#kontakt">Book en uforpliktende samtale →</a></p>
   </div>
@@ -587,8 +593,11 @@ footer{background:var(--vda-navy);color:var(--vda-on-navy-dim);padding:72px 0 56
       <article class="case">
         <span class="case-kunde">Massivlust · Massivtre og byggentreprenør</span>
         <h3>Veksten krevde et administrativt lag som ikke fantes.</h3>
-        <p>Massivlust produserer og monterer store trekonstruksjoner for skoler, sykehjem og næringsbygg. I slike prosjekter koster ett stopp i informasjonsflyten fort et montasjevindu eller en dyr kranleie. Da bedriften vokste, sto valget mellom å ansette flere til å følge med, eller å bygge intelligensen inn i driften. De valgte det siste.</p>
-        <p>I dag har hele bedriften én AI å forholde seg til. Den kjenner prosjektene, tallene, sertifikatene og rutinene, er koblet til alt de allerede bruker, og tar oppgaver på eget initiativ: et sertifikat som nærmer seg utløp, er varslet før noen har rukket å tenke på det. De ansatte har den i lomma døgnet rundt gjennom Telegram. En prosjektleder spør om fremdrift og får ferske tall, en montør sjekker noe om egen lønn, en e-post kan sendes rett derfra. Dokumentasjonen skjer av seg selv: fra null digitalt registrerte avvik til 47 på fire måneder, og fakturaer rett fra systemet. Og når et nytt område trenger struktur, lærer vi den noe nytt.</p>
+        <p>Massivlust produserer og monterer store trekonstruksjoner for skoler, sykehjem og næringsbygg. I slike prosjekter koster ett stopp i informasjonsflyten fort et montasjevindu eller en dyr kranleie.</p>
+        <p>Da bedriften vokste, sto valget mellom å ansette flere til å følge med, eller å bygge intelligensen inn i driften. De valgte det siste.</p>
+        <p>I dag har hele bedriften én AI å forholde seg til. Den kjenner prosjektene, tallene, sertifikatene og rutinene, er koblet til alt de allerede bruker, og tar oppgaver på eget initiativ: et sertifikat som nærmer seg utløp, er varslet før noen har rukket å tenke på det.</p>
+        <p>De ansatte har den i lomma døgnet rundt gjennom Telegram. En prosjektleder spør om fremdrift og får ferske tall, en montør sjekker noe om egen lønn, en e-post kan sendes rett derfra.</p>
+        <p>Dokumentasjonen skjer av seg selv: fra null digitalt registrerte avvik til 47 på fire måneder, og fakturaer rett fra systemet. Og når et nytt område trenger struktur, lærer vi den noe nytt.</p>
         <p>Siden starten har bedriften gått fra tre til elleve parallelle prosjekter. Administrasjonen har ikke vokst med dem. Det var hele poenget.</p>
         <!-- VIDEO I DVALE til opptaket er klart — bytt hele kommentaren med:
              <div class="case-video"><video src="assets/video/[fil].mp4" controls playsinline></video></div> -->
@@ -597,7 +606,8 @@ footer{background:var(--vda-navy);color:var(--vda-on-navy-dim);padding:72px 0 56
         <span class="case-kunde">Nordflo · Baderoms- og overflaterenovering</span>
         <h3>Leadsene må ringes med en gang. Montøren har hendene i et bad.</h3>
         <p>Nordflo renoverer bad og legger mikrosement, med kunder fra Facebook-annonser. Hver henvendelse må ringes raskt for ikke å bli kald, men montøren som skulle tatt telefonen, står som regel midt i en jobb.</p>
-        <p>Nå tar AI-en den. Den ringer nye leads samme kveld, innenfor lovlige ringetider, svarer på SMS-ene som kommer etterpå, og booker befaring i montørens kalender mens samtalen pågår. Er jobben liten nok, ber den heller kunden sende bilder av badet. Montøren åpner mobilen om morgenen og ser bare det som faktisk trenger ham: kundekort med sammendrag av samtalen, bildene kunden sendte, og de få som må ha et menneske, merket «ring nå». Skriver han «spør om det er varmekabler i gulvet», går det ut som en ferdig formulert melding fra Nordflo.</p>
+        <p>Nå tar AI-en den. Den ringer nye leads samme kveld, innenfor lovlige ringetider, svarer på SMS-ene som kommer etterpå, og booker befaring i montørens kalender mens samtalen pågår. Er jobben liten nok, ber den heller kunden sende bilder av badet.</p>
+        <p>Montøren åpner mobilen om morgenen og ser bare det som faktisk trenger ham: kundekort med sammendrag av samtalen, bildene kunden sendte, og de få som må ha et menneske, merket «ring nå». Skriver han «spør om det er varmekabler i gulvet», går det ut som en ferdig formulert melding fra Nordflo.</p>
         <p>Siden mars har systemet tatt over tusen telefonsamtaler og håndtert over to hundre henvendelser. Montøren har lagt mikrosement imens.</p>
         <!-- VIDEO I DVALE til opptaket er klart — bytt hele kommentaren med:
              <div class="case-video"><video src="assets/video/[fil].mp4" controls playsinline></video></div> -->
@@ -611,7 +621,8 @@ footer{background:var(--vda-navy);color:var(--vda-on-navy-dim);padding:72px 0 56
   <div class="wrap sec">
     <h2>Hva det koster</h2>
     <div class="prose">
-      <p>Dere betaler en fast månedspris, omtrent som for en ansatt. Ingen timeføring og ingen overraskelser på fakturaen. De tre første månedene, mens vi bygger og kommer i gang, betaler dere en lavere oppstartspris. Full pris er kjent fra dag én, og alt står i en skriftlig avtale.</p>
+      <p>Dere betaler en fast månedspris, omtrent som for en ansatt. Ingen timeføring og ingen overraskelser på fakturaen.</p>
+      <p>De tre første månedene, mens vi bygger og kommer i gang, betaler dere en lavere oppstartspris. Full pris er kjent fra dag én, og alt står i en skriftlig avtale.</p>
       <p>Hva prisen blir, kan vi ikke svare på før kartleggingen er gjort, for den avhenger av hva dere trenger. Derfor har vi heller ingen prisliste. Dere får én pris i forslaget, og frem til det forslaget har det ikke kostet dere noe. Så bestemmer dere.</p>
       <p class="muted">Alt vi bygger, er deres. Dataene også. Vil dere avslutte, tar dere systemene med dere og drifter dem videre selv.</p>
     </div>
@@ -725,7 +736,8 @@ footer{background:var(--vda-navy);color:var(--vda-on-navy-dim);padding:72px 0 56
       </div>
       <div class="faq-item">
         <h3>Trenger vi ikke bare ChatGPT?</h3>
-        <p>Kanskje. Noen problemer løses med et verktøy og litt opplæring, og da er det svaret dere får fra oss. De fleste taper likevel mest på ting verktøy alene ikke fikser: oppfølging som glipper, informasjon som flyttes manuelt mellom systemer, arbeid som gjøres dobbelt.</p>
+        <p>Kanskje. Noen problemer løses med et verktøy og litt opplæring, og da er det svaret dere får fra oss.</p>
+        <p>De fleste taper likevel mest på ting verktøy alene ikke fikser: oppfølging som glipper, informasjon som flyttes manuelt mellom systemer, arbeid som gjøres dobbelt.</p>
       </div>
       <div class="faq-item">
         <h3>Hva om det dukker opp mye mer enn antatt?</h3>
@@ -733,7 +745,8 @@ footer{background:var(--vda-navy);color:var(--vda-on-navy-dim);padding:72px 0 56
       </div>
       <div class="faq-item">
         <h3>Kan vi avslutte, og hvem eier det som er bygget?</h3>
-        <p>Dere kan avslutte, og dere eier alt: systemene og dataene i dem. Det står i avtalen. Velger dere å gå, tar dere alt med dere, men da overtar dere også driften selv. Derfor lærer vi dere opp underveis, slik at dere aldri er avhengige av oss for å forstå deres egne systemer.</p>
+        <p>Dere kan avslutte, og dere eier alt: systemene og dataene i dem. Det står i avtalen. Velger dere å gå, tar dere alt med dere, men da overtar dere også driften selv.</p>
+        <p>Derfor lærer vi dere opp underveis, slik at dere aldri er avhengige av oss for å forstå deres egne systemer.</p>
       </div>
       <div class="faq-item">
         <h3>Hva skjer med dataene våre?</h3>
