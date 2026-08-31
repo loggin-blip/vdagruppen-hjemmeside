@@ -136,7 +136,7 @@
 </script>
 <style>
 :root{
-  --vda-navy:#14273F; --vda-creme:#EDE3CE; --vda-grey:#6F7378; --vda-dust:#5A6E88;
+  --vda-navy:#14273F; --vda-creme:#EDE3CE; --vda-grey:#5C6064; --vda-dust:#5A6E88; --vda-dust-deep:#4F6178;
   --vda-creme-deep:#E8DBC2; --vda-brass:#B08341; --vda-navy-soft:#1C3350;
   --vda-on-navy:#EDE3CE; --vda-on-navy-dim:#9EA6B4;
   --vda-border:rgba(20,39,63,0.14);
@@ -172,7 +172,7 @@ nav{position:sticky;top:0;z-index:100;background:var(--vda-creme);border-bottom:
 header.art{padding:80px 0 56px;border-bottom:var(--vda-border-w) solid var(--vda-border)}
 h1{font-size:clamp(28px,4.4vw,42px);line-height:1.28;max-width:22ch}
 .lede{margin-top:24px;font-size:18px;color:var(--vda-grey);max-width:58ch}
-.meta{margin-top:20px;font-size:13px;color:var(--vda-dust)}
+.meta{margin-top:20px;font-size:13px;color:var(--vda-dust-deep)}
 article{padding:24px 0 40px}
 article section{padding:40px 0;border-bottom:var(--vda-border-w) solid var(--vda-border)}
 article section:last-of-type{border-bottom:none}
@@ -191,12 +191,14 @@ ul.punkter b{font-weight:600}
 .btn{display:inline-block;font-size:15px;font-weight:500;text-decoration:none;
   padding:14px 28px;border-radius:var(--vda-radius-sm);background:var(--vda-creme);color:var(--vda-navy);margin-top:24px;transition:background .2s}
 .btn:hover{background:var(--vda-creme-deep)}
-.tilbake{display:inline-block;margin-top:32px;font-size:14px;color:var(--vda-brass);text-decoration:none}
-.tilbake:hover{text-decoration:underline}
+.tilbake{display:inline-block;margin-top:32px;font-size:14px;color:var(--vda-navy);text-decoration:none;border-bottom:var(--vda-border-w) solid var(--vda-brass)}
+.tilbake:hover{background:var(--vda-creme-deep)}
 footer{background:var(--vda-navy);color:var(--vda-on-navy-dim);padding:40px 0;margin-top:56px;font-size:13px}
 footer a{color:var(--vda-on-navy-dim);text-decoration:none}
 footer a:hover{color:var(--vda-on-navy)}
 .f-inner{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+article p a,ul.punkter a,.punkter a{color:var(--vda-navy);text-decoration:none;border-bottom:var(--vda-border-w) solid var(--vda-brass);transition:background .2s}
+article p a:hover,ul.punkter a:hover,.punkter a:hover{background:var(--vda-creme-deep)}
 </style>
 <link rel="stylesheet" href="/assets/motion.css">
 <script src="/assets/motion.js" defer></script>
