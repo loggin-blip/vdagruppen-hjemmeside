@@ -1,0 +1,11 @@
+Bilder til Google bedriftsprofil (VDA Gruppen)
+
+01-logo-720x720.jpg              -> last opp som LOGO (kvadratisk, 720x720)
+02-omslag-max-og-leon-1920x1080  -> last opp som OMSLAGSBILDE (16:9)
+03-teamet-max-og-leon-1200x1200  -> Bilder > Team / Bedriften
+04-max-wilhelm-lien-1200x1200    -> Bilder > Team
+05-leon-alfred-falldorf-...      -> Bilder > Team
+
+Alt er JPG, over Googles minstekrav (250x250) og godt under 5 MB.
+Kilde: assets/team/*.webp + assets/brand/vda-gbp-logo-720.png
+Bygget med /private/tmp/.../gbp.py
