@@ -74,10 +74,10 @@
   "mainEntity": [
     {
       "@type": "Question",
-      "name": "Hva koster en AI-konsulent fra VDA Gruppen?",
+      "name": "Hva koster det?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "En fast månedspris som settes etter kartleggingen. Selve kartleggingssamtalen er gratis. VDA Gruppen har ingen prisliste, for to bedrifter trenger sjelden det samme."
+        "text": "En fast månedspris som settes etter kartleggingen. Selve kartleggingssamtalen er gratis. Vi har ingen prisliste, for to bedrifter trenger sjelden det samme."
       }
     },
     {
@@ -85,15 +85,15 @@
       "name": "Hvor fort kan vi komme i gang?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Samtalen kan bookes med en gang. Går bedriften videre, tar kartleggingen et par uker før forslaget er klart, og byggingen starter når kunden har sagt ja."
+        "text": "Samtalen kan bookes med en gang. Går vi videre, tar kartleggingen et par uker før dere har et forslag, og byggingen starter når dere har sagt ja."
       }
     },
     {
       "@type": "Question",
-      "name": "Hva kreves av bedriften underveis?",
+      "name": "Hva kreves av oss underveis?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Litt tid fra folkene som kjenner driften, mest i kartleggingen. VDA Gruppen må forstå hvordan bedriften faktisk jobber, og det er det bedriftens egne folk som vet."
+        "text": "Litt tid fra folkene som kjenner driften, mest i kartleggingen. Vi må forstå hvordan dere faktisk jobber, og det er det deres egne folk som vet."
       }
     },
     {
@@ -106,10 +106,10 @@
     },
     {
       "@type": "Question",
-      "name": "Hvilke bransjer jobber VDA Gruppen med?",
+      "name": "Passer dette for vår bransje?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "VDA Gruppen jobber på tvers av bransjer, for det er sjelden bransjen som avgjør. Der ansatte registrerer det samme to ganger eller bruker kveldene på papirarbeid, er det som regel noe å hente. Finner kartleggingen ingenting verdt å bygge, sier VDA Gruppen det."
+        "text": "Sannsynligvis, for det er sjelden bransjen som avgjør. Der folk registrerer det samme to ganger eller bruker kveldene på papirarbeid, er det som regel noe å hente. Og finner kartleggingen ingenting verdt å bygge, sier vi det."
       }
     },
     {
@@ -117,15 +117,15 @@
       "name": "Trenger vi ikke bare ChatGPT?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Kanskje, og i så fall er det svaret bedriften får fra VDA Gruppen. De fleste bedrifter taper likevel mest på ting verktøy alene ikke fikser: oppfølging som glipper, informasjon som flyttes manuelt mellom systemer, arbeid som gjøres dobbelt."
+        "text": "Kanskje. Noen problemer løses med et verktøy og litt opplæring, og da er det svaret dere får fra oss."
       }
     },
     {
       "@type": "Question",
-      "name": "Hva om det dukker opp mye mer arbeid enn antatt?",
+      "name": "Hva om det dukker opp mye mer enn antatt?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Månedsprisen står. VDA Gruppen jobber på det som er mest verdt for bedriften, én ting om gangen, og prioriterer sammen med kunden når nye behov kommer inn."
+        "text": "Prisen står. Vi jobber på det som er mest verdt for dere, én ting om gangen, og prioriterer sammen med dere når nye behov kommer inn."
       }
     },
     {
@@ -133,7 +133,7 @@
       "name": "Kan vi avslutte, og hvem eier det som er bygget?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Kunden kan avslutte og eier alt: systemene og dataene i dem. Det står i avtalen. Kunder som går, tar alt med seg og overtar driften selv. VDA Gruppen lærer derfor kunden opp underveis, slik at bedriften aldri er avhengig av konsulenten for å forstå sine egne systemer."
+        "text": "Dere kan avslutte, og dere eier alt: systemene og dataene i dem. Det står i avtalen. Velger dere å gå, tar dere alt med dere, men da overtar dere også driften selv."
       }
     },
     {
@@ -141,7 +141,7 @@
       "name": "Hva skjer med dataene våre?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Databehandling og GDPR avklares i kartleggingen, før noe bygges. Bedriften skal vite hva som lagres hvor, og beholde kontrollen på egne data."
+        "text": "Databehandling og GDPR avklares i kartleggingen, før noe bygges. Dere skal vite hva som lagres hvor, og beholde kontrollen på egne data."
       }
     }
   ]
@@ -152,7 +152,7 @@
   --vda-navy:        #14273F;
   --vda-creme:       #EDE3CE;
   --vda-grey:        #5C6064;
-  --vda-dust:        #5A6E88;
+  --vda-dust:        #5A6E88; --vda-dust-deep:#4F6178;
   --vda-creme-deep:  #E8DBC2;
   --vda-brass:       #B08341;
 
@@ -230,6 +230,7 @@ nav.krympet .nav-logo-sub{opacity:0;height:0;margin-top:0}
 .nav-drop:hover .drop-pil,.nav-drop.apen .drop-pil{transform:rotate(180deg)}
 .nav-links .nav-drop-meny a{display:block;padding:11px 20px;font-family:var(--vda-font-body);font-size:14px;letter-spacing:0;text-transform:none}
 .nav-links .nav-drop-meny a:hover{background:var(--vda-creme-deep);color:var(--vda-navy)}
+.nav-drop-alle{border-top:var(--vda-border-w) solid var(--vda-border);margin-top:8px;padding-top:13px!important;color:var(--vda-dust-deep)!important}
 .nav-cta{
   border:var(--vda-border-w) solid var(--vda-navy);
   border-radius:var(--vda-radius-sm);
@@ -478,6 +479,7 @@ footer{background:var(--vda-navy);color:var(--vda-on-navy-dim);padding:72px 0 56
           <a href="/hva-koster-ai-konsulent/">Hva koster en AI-konsulent?</a>
           <a href="/hvordan-ta-i-bruk-ai-i-bedriften/">Hvordan ta i bruk AI i bedriften</a>
           <a href="/automatisering-av-bedrift/">Automatisering av bedrift</a>
+          <a class="nav-drop-alle" href="/artikler/">Alle artikler</a>
         </div>
       </div>
       <a href="#kontakt" class="nav-cta">Book samtale</a>
