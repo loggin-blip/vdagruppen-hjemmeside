@@ -39,7 +39,10 @@
   "@id": "https://vdagruppen.com/#organisasjon",
   "name": "VDA Gruppen",
   "legalName": "Westside Digital Automation AS",
-  "alternateName": ["VDA", "Westside Digital Automation"],
+  "alternateName": [
+    "VDA",
+    "Westside Digital Automation"
+  ],
   "url": "https://vdagruppen.com/",
   "logo": "https://vdagruppen.com/assets/brand/vda-merke-navy.svg",
   "image": "https://vdagruppen.com/assets/brand/vda-og-1200x630.jpg",
@@ -55,16 +58,64 @@
     "addressLocality": "Oslo",
     "addressCountry": "NO"
   },
-  "areaServed": {
-    "@type": "Country",
-    "name": "Norge"
-  },
+  "areaServed": [
+    {
+      "@type": "City",
+      "name": "Oslo"
+    },
+    {
+      "@type": "Country",
+      "name": "Norge"
+    }
+  ],
   "description": "AI-konsulenter og KI-rådgivning for norske bedrifter. VDA Gruppen kartlegger hvor bedriften mister mest tid og penger, og bygger det som trengs. Fast månedspris satt etter kartlagt behov.",
-  "knowsAbout": ["Kunstig intelligens", "AI-automatisering", "KI-rådgivning", "AI-agenter", "Prosessautomatisering"],
+  "knowsAbout": [
+    "Kunstig intelligens",
+    "AI-automatisering",
+    "KI-rådgivning",
+    "AI-agenter",
+    "Prosessautomatisering"
+  ],
   "sameAs": [
     "https://www.instagram.com/vda.gruppen/",
     "https://www.tiktok.com/@vda.gruppen"
-  ]
+  ],
+  "founder": [
+    {
+      "@type": "Person",
+      "@id": "https://vdagruppen.com/#max",
+      "name": "Max Wilhelm Lien",
+      "email": "max@vdagruppen.com",
+      "telephone": "+47 91 24 32 24",
+      "jobTitle": "Medgründer, eier og AI-konsulent",
+      "worksFor": {
+        "@id": "https://vdagruppen.com/#organisasjon"
+      }
+    },
+    {
+      "@type": "Person",
+      "@id": "https://vdagruppen.com/#leon",
+      "name": "Leon Alfred Falldorf",
+      "email": "leon@vdagruppen.com",
+      "telephone": "+47 94 97 34 62",
+      "jobTitle": "Medgründer, eier og AI-konsulent",
+      "worksFor": {
+        "@id": "https://vdagruppen.com/#organisasjon"
+      }
+    }
+  ],
+  "employee": [
+    {
+      "@id": "https://vdagruppen.com/#max"
+    },
+    {
+      "@id": "https://vdagruppen.com/#leon"
+    }
+  ],
+  "numberOfEmployees": {
+    "@type": "QuantitativeValue",
+    "value": 2
+  }
 }
 </script>
 <script type="application/ld+json">
@@ -417,6 +468,8 @@ h2{font-size:clamp(25px,3vw,34px);line-height:1.3;max-width:26ch}
 .faq-item:last-child{padding-bottom:0}
 .faq-item h3{font-size:19px;line-height:1.4;margin-bottom:8px}
 .faq-item p{font-size:15.5px;color:var(--vda-grey);max-width:60ch}
+.faq-item p a{color:var(--vda-navy);text-decoration:none;border-bottom:var(--vda-border-w) solid var(--vda-brass);transition:background .2s}
+.faq-item p a:hover{background:var(--vda-creme-deep)}
 
 /* ---------- CTA / KONTAKT ---------- */
 #kontakt{background:var(--vda-navy)}
@@ -777,7 +830,7 @@ footer{background:var(--vda-navy);color:var(--vda-on-navy-dim);padding:72px 0 56
       </div>
       <div class="faq-item">
         <h3>Hva skjer med dataene våre?</h3>
-        <p>Databehandling og GDPR avklares i kartleggingen, før noe bygges. Dere skal vite hva som lagres hvor, og beholde kontrollen på egne data.</p>
+        <p><a href="/ai-og-gdpr/">Databehandling og GDPR</a> avklares i kartleggingen, før noe bygges. Dere skal vite hva som lagres hvor, og beholde kontrollen på egne data.</p>
       </div>
     </div>
   </div>
