@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Siden finnes ikke | VDA Gruppen</title>
+<meta name="description" content="Siden du leter etter finnes ikke. Gå til forsiden eller se artiklene våre.">
+<meta name="robots" content="noindex,follow">
+<link rel="icon" type="image/svg+xml" href="/assets/brand/vda-merke-navy.svg">
+<link rel="preload" href="/assets/fonts/libre-baskerville-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/inter-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+@font-face{font-family:'Inter';font-style:normal;font-weight:400;font-display:swap;src:url(/assets/fonts/inter-400-latin.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+@font-face{font-family:'Inter';font-style:normal;font-weight:400;font-display:swap;src:url(/assets/fonts/inter-400-latin-ext.woff2) format('woff2');unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF}
+@font-face{font-family:'Libre Baskerville';font-style:italic;font-weight:400;font-display:swap;src:url(/assets/fonts/libre-baskerville-400-latin.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+@font-face{font-family:'Libre Baskerville';font-style:normal;font-weight:400;font-display:swap;src:url(/assets/fonts/libre-baskerville-400-latin.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+</style>
+<style>
+:root{
+  --vda-navy:#14273F; --vda-creme:#EDE3CE; --vda-grey:#5C6064; --vda-dust:#5A6E88; --vda-dust-deep:#4F6178;
+  --vda-creme-deep:#E8DBC2; --vda-brass:#B08341;
+  --vda-on-navy:#EDE3CE; --vda-on-navy-dim:#9EA6B4;
+  --vda-border:rgba(20,39,63,0.14);
+  --vda-font-display:"Libre Baskerville",Georgia,serif;
+  --vda-font-body:"Inter",-apple-system,system-ui,sans-serif;
+  --vda-border-w:0.5px; --vda-radius-sm:8px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%}
+body{background:var(--vda-creme);color:var(--vda-navy);font-family:var(--vda-font-body);
+  font-size:16px;line-height:1.7;-webkit-font-smoothing:antialiased;
+  display:flex;flex-direction:column;min-height:100vh}
+::selection{background:var(--vda-navy);color:var(--vda-creme)}
+h1,h2{font-family:var(--vda-font-display);font-weight:400;color:var(--vda-navy)}
+.wrap{max-width:760px;margin:0 auto;padding:0 32px;width:100%}
+@media(max-width:640px){.wrap{padding:0 20px}}
+nav{background:var(--vda-creme);border-bottom:var(--vda-border-w) solid var(--vda-border)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:72px}
+.nav-logo img{height:30px;width:auto;display:block}
+.nav-cta{font-size:14px;color:var(--vda-navy);text-decoration:none;border:var(--vda-border-w) solid var(--vda-navy);
+  border-radius:var(--vda-radius-sm);padding:9px 20px;transition:background .2s,color .2s}
+.nav-cta:hover{background:var(--vda-navy);color:var(--vda-creme)}
+main{flex:1;display:flex;align-items:center;padding:80px 0}
+.tall{font-family:var(--vda-font-display);font-style:italic;color:var(--vda-brass);
+  font-size:clamp(72px,14vw,140px);line-height:1;letter-spacing:-.02em;margin-bottom:24px}
+h1{font-size:clamp(28px,4.4vw,42px);line-height:1.28;max-width:22ch}
+.lede{margin-top:20px;font-size:18px;color:var(--vda-grey);max-width:58ch}
+.lenker{margin-top:36px;display:flex;flex-wrap:wrap;gap:14px}
+.btn{display:inline-block;font-size:15px;font-weight:500;text-decoration:none;
+  padding:14px 26px;border-radius:var(--vda-radius-sm);
+  background:var(--vda-navy);color:var(--vda-creme);transition:background .2s}
+.btn:hover{background:#1C3350}
+.btn.ghost{background:none;color:var(--vda-navy);border:var(--vda-border-w) solid var(--vda-navy)}
+.btn.ghost:hover{background:var(--vda-creme-deep)}
+.forslag{margin-top:56px;padding-top:32px;border-top:var(--vda-border-w) solid var(--vda-border)}
+.forslag h2{font-size:15px;font-family:var(--vda-font-body);font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--vda-dust-deep);margin-bottom:14px}
+.forslag ul{list-style:none;padding:0;margin:0;display:grid;gap:8px}
+.forslag a{color:var(--vda-navy);text-decoration:none;font-size:15px;
+  border-bottom:var(--vda-border-w) solid var(--vda-brass);padding-bottom:2px}
+.forslag a:hover{background:var(--vda-creme-deep)}
+footer{background:var(--vda-navy);color:var(--vda-on-navy-dim);padding:32px 0;font-size:13px}
+footer a{color:var(--vda-on-navy-dim);text-decoration:none}
+footer a:hover{color:var(--vda-on-navy)}
+.f-inner{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap nav-inner">
+    <a class="nav-logo" href="/" aria-label="VDA Gruppen, til forsiden">
+      <img src="/assets/brand/vda-merke-navy.svg" alt="VDA Gruppen" width="1807" height="934">
+    </a>
+    <a class="nav-cta" href="/#kontakt">Book samtale</a>
+  </div>
+</nav>
+
+<main>
+  <div class="wrap">
+    <div class="tall">404</div>
+    <h1>Denne siden finnes ikke.</h1>
+    <p class="lede">Enten er lenken feil, eller så har vi flyttet noe uten å legge inn en videresending. Prøv forsiden, eller et av forslagene under.</p>
+
+    <div class="lenker">
+      <a class="btn" href="/">Til forsiden</a>
+      <a class="btn ghost" href="/artikler/">Alle artikler</a>
+    </div>
+
+    <div class="forslag">
+      <h2>Kanskje du lette etter</h2>
+      <ul>
+        <li><a href="/hvordan-ta-i-bruk-ai-i-bedriften/">Hvordan ta i bruk AI i bedriften</a></li>
+        <li><a href="/hva-koster-ai-konsulent/">Hva koster en AI-konsulent?</a></li>
+        <li><a href="/automatisering-av-bedrift/">Automatisering av bedrift</a></li>
+        <li><a href="/ai-og-gdpr/">AI og GDPR</a></li>
+        <li><a href="/ai-konsulent-oslo/">AI-konsulent i Oslo</a></li>
+      </ul>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap f-inner">
+    <span>VDA Gruppen · Westside Digital Automation AS · Org.nr 936 993 222</span>
+    <span><a href="/personvern/">Personvern</a> · <a href="/vilkar/">Vilkår</a> · <a href="mailto:kontakt@vdagruppen.com">kontakt@vdagruppen.com</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
