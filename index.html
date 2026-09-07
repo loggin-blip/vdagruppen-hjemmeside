@@ -349,11 +349,9 @@ h1{
 .clients{margin-top:100px}
 .marquee{overflow:hidden;width:100vw;margin-left:calc(50% - 50vw)}
 .marquee-track{display:flex;align-items:center;width:max-content;animation:kundelogo-rull 26s linear infinite}
-.marquee:hover .marquee-track{animation-play-state:paused}
 .marquee a{display:block;flex:none;margin-right:72px}
-.marquee img{display:block;height:22px;width:auto;opacity:.5;filter:brightness(0);transition:opacity .2s}
+.marquee img{display:block;height:22px;width:auto;opacity:.5;filter:brightness(0)}
 .marquee img.ml{height:31px}
-.marquee a:hover img{opacity:.85}
 @keyframes kundelogo-rull{to{transform:translateX(-50%)}}
 @media (prefers-reduced-motion:reduce){.marquee-track{animation:none}}
 
@@ -375,7 +373,6 @@ h1{
 }
 /* motsatt vei av kundelogoene, så de to radene går hver sin retning */
 .int-track{display:flex;width:max-content;animation:int-rull 40s linear infinite reverse}
-.int-marquee:hover .int-track{animation-play-state:paused}
 .int-sett{display:flex;align-items:center;flex:none}
 .int-item{
   display:inline-flex;align-items:center;gap:10px;flex:none;margin-right:14px;
@@ -383,9 +380,7 @@ h1{
   border:var(--vda-border-w) solid var(--vda-border);border-radius:var(--vda-radius-sm);
   background:rgba(255,255,255,.45);
   font-size:14px;font-weight:500;color:var(--vda-navy);white-space:nowrap;
-  transition:border-color .2s,background .2s;
 }
-.int-item:hover{border-color:var(--vda-dust);background:#fff}
 .int-item img{display:block;width:22px;height:22px;object-fit:contain}
 .int-note{margin-top:18px;font-size:14px;color:var(--vda-grey);max-width:52ch}
 @keyframes int-rull{to{transform:translateX(var(--int-shift,-50%))}}
