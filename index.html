@@ -357,6 +357,50 @@ h1{
 @keyframes kundelogo-rull{to{transform:translateX(-50%)}}
 @media (prefers-reduced-motion:reduce){.marquee-track{animation:none}}
 
+/* ---------- INTEGRASJONER ---------- */
+.integrasjoner{margin-top:52px}
+.int-tittel{font-family:var(--vda-font-display);font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--vda-grey)}
+.int-tabs{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.int-tab{
+  font-family:var(--vda-font-body);font-size:13px;font-weight:500;color:var(--vda-navy);
+  background:none;border:var(--vda-border-w) solid var(--vda-border);border-radius:var(--vda-radius-sm);
+  padding:8px 15px;cursor:pointer;transition:background .2s,color .2s,border-color .2s;
+}
+.int-tab:hover{border-color:var(--vda-dust)}
+.int-tab.er-aktiv{background:var(--vda-navy);border-color:var(--vda-navy);color:var(--vda-creme)}
+.int-marquee{
+  margin-top:20px;overflow:hidden;width:100vw;margin-left:calc(50% - 50vw);
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 80px,#000 calc(100% - 80px),transparent);
+          mask-image:linear-gradient(90deg,transparent,#000 80px,#000 calc(100% - 80px),transparent);
+}
+/* motsatt vei av kundelogoene, så de to radene går hver sin retning */
+.int-track{display:flex;width:max-content;animation:int-rull 40s linear infinite reverse}
+.int-marquee:hover .int-track{animation-play-state:paused}
+.int-sett{display:flex;align-items:center;flex:none}
+.int-item{
+  display:inline-flex;align-items:center;gap:10px;flex:none;margin-right:14px;
+  padding:9px 16px 9px 11px;
+  border:var(--vda-border-w) solid var(--vda-border);border-radius:var(--vda-radius-sm);
+  background:rgba(255,255,255,.45);
+  font-size:14px;font-weight:500;color:var(--vda-navy);white-space:nowrap;
+  transition:border-color .2s,background .2s;
+}
+.int-item:hover{border-color:var(--vda-dust);background:#fff}
+.int-item img{display:block;width:22px;height:22px;object-fit:contain}
+.int-note{margin-top:18px;font-size:14px;color:var(--vda-grey);max-width:52ch}
+@keyframes int-rull{to{transform:translateX(var(--int-shift,-50%))}}
+@media (prefers-reduced-motion:reduce){
+  .int-track{animation:none}
+  .int-marquee{overflow-x:auto;-webkit-mask-image:none;mask-image:none}
+}
+@media(max-width:640px){
+  .integrasjoner{margin-top:40px}
+  .int-tab{font-size:12px;padding:7px 12px}
+  .int-item{font-size:13px;padding:8px 13px 8px 9px}
+  .int-item img{width:20px;height:20px}
+  .int-marquee{-webkit-mask-image:linear-gradient(90deg,transparent,#000 28px,#000 calc(100% - 28px),transparent);mask-image:linear-gradient(90deg,transparent,#000 28px,#000 calc(100% - 28px),transparent)}
+}
+
 /* ---------- SECTIONS ---------- */
 section{border-bottom:var(--vda-border-w) solid var(--vda-border)}
 .sec{padding:80px 0}
@@ -613,6 +657,47 @@ footer{background:var(--vda-navy);color:var(--vda-on-navy-dim);padding:72px 0 56
       <a href="https://www.nordflo.eu" target="_blank" rel="noopener" aria-hidden="true" tabindex="-1"><img src="assets/nordflo-wordmark.png" alt="" width="193" height="35"></a>
         </div>
       </div>
+    </div>
+    <div class="integrasjoner" id="integrasjoner">
+      <p class="int-tittel">Vi kobler oss på verktøyene dere allerede bruker</p>
+      <div class="int-tabs" role="group" aria-label="Filtrer integrasjoner">
+        <button type="button" class="int-tab er-aktiv" data-kat="alle" aria-pressed="true">Alle</button>
+        <button type="button" class="int-tab" data-kat="automasjon" aria-pressed="false">Automasjon &amp; data</button>
+        <button type="button" class="int-tab" data-kat="regnskap" aria-pressed="false">Norsk regnskap &amp; drift</button>
+        <button type="button" class="int-tab" data-kat="crm" aria-pressed="false">CRM, salg &amp; kommunikasjon</button>
+      </div>
+      <div class="int-marquee">
+        <div class="int-track">
+          <div class="int-sett">
+            <span class="int-item" data-kat="crm"><img src="assets/integrasjoner/teams.svg" alt="" width="22" height="22" loading="lazy" decoding="async">Microsoft Teams</span>
+            <span class="int-item" data-kat="crm"><img src="assets/integrasjoner/outlook.svg" alt="" width="22" height="22" loading="lazy" decoding="async">Outlook</span>
+            <span class="int-item" data-kat="crm"><img src="assets/integrasjoner/gmail.svg" alt="" width="22" height="22" loading="lazy" decoding="async">Gmail</span>
+            <span class="int-item" data-kat="crm"><img src="assets/integrasjoner/slack.svg" alt="" width="22" height="22" loading="lazy" decoding="async">Slack</span>
+            <span class="int-item" data-kat="regnskap"><img src="assets/integrasjoner/visma.png" alt="" width="22" height="22" loading="lazy" decoding="async">Visma</span>
+            <span class="int-item" data-kat="regnskap"><img src="assets/integrasjoner/tripletex.svg" alt="" width="22" height="22" loading="lazy" decoding="async">Tripletex</span>
+            <span class="int-item" data-kat="crm"><img src="assets/integrasjoner/hubspot.svg" alt="" width="22" height="22" loading="lazy" decoding="async">HubSpot</span>
+            <span class="int-item" data-kat="automasjon"><img src="assets/integrasjoner/googlesheets.svg" alt="" width="22" height="22" loading="lazy" decoding="async">Google Sheets</span>
+            <span class="int-item" data-kat="automasjon"><img src="assets/integrasjoner/zapier.svg" alt="" width="22" height="22" loading="lazy" decoding="async">Zapier</span>
+            <span class="int-item" data-kat="crm"><img src="assets/integrasjoner/salesforce.svg" alt="" width="22" height="22" loading="lazy" decoding="async">Salesforce</span>
+            <span class="int-item" data-kat="regnskap"><img src="assets/integrasjoner/vipps.svg" alt="" width="22" height="22" loading="lazy" decoding="async">Vipps</span>
+            <span class="int-item" data-kat="automasjon"><img src="assets/integrasjoner/make.svg" alt="" width="22" height="22" loading="lazy" decoding="async">Make</span>
+            <span class="int-item" data-kat="crm"><img src="assets/integrasjoner/shopify.svg" alt="" width="22" height="22" loading="lazy" decoding="async">Shopify</span>
+            <span class="int-item" data-kat="automasjon"><img src="assets/integrasjoner/notion.svg" alt="" width="22" height="22" loading="lazy" decoding="async">Notion</span>
+            <span class="int-item" data-kat="regnskap"><img src="assets/integrasjoner/fiken.png" alt="" width="22" height="22" loading="lazy" decoding="async">Fiken</span>
+            <span class="int-item" data-kat="crm"><img src="assets/integrasjoner/whatsapp.svg" alt="" width="22" height="22" loading="lazy" decoding="async">WhatsApp</span>
+            <span class="int-item" data-kat="automasjon"><img src="assets/integrasjoner/airtable.svg" alt="" width="22" height="22" loading="lazy" decoding="async">Airtable</span>
+            <span class="int-item" data-kat="regnskap"><img src="assets/integrasjoner/stripe.svg" alt="" width="22" height="22" loading="lazy" decoding="async">Stripe</span>
+            <span class="int-item" data-kat="regnskap"><img src="assets/integrasjoner/poweroffice.png" alt="" width="22" height="22" loading="lazy" decoding="async">PowerOffice Go</span>
+            <span class="int-item" data-kat="crm"><img src="assets/integrasjoner/meta.svg" alt="" width="22" height="22" loading="lazy" decoding="async">Meta</span>
+            <span class="int-item" data-kat="automasjon"><img src="assets/integrasjoner/n8n.svg" alt="" width="22" height="22" loading="lazy" decoding="async">n8n</span>
+            <span class="int-item" data-kat="automasjon"><img src="assets/integrasjoner/googledrive.svg" alt="" width="22" height="22" loading="lazy" decoding="async">Google Drive</span>
+            <span class="int-item" data-kat="crm"><img src="assets/integrasjoner/pipedrive.png" alt="" width="22" height="22" loading="lazy" decoding="async">Pipedrive</span>
+            <span class="int-item" data-kat="crm"><img src="assets/integrasjoner/twilio.svg" alt="" width="22" height="22" loading="lazy" decoding="async">Twilio</span>
+            <span class="int-item" data-kat="automasjon"><img src="assets/integrasjoner/supabase.svg" alt="" width="22" height="22" loading="lazy" decoding="async">Supabase</span>
+          </div>
+        </div>
+      </div>
+      <p class="int-note">Bruker dere noe annet? Vi kobler oss på det også. Dere trenger ikke gjøre noe selv.</p>
     </div>
   </div>
 </header>
@@ -1236,5 +1321,61 @@ function vdaStartTracking(fullConsent){
   .cookie-actions{justify-content:stretch}.cookie-btn{flex:1;text-align:center}}
 </style>
 
+
+<script>
+/* Integrasjons-marquee: filtrerer på kategori og setter opp et sømløst løp
+   uansett hvor mange logoer som er igjen etter filtreringen. */
+(function(){
+  var d=document, blokk=d.getElementById('integrasjoner');
+  if(!blokk) return;
+  var track=blokk.querySelector('.int-track');
+  var mal=blokk.querySelector('.int-sett');
+  if(!track||!mal) return;
+  var alle=[].slice.call(mal.children);
+  var aktiv='alle', sisteBredde=0;
+
+  function bygg(){
+    var sett=d.createElement('div');
+    sett.className='int-sett';
+    alle.forEach(function(el){
+      if(aktiv==='alle'||el.getAttribute('data-kat')===aktiv) sett.appendChild(el.cloneNode(true));
+    });
+    track.textContent='';
+    track.appendChild(sett);
+    var bredde=sett.getBoundingClientRect().width;
+    if(bredde<1) return;
+    // nok kopier til at sporet alltid dekker skjermen, og forskyv nøyaktig ett sett
+    var antall=Math.max(2, Math.ceil(innerWidth*1.6/bredde)+1);
+    for(var i=1;i<antall;i++) track.appendChild(sett.cloneNode(true));
+    track.style.setProperty('--int-shift', (-100/antall)+'%');
+    track.style.animationDuration=Math.max(8, Math.round(bredde/55))+'s';
+  }
+
+  blokk.querySelectorAll('.int-tab').forEach(function(knapp){
+    knapp.addEventListener('click',function(){
+      if(knapp.getAttribute('data-kat')===aktiv) return;
+      aktiv=knapp.getAttribute('data-kat');
+      blokk.querySelectorAll('.int-tab').forEach(function(k){
+        var pa=k===knapp;
+        k.classList.toggle('er-aktiv',pa);
+        k.setAttribute('aria-pressed',pa?'true':'false');
+      });
+      bygg();
+    });
+  });
+
+  var t;
+  addEventListener('resize',function(){
+    if(Math.abs(innerWidth-sisteBredde)<40) return;
+    sisteBredde=innerWidth;
+    clearTimeout(t); t=setTimeout(bygg,200);
+  },{passive:true});
+
+  sisteBredde=innerWidth;
+  // vent til fontene er lastet, ellers måles settet for smalt
+  if(d.fonts&&d.fonts.ready) d.fonts.ready.then(bygg); else bygg();
+  bygg();
+})();
+</script>
 </body>
 </html>

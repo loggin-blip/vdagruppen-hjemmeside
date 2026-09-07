@@ -26,7 +26,7 @@
     }
 
     /* ---------- Hero-undertekst og handlinger følger tittelen ---------- */
-    [['.hero-sub','0.35s'],['.hero-actions','0.45s'],['.clients','0.55s'],
+    [['.hero-sub','0.35s'],['.hero-actions','0.45s'],['.clients','0.55s'],['.integrasjoner','0.65s'],
      ['header .lede','0.15s'],['header .meta','0.25s']].forEach(function(par){
       var el=d.querySelector(par[0]);
       if(el){el.classList.add('mo-reveal');el.style.setProperty('--mo-d',par[1]);}
