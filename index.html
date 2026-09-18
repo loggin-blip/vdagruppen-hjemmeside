@@ -31,6 +31,8 @@
 @font-face{font-family:'Inter';font-style:normal;font-weight:500;font-display:swap;src:url(/assets/fonts/inter-400-latin-ext.woff2) format('woff2');unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF}
 @font-face{font-family:'Libre Baskerville';font-style:normal;font-weight:400;font-display:swap;src:url(/assets/fonts/libre-baskerville-400-latin.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
 @font-face{font-family:'Libre Baskerville';font-style:normal;font-weight:400;font-display:swap;src:url(/assets/fonts/libre-baskerville-400-latin-ext.woff2) format('woff2');unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF}
+@font-face{font-family:"LB Fallback";src:local("Georgia");size-adjust:117.7%;ascent-override:82.42%;descent-override:22.94%;line-gap-override:0%}
+@font-face{font-family:"Inter Fallback";src:local("Arial");size-adjust:109.38%;ascent-override:88.57%;descent-override:22.05%;line-gap-override:0%}
 </style>
 <script type="application/ld+json">
 {
@@ -216,8 +218,8 @@
   --vda-text-muted:  var(--vda-grey);
   --vda-border:      rgba(20, 39, 63, 0.14);
 
-  --vda-font-display: "Libre Baskerville", Georgia, serif;
-  --vda-font-body:    "Inter", -apple-system, system-ui, sans-serif;
+  --vda-font-display: "Libre Baskerville", "LB Fallback", Georgia, serif;
+  --vda-font-body:    "Inter", "Inter Fallback", -apple-system, system-ui, sans-serif;
 
   --vda-radius:      0px;
   --vda-radius-sm:   8px;
@@ -305,7 +307,7 @@ h1{
 }
 .hero-actions{margin-top:44px}
 /* hero-grid: tekst venstre, menneskene bak til høyre */
-.hero-grid{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:64px;align-items:center}
+.hero-grid{display:grid;grid-template-columns:1fr;gap:64px;align-items:center}
 .hero-folk{display:flex;gap:26px;align-items:flex-start}
 /* to portrettkort, lett rotert fra hverandre som utlagte fotografier */
 .hero-kort{display:block;width:212px;text-decoration:none;background:var(--vda-creme);border:var(--vda-border-w) solid var(--vda-dust);box-shadow:0 18px 40px -22px rgba(20,39,63,.28);transform:rotate(-2deg);transition:transform .35s cubic-bezier(.16,1,.3,1),box-shadow .35s ease,border-color .25s ease}
@@ -548,7 +550,65 @@ footer{background:var(--vda-navy);color:var(--vda-on-navy-dim);padding:72px 0 56
   font-size:12px;
 }
 </style>
-<link rel="stylesheet" href="/assets/motion.css">
+<style>/* motion.css inlined (kilde: /assets/motion.css) — rediger kilden og lim inn på nytt */
+:root{--mo-ease:cubic-bezier(.16,1,.3,1)}
+.mo .mo-reveal{opacity:0;transform:translateY(24px);filter:blur(6px);
+transition:opacity .9s var(--mo-ease),transform .9s var(--mo-ease),filter .9s var(--mo-ease);
+transition-delay:var(--mo-d,0s)}
+.mo .mo-reveal.mo-in{opacity:1;transform:none;filter:none}
+.mo .mo-item{opacity:0;transform:translateY(16px);filter:blur(5px);
+transition:opacity .9s var(--mo-ease),transform .9s var(--mo-ease),filter .9s var(--mo-ease);
+transition-delay:var(--mo-d,0s)}
+.mo .mo-in>.mo-item,.mo .mo-item.mo-in{opacity:1;transform:none;filter:none}
+.mo-w{display:inline-block;overflow:hidden;vertical-align:bottom;padding-bottom:.08em;margin-bottom:-.08em}
+.mo .mo-w>span{display:inline-block;transform:translateY(100%);opacity:0;
+transition:transform .9s var(--mo-ease),opacity .9s var(--mo-ease);
+transition-delay:var(--mo-d,0s)}
+.mo .mo-w.mo-in>span{transform:none;opacity:1}
+.mo .mo-photo{clip-path:inset(0 100% 0 0);transition:clip-path .9s var(--mo-ease);will-change:clip-path}
+.mo .mo-photo img{transform:scale(1.08);transition:transform 1.1s var(--mo-ease)}
+.mo .mo-photo.mo-in{clip-path:inset(0 0% 0 0)}
+.mo .mo-photo.mo-in img{transform:none}
+.person{transition:transform .22s var(--mo-ease),box-shadow .22s var(--mo-ease)}
+.person:hover{transform:translateY(-6px);box-shadow:0 16px 32px -12px rgba(20,39,63,.22)}
+.person:active{transform:translateY(-6px) scale(.985)}
+.btn{transition:background .2s,color .2s,border-color .2s,transform .3s cubic-bezier(.34,1.56,.64,1)}
+.btn:hover{transform:scale(1.02)}
+.btn:active{transform:scale(.97)}
+.cookie-btn:active{transform:scale(.97)}
+.faq-item,.case,.step{transition:border-color .3s var(--mo-ease)}
+.faq-item:hover,.case:hover,.step:hover{border-top-color:var(--vda-brass)}
+.nav-links{position:relative}
+.mo-navstrek{position:absolute;bottom:-6px;height:1.5px;background:var(--vda-brass);
+opacity:0;pointer-events:none;
+transition:left .35s var(--mo-ease),width .35s var(--mo-ease),opacity .15s ease}
+.mo-navstrek.mo-vis{opacity:1}
+header#top{position:relative}
+header#top>.wrap{position:relative}
+.mo-flyt{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;color:var(--vda-dust);will-change:transform}
+.mo-par{will-change:transform}
+.mo-flyt path{stroke:currentColor;fill:none;stroke-dasharray:90 240}
+.mo-flyt circle{fill:currentColor;opacity:.2}
+@keyframes mo-strom{to{stroke-dashoffset:-660}}
+@keyframes mo-driv{50%{transform:translate(var(--dx,26px),calc(var(--dx,26px)/-2))}}
+.mo-flyt .s1{animation:mo-strom 26s linear infinite}
+.mo-flyt .s2{animation:mo-strom 21s linear infinite}
+.mo-flyt .s3{animation:mo-strom 31s linear infinite}
+.mo-flyt .p1{animation:mo-driv 11s ease-in-out infinite;--dx:26px}
+.mo-flyt .p2{animation:mo-driv 13s ease-in-out infinite;--dx:32px}
+.mo-flyt .p3{animation:mo-driv 15s ease-in-out infinite;--dx:22px}
+.mo-flyt .p4{animation:mo-driv 12s ease-in-out infinite;--dx:30px}
+.mo-flyt .p5{animation:mo-driv 14s ease-in-out infinite;--dx:26px}
+@media (prefers-reduced-motion:reduce){
+.mo .mo-reveal,.mo .mo-item,.mo .mo-w>span{opacity:1!important;transform:none!important;transition:none!important}
+.mo .mo-photo{clip-path:none!important;transition:none!important}
+.mo .mo-photo img{transform:none!important;transition:none!important}
+.mo-flyt path,.mo-flyt circle{animation:none!important}
+.mo-flyt circle{display:none}
+.person:hover,.btn:hover,.btn:active{transform:none}
+.mo-navstrek{transition:none}
+}
+</style>
 <script src="/assets/motion.js" defer></script>
 </head>
 <body>
@@ -610,46 +670,30 @@ footer{background:var(--vda-navy);color:var(--vda-on-navy-dim);padding:72px 0 56
           <a class="btn btn-navy" href="#kontakt">Book en uforpliktende samtale <span class="pil">→</span></a>
         </div>
       </div>
-      <div class="hero-folk mo-reveal" style="--mo-d:.5s" aria-label="Menneskene bak VDA Gruppen">
-        <a class="hero-kort" href="#om">
-          <span class="hero-kort-foto mo-photo"><img src="assets/team/max-640.webp" srcset="assets/team/max-640.webp 640w, assets/team/max.webp 1200w" sizes="(max-width:760px) 46vw, 230px" decoding="async" alt="Max Wilhelm Lien" width="640" height="800"></span>
-          <span class="hero-kort-tekst">
-            <span class="hero-kort-navn">Max Wilhelm Lien</span>
-            <span class="hero-kort-rolle">Medgründer · AI-konsulent</span>
-          </span>
-        </a>
-        <a class="hero-kort" href="#om">
-          <span class="hero-kort-foto mo-photo"><img src="assets/team/leon-sol2-640.webp" srcset="assets/team/leon-sol2-640.webp 640w, assets/team/leon-sol2.webp 1200w" sizes="(max-width:760px) 46vw, 230px" decoding="async" alt="Leon Alfred Falldorf" width="640" height="800"></span>
-          <span class="hero-kort-tekst">
-            <span class="hero-kort-navn">Leon Alfred Falldorf</span>
-            <span class="hero-kort-rolle">Medgründer · AI-konsulent</span>
-          </span>
-        </a>
-      </div>
     </div>
     <div class="clients">
       <div class="marquee">
         <div class="marquee-track">
-      <a href="https://www.massivlust.no" target="_blank" rel="noopener"><img class="ml" src="assets/massivlust-logo.png" alt="Massivlust" width="300" height="131"></a>
-      <a href="https://www.nordflo.eu" target="_blank" rel="noopener"><img src="assets/nordflo-wordmark.png" alt="Nordflo" width="193" height="35"></a>
-      <a href="https://www.massivlust.no" target="_blank" rel="noopener" aria-hidden="true" tabindex="-1"><img class="ml" src="assets/massivlust-logo.png" alt="" width="300" height="131"></a>
-      <a href="https://www.nordflo.eu" target="_blank" rel="noopener" aria-hidden="true" tabindex="-1"><img src="assets/nordflo-wordmark.png" alt="" width="193" height="35"></a>
-      <a href="https://www.massivlust.no" target="_blank" rel="noopener" aria-hidden="true" tabindex="-1"><img class="ml" src="assets/massivlust-logo.png" alt="" width="300" height="131"></a>
-      <a href="https://www.nordflo.eu" target="_blank" rel="noopener" aria-hidden="true" tabindex="-1"><img src="assets/nordflo-wordmark.png" alt="" width="193" height="35"></a>
-      <a href="https://www.massivlust.no" target="_blank" rel="noopener" aria-hidden="true" tabindex="-1"><img class="ml" src="assets/massivlust-logo.png" alt="" width="300" height="131"></a>
-      <a href="https://www.nordflo.eu" target="_blank" rel="noopener" aria-hidden="true" tabindex="-1"><img src="assets/nordflo-wordmark.png" alt="" width="193" height="35"></a>
-      <a href="https://www.massivlust.no" target="_blank" rel="noopener" aria-hidden="true" tabindex="-1"><img class="ml" src="assets/massivlust-logo.png" alt="" width="300" height="131"></a>
-      <a href="https://www.nordflo.eu" target="_blank" rel="noopener" aria-hidden="true" tabindex="-1"><img src="assets/nordflo-wordmark.png" alt="" width="193" height="35"></a>
-      <a href="https://www.massivlust.no" target="_blank" rel="noopener" aria-hidden="true" tabindex="-1"><img class="ml" src="assets/massivlust-logo.png" alt="" width="300" height="131"></a>
-      <a href="https://www.nordflo.eu" target="_blank" rel="noopener" aria-hidden="true" tabindex="-1"><img src="assets/nordflo-wordmark.png" alt="" width="193" height="35"></a>
-      <a href="https://www.massivlust.no" target="_blank" rel="noopener" aria-hidden="true" tabindex="-1"><img class="ml" src="assets/massivlust-logo.png" alt="" width="300" height="131"></a>
-      <a href="https://www.nordflo.eu" target="_blank" rel="noopener" aria-hidden="true" tabindex="-1"><img src="assets/nordflo-wordmark.png" alt="" width="193" height="35"></a>
-      <a href="https://www.massivlust.no" target="_blank" rel="noopener" aria-hidden="true" tabindex="-1"><img class="ml" src="assets/massivlust-logo.png" alt="" width="300" height="131"></a>
-      <a href="https://www.nordflo.eu" target="_blank" rel="noopener" aria-hidden="true" tabindex="-1"><img src="assets/nordflo-wordmark.png" alt="" width="193" height="35"></a>
-      <a href="https://www.massivlust.no" target="_blank" rel="noopener" aria-hidden="true" tabindex="-1"><img class="ml" src="assets/massivlust-logo.png" alt="" width="300" height="131"></a>
-      <a href="https://www.nordflo.eu" target="_blank" rel="noopener" aria-hidden="true" tabindex="-1"><img src="assets/nordflo-wordmark.png" alt="" width="193" height="35"></a>
-      <a href="https://www.massivlust.no" target="_blank" rel="noopener" aria-hidden="true" tabindex="-1"><img class="ml" src="assets/massivlust-logo.png" alt="" width="300" height="131"></a>
-      <a href="https://www.nordflo.eu" target="_blank" rel="noopener" aria-hidden="true" tabindex="-1"><img src="assets/nordflo-wordmark.png" alt="" width="193" height="35"></a>
+      <a href="https://www.massivlust.no" target="_blank" rel="noopener"><img class="ml" src="assets/massivlust-logo.webp" alt="Massivlust" width="300" height="131"></a>
+      <a href="https://www.nordflo.eu" target="_blank" rel="noopener"><img src="assets/nordflo-wordmark.webp" alt="Nordflo" width="193" height="35"></a>
+      <a href="https://www.massivlust.no" target="_blank" rel="noopener" aria-hidden="true" tabindex="-1"><img class="ml" src="assets/massivlust-logo.webp" alt="" width="300" height="131"></a>
+      <a href="https://www.nordflo.eu" target="_blank" rel="noopener" aria-hidden="true" tabindex="-1"><img src="assets/nordflo-wordmark.webp" alt="" width="193" height="35"></a>
+      <a href="https://www.massivlust.no" target="_blank" rel="noopener" aria-hidden="true" tabindex="-1"><img class="ml" src="assets/massivlust-logo.webp" alt="" width="300" height="131"></a>
+      <a href="https://www.nordflo.eu" target="_blank" rel="noopener" aria-hidden="true" tabindex="-1"><img src="assets/nordflo-wordmark.webp" alt="" width="193" height="35"></a>
+      <a href="https://www.massivlust.no" target="_blank" rel="noopener" aria-hidden="true" tabindex="-1"><img class="ml" src="assets/massivlust-logo.webp" alt="" width="300" height="131"></a>
+      <a href="https://www.nordflo.eu" target="_blank" rel="noopener" aria-hidden="true" tabindex="-1"><img src="assets/nordflo-wordmark.webp" alt="" width="193" height="35"></a>
+      <a href="https://www.massivlust.no" target="_blank" rel="noopener" aria-hidden="true" tabindex="-1"><img class="ml" src="assets/massivlust-logo.webp" alt="" width="300" height="131"></a>
+      <a href="https://www.nordflo.eu" target="_blank" rel="noopener" aria-hidden="true" tabindex="-1"><img src="assets/nordflo-wordmark.webp" alt="" width="193" height="35"></a>
+      <a href="https://www.massivlust.no" target="_blank" rel="noopener" aria-hidden="true" tabindex="-1"><img class="ml" src="assets/massivlust-logo.webp" alt="" width="300" height="131"></a>
+      <a href="https://www.nordflo.eu" target="_blank" rel="noopener" aria-hidden="true" tabindex="-1"><img src="assets/nordflo-wordmark.webp" alt="" width="193" height="35"></a>
+      <a href="https://www.massivlust.no" target="_blank" rel="noopener" aria-hidden="true" tabindex="-1"><img class="ml" src="assets/massivlust-logo.webp" alt="" width="300" height="131"></a>
+      <a href="https://www.nordflo.eu" target="_blank" rel="noopener" aria-hidden="true" tabindex="-1"><img src="assets/nordflo-wordmark.webp" alt="" width="193" height="35"></a>
+      <a href="https://www.massivlust.no" target="_blank" rel="noopener" aria-hidden="true" tabindex="-1"><img class="ml" src="assets/massivlust-logo.webp" alt="" width="300" height="131"></a>
+      <a href="https://www.nordflo.eu" target="_blank" rel="noopener" aria-hidden="true" tabindex="-1"><img src="assets/nordflo-wordmark.webp" alt="" width="193" height="35"></a>
+      <a href="https://www.massivlust.no" target="_blank" rel="noopener" aria-hidden="true" tabindex="-1"><img class="ml" src="assets/massivlust-logo.webp" alt="" width="300" height="131"></a>
+      <a href="https://www.nordflo.eu" target="_blank" rel="noopener" aria-hidden="true" tabindex="-1"><img src="assets/nordflo-wordmark.webp" alt="" width="193" height="35"></a>
+      <a href="https://www.massivlust.no" target="_blank" rel="noopener" aria-hidden="true" tabindex="-1"><img class="ml" src="assets/massivlust-logo.webp" alt="" width="300" height="131"></a>
+      <a href="https://www.nordflo.eu" target="_blank" rel="noopener" aria-hidden="true" tabindex="-1"><img src="assets/nordflo-wordmark.webp" alt="" width="193" height="35"></a>
         </div>
       </div>
     </div>
@@ -664,12 +708,12 @@ footer{background:var(--vda-navy);color:var(--vda-on-navy-dim);padding:72px 0 56
       <div class="int-marquee">
         <div class="int-track">
           <div class="int-sett">
-            <span class="int-item" data-kat="regnskap"><img src="assets/integrasjoner/tabs.png" alt="" width="22" height="22" loading="lazy" decoding="async">TABS</span>
+            <span class="int-item" data-kat="regnskap"><img src="assets/integrasjoner/tabs.webp" alt="" width="22" height="22" loading="lazy" decoding="async">TABS</span>
             <span class="int-item" data-kat="crm"><img src="assets/integrasjoner/teams.svg" alt="" width="22" height="22" loading="lazy" decoding="async">Microsoft Teams</span>
             <span class="int-item" data-kat="crm"><img src="assets/integrasjoner/outlook.svg" alt="" width="22" height="22" loading="lazy" decoding="async">Outlook</span>
             <span class="int-item" data-kat="crm"><img src="assets/integrasjoner/gmail.svg" alt="" width="22" height="22" loading="lazy" decoding="async">Gmail</span>
             <span class="int-item" data-kat="crm"><img src="assets/integrasjoner/slack.svg" alt="" width="22" height="22" loading="lazy" decoding="async">Slack</span>
-            <span class="int-item" data-kat="regnskap"><img src="assets/integrasjoner/visma.png" alt="" width="22" height="22" loading="lazy" decoding="async">Visma</span>
+            <span class="int-item" data-kat="regnskap"><img src="assets/integrasjoner/visma.webp" alt="" width="22" height="22" loading="lazy" decoding="async">Visma</span>
             <span class="int-item" data-kat="regnskap"><img src="assets/integrasjoner/tripletex.svg" alt="" width="22" height="22" loading="lazy" decoding="async">Tripletex</span>
             <span class="int-item" data-kat="crm"><img src="assets/integrasjoner/hubspot.svg" alt="" width="22" height="22" loading="lazy" decoding="async">HubSpot</span>
             <span class="int-item" data-kat="automasjon"><img src="assets/integrasjoner/googlesheets.svg" alt="" width="22" height="22" loading="lazy" decoding="async">Google Sheets</span>
@@ -679,15 +723,15 @@ footer{background:var(--vda-navy);color:var(--vda-on-navy-dim);padding:72px 0 56
             <span class="int-item" data-kat="automasjon"><img src="assets/integrasjoner/make.svg" alt="" width="22" height="22" loading="lazy" decoding="async">Make</span>
             <span class="int-item" data-kat="crm"><img src="assets/integrasjoner/shopify.svg" alt="" width="22" height="22" loading="lazy" decoding="async">Shopify</span>
             <span class="int-item" data-kat="automasjon"><img src="assets/integrasjoner/notion.svg" alt="" width="22" height="22" loading="lazy" decoding="async">Notion</span>
-            <span class="int-item" data-kat="regnskap"><img src="assets/integrasjoner/fiken.png" alt="" width="22" height="22" loading="lazy" decoding="async">Fiken</span>
+            <span class="int-item" data-kat="regnskap"><img src="assets/integrasjoner/fiken.webp" alt="" width="22" height="22" loading="lazy" decoding="async">Fiken</span>
             <span class="int-item" data-kat="crm"><img src="assets/integrasjoner/whatsapp.svg" alt="" width="22" height="22" loading="lazy" decoding="async">WhatsApp</span>
             <span class="int-item" data-kat="automasjon"><img src="assets/integrasjoner/airtable.svg" alt="" width="22" height="22" loading="lazy" decoding="async">Airtable</span>
             <span class="int-item" data-kat="regnskap"><img src="assets/integrasjoner/stripe.svg" alt="" width="22" height="22" loading="lazy" decoding="async">Stripe</span>
-            <span class="int-item" data-kat="regnskap"><img src="assets/integrasjoner/poweroffice.png" alt="" width="22" height="22" loading="lazy" decoding="async">PowerOffice Go</span>
+            <span class="int-item" data-kat="regnskap"><img src="assets/integrasjoner/poweroffice.webp" alt="" width="22" height="22" loading="lazy" decoding="async">PowerOffice Go</span>
             <span class="int-item" data-kat="crm"><img src="assets/integrasjoner/meta.svg" alt="" width="22" height="22" loading="lazy" decoding="async">Meta</span>
             <span class="int-item" data-kat="automasjon"><img src="assets/integrasjoner/n8n.svg" alt="" width="22" height="22" loading="lazy" decoding="async">n8n</span>
             <span class="int-item" data-kat="automasjon"><img src="assets/integrasjoner/googledrive.svg" alt="" width="22" height="22" loading="lazy" decoding="async">Google Drive</span>
-            <span class="int-item" data-kat="crm"><img src="assets/integrasjoner/pipedrive.png" alt="" width="22" height="22" loading="lazy" decoding="async">Pipedrive</span>
+            <span class="int-item" data-kat="crm"><img src="assets/integrasjoner/pipedrive.webp" alt="" width="22" height="22" loading="lazy" decoding="async">Pipedrive</span>
             <span class="int-item" data-kat="crm"><img src="assets/integrasjoner/twilio.svg" alt="" width="22" height="22" loading="lazy" decoding="async">Twilio</span>
             <span class="int-item" data-kat="automasjon"><img src="assets/integrasjoner/supabase.svg" alt="" width="22" height="22" loading="lazy" decoding="async">Supabase</span>
           </div>
