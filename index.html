@@ -345,6 +345,50 @@ h1{
 .btn-navy:hover{background:var(--vda-brass);color:var(--vda-navy)}
 .btn-creme{background:var(--vda-creme);color:var(--vda-navy)}
 .btn-creme:hover{background:var(--vda-brass);color:var(--vda-navy)}
+/* ---- Bli ringt opp ---- */
+.btn-linje{background:none;color:var(--vda-navy);border:var(--vda-border-w) solid var(--vda-navy);margin-left:14px}
+.btn-linje:hover{background:var(--vda-navy);color:var(--vda-creme)}
+.hero-actions{display:flex;flex-wrap:wrap;gap:12px 0;align-items:center}
+.ring-modal{position:fixed;inset:0;z-index:310;display:flex;align-items:center;justify-content:center;padding:24px}
+.ring-modal[hidden]{display:none}
+.ring-scrim{position:absolute;inset:0;background:rgba(20,39,63,.55);opacity:0;transition:opacity .3s ease}
+.ring-boks{position:relative;background:var(--vda-creme);border:var(--vda-border-w) solid var(--vda-dust);width:min(460px,100%);max-height:calc(100dvh - 48px);overflow:auto;padding:40px 36px 34px;transform:translateY(40px);opacity:0;transition:transform .38s var(--mo-ease,cubic-bezier(.16,1,.3,1)),opacity .3s ease}
+.ring-modal.apen .ring-scrim{opacity:1}
+.ring-modal.apen .ring-boks{transform:none;opacity:1}
+.ring-boks h3{font-size:26px;line-height:1.2;margin:0 0 6px;color:var(--vda-navy)}
+.ring-boks .ring-ingress{font-size:14.5px;color:var(--vda-grey);margin:0 0 22px;line-height:1.5}
+.ring-valg{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:18px}
+.ring-valg label{position:relative;display:block;padding:12px 10px;text-align:center;border:var(--vda-border-w) solid var(--vda-dust);border-radius:var(--vda-radius-sm);font-family:var(--vda-font-body);font-size:13.5px;font-weight:500;color:var(--vda-navy);cursor:pointer;transition:background .2s,color .2s,border-color .2s}
+.ring-valg input{position:absolute;opacity:0;width:0;height:0}
+.ring-valg input:checked+span{color:var(--vda-creme)}
+.ring-valg label:has(input:checked){background:var(--vda-navy);border-color:var(--vda-navy);color:var(--vda-creme)}
+.ring-valg label:has(input:focus-visible){outline:2px solid var(--vda-brass);outline-offset:2px}
+.ring-felt{display:block;margin-bottom:14px}
+.ring-felt span{display:block;font-family:var(--vda-font-body);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--vda-grey);margin-bottom:6px}
+.ring-felt input{width:100%;box-sizing:border-box;font-family:var(--vda-font-body);font-size:16px;padding:12px 14px;color:var(--vda-navy);background:#fff8;border:var(--vda-border-w) solid var(--vda-dust);border-radius:var(--vda-radius-sm);outline:none;transition:border-color .2s,box-shadow .2s}
+.ring-felt input:focus{border-color:var(--vda-navy);box-shadow:0 0 0 3px rgba(20,39,63,.12)}
+.ring-felt input[aria-invalid="true"]{border-color:#B3392B}
+.ring-send{width:100%;justify-content:center;margin-top:6px}
+.ring-send[disabled]{opacity:.6;cursor:progress;transform:none}
+.ring-note{font-size:12px;color:var(--vda-grey);margin:14px 0 0;line-height:1.5;text-align:center}
+.ring-feil{display:none;font-family:var(--vda-font-body);font-size:13px;color:#B3392B;margin:0 0 12px}
+.ring-feil.vis{display:block}
+.ring-takk{display:none;text-align:center;padding:12px 0 4px}
+.ring-takk h3{margin-bottom:10px}
+.ring-takk p{color:var(--vda-grey);font-size:15px;line-height:1.55;margin:0}
+.ring-modal.ferdig form{display:none}
+.ring-modal.ferdig .ring-takk{display:block}
+.ring-lukk{position:absolute;top:12px;right:12px;width:36px;height:36px;background:none;border:var(--vda-border-w) solid var(--vda-dust);color:var(--vda-navy);font-size:20px;line-height:1;cursor:pointer;font-family:var(--vda-font-body);border-radius:var(--vda-radius-sm)}
+.ring-lukk:hover{color:var(--vda-brass);border-color:var(--vda-brass)}
+.ring-hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+@media(max-width:480px){
+  .btn-linje{margin-left:0}
+  .hero-actions .btn{width:100%;justify-content:center;box-sizing:border-box}
+  .ring-modal{padding:12px;align-items:flex-end}
+  .ring-boks{padding:30px 22px 26px}
+}
+@media (prefers-reduced-motion:reduce){.ring-scrim,.ring-boks{transition:none}}
+
 @media(max-width:640px){header{padding:64px 0 48px}}
 
 /* ---------- KUNDELOGOER ---------- */
@@ -668,6 +712,7 @@ header#top>.wrap{position:relative}
         <p class="hero-sub">Først finner vi ut hvor dere taper mest tid. Så bygger vi bare det.</p>
         <div class="hero-actions">
           <a class="btn btn-navy" href="#kontakt">Book en uforpliktende samtale <span class="pil">→</span></a>
+          <button class="btn btn-linje" type="button" id="ring-knapp">Bli ringt opp</button>
         </div>
       </div>
     </div>
@@ -1304,6 +1349,76 @@ function vdaStartTracking(fullConsent){
   });
 })();
 
+</script>
+
+<div class="ring-modal" id="ring-modal" hidden>
+  <div class="ring-scrim"></div>
+  <div class="ring-boks" role="dialog" aria-modal="true" aria-labelledby="ring-tittel">
+    <button class="ring-lukk" type="button" aria-label="Lukk">&times;</button>
+    <form id="ring-form" novalidate>
+      <h3 id="ring-tittel">Skal vi ta kontakt?</h3>
+      <p class="ring-ingress">Legg igjen nummeret ditt, så hører du fra oss. Uforpliktende.</p>
+      <div class="ring-valg" role="radiogroup" aria-label="Hvordan vil du bli kontaktet?">
+        <label><input type="radio" name="valg" value="ring" checked><span>Ring meg opp</span></label>
+        <label><input type="radio" name="valg" value="kontakt"><span>Send meg en melding</span></label>
+      </div>
+      <label class="ring-felt"><span>Navn</span><input type="text" name="navn" autocomplete="name" placeholder="Valgfritt"></label>
+      <label class="ring-felt"><span>Telefonnummer</span><input type="tel" name="telefon" autocomplete="tel" inputmode="tel" placeholder="+47 000 00 000" required></label>
+      <label class="ring-hp" aria-hidden="true">Firma <input type="text" name="firma" tabindex="-1" autocomplete="off"></label>
+      <p class="ring-feil" id="ring-feil" aria-live="polite"></p>
+      <button class="btn btn-navy ring-send" type="submit" id="ring-send">Send <span class="pil">→</span></button>
+      <p class="ring-note">Vi tar kontakt i arbeidstiden, som regel samme dag. Nummeret brukes kun til å kontakte deg.</p>
+    </form>
+    <div class="ring-takk" aria-live="polite">
+      <h3>Takk!</h3>
+      <p id="ring-takk-tekst">Vi ringer deg så snart vi kan.</p>
+    </div>
+  </div>
+</div>
+<script>
+(function(){
+  var modal=document.getElementById('ring-modal'),knapp=document.getElementById('ring-knapp');
+  if(!modal||!knapp)return;
+  var form=document.getElementById('ring-form'),feil=document.getElementById('ring-feil'),send=document.getElementById('ring-send'),
+      lukkBtn=modal.querySelector('.ring-lukk'),scrim=modal.querySelector('.ring-scrim'),tel=form.telefon;
+  var URL='https://mvichoussxfcstizvlwx.supabase.co/functions/v1/ring-meg';
+  var ANON='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im12aWNob3Vzc3hmY3N0aXp2bHd4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM1ODkxMTAsImV4cCI6MjA4OTE2NTExMH0.L75gHWwhm3AzJ2jmfYHB7ZU_sJErgMCh0_sZ0abaBkc';
+  function apne(){
+    modal.hidden=false;modal.classList.remove('ferdig');
+    requestAnimationFrame(function(){requestAnimationFrame(function(){modal.classList.add('apen');});});
+    document.body.style.overflow='hidden';
+    setTimeout(function(){tel.focus();},380);
+  }
+  function lukk(){
+    modal.classList.remove('apen');document.body.style.overflow='';
+    setTimeout(function(){modal.hidden=true;},380);knapp.focus();
+  }
+  knapp.addEventListener('click',apne);
+  lukkBtn.addEventListener('click',lukk);scrim.addEventListener('click',lukk);
+  addEventListener('keydown',function(e){if(e.key==='Escape'&&!modal.hidden)lukk();});
+  function visFeil(t){feil.textContent=t;feil.classList.toggle('vis',!!t);tel.setAttribute('aria-invalid',t?'true':'false');}
+  function gyldig(v){var t=v.replace(/[\s().-]/g,'');if(t.indexOf('0047')===0)t='+47'+t.slice(4);if(/^\d{8}$/.test(t))t='+47'+t;return /^\+\d{8,15}$/.test(t);}
+  tel.addEventListener('input',function(){if(feil.classList.contains('vis')&&gyldig(tel.value))visFeil('');});
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    if(!gyldig(tel.value)){visFeil('Skriv inn et gyldig telefonnummer (8 siffer, eller med landkode).');tel.focus();return;}
+    visFeil('');send.disabled=true;send.firstChild.textContent='Sender ';
+    var valg=form.querySelector('input[name=valg]:checked').value;
+    fetch(URL,{method:'POST',headers:{'Content-Type':'application/json','apikey':ANON,'Authorization':'Bearer '+ANON},
+      body:JSON.stringify({telefon:tel.value,navn:form.navn.value,valg:valg,firma:form.firma.value,side:location.href})})
+    .then(function(r){return r.json().then(function(j){return {ok:r.ok,j:j};});})
+    .then(function(res){
+      if(!res.ok||!res.j.ok){throw new Error(res.j&&res.j.error||'feil');}
+      document.getElementById('ring-takk-tekst').textContent=valg==='ring'?'Vi ringer deg så snart vi kan – som regel i løpet av dagen.':'Vi tar kontakt så snart vi kan – som regel i løpet av dagen.';
+      modal.classList.add('ferdig');form.reset();
+    })
+    .catch(function(err){
+      var m=String(err.message||'');
+      visFeil(m==='telefon'?'Telefonnummeret ser ikke riktig ut.':m==='ratelimit'?'Du har sendt mange forespørsler – ring oss heller på 91 24 32 24.':'Noe gikk galt. Ring oss gjerne direkte på 91 24 32 24.');
+    })
+    .finally(function(){send.disabled=false;send.firstChild.textContent='Send ';});
+  });
+})();
 </script>
 
 <div id="cookie-banner">
