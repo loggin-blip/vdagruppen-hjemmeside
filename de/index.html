@@ -3521,14 +3521,15 @@ html:has(#sy-lys[open]){overflow:hidden}
 #massivlust .ml5-logo{display:block;flex:none;width:auto;height:40px;filter:brightness(0);opacity:.78}
 #massivlust .ml5-kunde-t{display:block;min-width:0;padding-left:16px;border-left:.5px solid var(--vda-dust);font-family:var(--fd);font-size:11.5px;line-height:1.5;letter-spacing:.16em;text-transform:uppercase;color:var(--vda-grey)}
 #massivlust .ml5-intro .h2{font-size:clamp(30px,3.2vw,44px);line-height:1.2;max-width:21ch;text-wrap:balance}
-#massivlust .ml5-tekst{font-size:16px;line-height:1.65;color:var(--vda-grey);max-width:46ch;padding-bottom:6px}
 
 /* tre tall (teller opp via [data-tall] i felles.js) */
-#massivlust .ml5-tall{margin-top:64px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:36px}
+#massivlust .ml5-tall{margin-top:40px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:30px}
 #massivlust .ml5-tall>div{border-top:.5px solid var(--vda-dust);padding-top:18px;min-width:0}
-#massivlust .ml5-tall b{display:block;font-family:var(--fd);font-weight:400;font-size:clamp(42px,4.6vw,62px);line-height:1.05;letter-spacing:-.01em;color:var(--vda-navy);font-variant-numeric:tabular-nums;white-space:nowrap}
+#massivlust .ml5-tall b{display:block;font-family:var(--fd);font-weight:400;font-size:clamp(34px,3.6vw,50px);line-height:1.05;letter-spacing:-.01em;color:var(--vda-navy);font-variant-numeric:tabular-nums;white-space:nowrap}
 #massivlust .ml5-tall span{display:block;margin-top:12px;font-size:14px;line-height:1.5;color:var(--vda-grey);max-width:26ch}
-#massivlust .ml5-kilde{margin-top:22px;font-size:12.5px;line-height:1.5;color:var(--vda-grey)}
+#massivlust .ml5-sync{margin-top:18px;font-size:14.5px;line-height:1.5;color:var(--vda-brass-tekst,#7A5822)}
+#massivlust .ml5-tekst{font-size:16px;line-height:1.75;color:var(--vda-grey);max-width:46ch;margin-top:30px;padding-bottom:0}
+#massivlust .ml5-kilde{margin-top:14px;font-size:12.5px;line-height:1.5;color:var(--vda-grey)}
 
 /* sitatet stort + knappen rett etter, chatutdraget ved siden av */
 #massivlust .ml5-bevis{margin-top:96px;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);column-gap:64px;row-gap:56px;align-items:center}
@@ -3611,14 +3612,15 @@ html:not(.js) #massivlust .ml5-acc .collapse{display:block}
   #massivlust .ml5-del h4{font-size:18px}
 }
 @media (max-width:599px){
-  #massivlust .ml5-tall{grid-template-columns:1fr;gap:0}
-  #massivlust .ml5-tall>div{display:grid;grid-template-columns:8.2rem minmax(0,1fr);column-gap:14px;align-items:baseline;padding:14px 0 16px}
-  #massivlust .ml5-tall b{font-size:38px}
-  #massivlust .ml5-tall span{margin-top:0;font-size:14px;max-width:none}
+  #massivlust .ml5-tall{grid-template-columns:1fr 1fr;gap:28px 20px}
+  #massivlust .ml5-tall>div{padding:14px 0 0}
+  #massivlust .ml5-tall b{font-size:34px}
+  #massivlust .ml5-tall span{margin-top:8px;font-size:13.5px;max-width:none}
 }
 @media (max-width:359px){
-  #massivlust .ml5-tall>div{grid-template-columns:6.6rem minmax(0,1fr);column-gap:12px}
-  #massivlust .ml5-tall b{font-size:32px}
+  #massivlust .ml5-tall{grid-template-columns:1fr;gap:18px}
+  #massivlust .ml5-tall>div{padding-top:12px}
+  #massivlust .ml5-tall b{font-size:30px}
   #massivlust .ml5-kunde{gap:12px}
   #massivlust .ml5-kunde-t{padding-left:12px;letter-spacing:.12em}
 }
@@ -4507,17 +4509,20 @@ Wie telefonisch besprochen, schicke ich die aktualisierte Mannschaftsliste (#9) 
     <div class="ml5-hode">
       <div class="ml5-intro">
         <p class="ml5-kunde rv"><img class="ml5-logo" src="/assets/entreprenor/massivlust.webp" alt="Massivlust-Logo" width="300" height="131"><span class="ml5-kunde-t">Kunde · Massivlust · Montage von Massivholz</span></p>
-        <h2 class="h2 rv" id="ml5-t">Bei Massivlust bittet der Projektleiter im Chat um Protokoll, SJA und Mannschaftsliste.</h2>
+        <h2 class="h2 rv" id="ml5-t">Massivlust &ndash; die Zahlen sprechen für sich.</h2>
       </div>
-      <p class="ml5-tekst rv">Massivlust montiert Massivholz für Generalunternehmer, mit Monteuren auf mehreren Baustellen gleichzeitig. Die Monteure schreiben den Tagesbericht in einen Chat: was montiert wurde und was die Arbeit aufgehalten hat. Die Stunden erfassen sie wie bisher in Tripletex. Der Inhaber bekommt um&nbsp;08:30 einen Morgenbericht, wer wo ist, und um&nbsp;17:00 einen Abendbericht.</p>
     </div>
 
     <div class="ml5-tall rv" data-tall>
-      <div><b data-til="2872">2.872</b><span>Stunden aus Tripletex abgerufen, 11&nbsp;Personen, 3&nbsp;Projekte</span></div>
-      <div><b data-til="61">61</b><span>Abweichungen dokumentiert 20.11.2025–14.10.2026, mindestens 32&nbsp;davon Fehler anderer</span></div>
-      <div><b data-til="15">15</b><span>Minuten zwischen zwei Abrufen der Stunden aus Tripletex</span></div>
+      <div><b data-til="2872">2.872</b><span>Stunden automatisch aus Tripletex &ndash; fast 3.000</span></div>
+      <div><b data-til="11">11</b><span>Monteure auf 3&nbsp;Baustellen gleichzeitig</span></div>
+      <div><b data-til="61">61</b><span>Abweichungen dokumentiert in unter 11&nbsp;Monaten</span></div>
+      <div><b>50&nbsp;%+</b><span>verursacht von anderen &ndash; nicht von uns</span></div>
     </div>
-    <p class="ml5-kilde rv">Gemessen im System von Massivlust am 19.10.2026. Die Zahlen zeigen die Datengrundlage, nicht die gesparte Zeit.</p>
+    <p class="ml5-sync rv">Stunden werden alle 15&nbsp;Minuten synchronisiert &ndash; immer aktuell, kein manueller Aufwand.</p>
+
+    <p class="ml5-tekst rv">Die Monteure schreiben einen Tagesbericht im Chat: was montiert wurde und was die Arbeit aufgehalten hat.<br>Der Projektleiter bekommt Protokoll, SJA und Mannschaftsliste direkt dort.<br>Der Inhaber bekommt um&nbsp;08:30 einen Morgenbericht und um&nbsp;17:00 einen Abendbericht &ndash; automatisch.</p>
+    <p class="ml5-kilde rv">Gemessen im System von Massivlust am 19.10.2026. Die Zahlen zeigen die tatsächliche Datengrundlage &ndash; keine geschätzte Zeitersparnis.</p>
 
     <div class="ml5-bevis">
       <div class="ml5-venstre">
