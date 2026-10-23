@@ -5470,7 +5470,7 @@ if(scene){
       var travel=Math.max(1,scene.offsetHeight-shell.offsetHeight);
       var position=Math.max(0,Math.min(1,(72-bounds.top)/travel));
       best=Math.min(3,Math.floor(position*3)+1);
-      inn.style.transform='';
+      inn.style.transform='translate3d(0,'+((.5-position)*22).toFixed(1)+'px,0)';
       if(bounds.top<innerHeight*.7)settSteg(best);
       scene.querySelector('.sy-buhne').removeAttribute('aria-hidden');
       bokser.forEach(function(b,i){b.inert=i!==best-1;});
