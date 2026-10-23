@@ -4029,6 +4029,103 @@ html body .sec-navy .trygg,html body [class*="navy"] .trygg,html body #tro .tryg
 @media (min-width:900px){.spraak-desk{display:block}.spraak-mobil{display:none}}
 .spraak-mobil{margin-left:auto}
 </style>
+<style id="vda-mobile-experience">
+/* Egen mobilutgave av v5. PC beholder originalens regler. */
+.sy-scene-viewport {display:contents}
+.mobil-samtale {position:fixed;inset:0;margin:auto;width:min(94vw,480px);max-height:90dvh;padding:0;border:0;border-radius:16px;background:#d6e2cb;color:#14273f}
+.mobil-samtale::backdrop {background:rgba(20,39,63,.85)}
+.mobil-samtale>button {position:sticky;top:0;display:block;margin-left:auto;min-width:48px;min-height:48px;border:0;background:#ede3ce;color:#14273f;font-size:28px;z-index:2}
+.mobil-samtale-inn {padding:10px 14px 24px;font:16px/1.4 var(--fb);overflow:auto}
+.mobil-samtale .tg-msgs {position:static;transform:none!important}
+.mobil-samtale .tgr {opacity:1;transform:none;transition:none}
+.mobil-samtale img {max-width:100%;height:auto}
+@media (max-width:899px) {
+  #top .ht-tlf {align-items:center;margin:42px auto 32px;perspective:1200px}
+  #top .ph-wrap,#systemet .sy-ph {width:auto;max-width:100%;margin-inline:auto}
+  #top .phone,#systemet .sy-ph .phone {
+    --ph-h:min(620px,184vw);height:var(--ph-h);width:calc(var(--ph-h) * .4875);
+    max-width:none;transform:perspective(1500px) rotateY(-12deg) rotateX(4deg);
+    transform-origin:center;isolation:isolate;
+  }
+  #top .ph-frame,#systemet .sy-ph .ph-frame,
+  #top .ph-btn,#systemet .sy-ph .ph-btn,
+  #top .ph-island,#systemet .sy-ph .ph-island,
+  #top .ph-home,#systemet .sy-ph .ph-home {display:block}
+  #top .ph-status,#systemet .sy-ph .ph-status {display:grid}
+  #top .tg-input,#systemet .sy-ph .tg-input {display:flex}
+  #top .ph-screen,#systemet .sy-ph .ph-screen {
+    position:absolute;inset:calc(var(--ph-h) * .018);border-radius:calc(var(--ph-h) * .064);
+    font-size:14.5px;line-height:1.32;overflow:hidden;
+  }
+  #top .ph-frame,#systemet .sy-ph .ph-frame {
+    box-shadow:2px 0 0 2px #a4a6aa,5px 1px 0 3px #34373d,0 28px 45px -25px rgba(20,39,63,.45);
+  }
+  #top .tg-chat,#systemet .sy-ph .tg-chat {flex:1;min-height:0;overflow:auto;overscroll-behavior-y:contain}
+  #top .tg-msgs,#systemet .sy-ph .tg-msgs {position:relative;inset:auto;padding:.75em .65em;min-height:100%;justify-content:flex-end;transform:none}
+  #top .ht-klar .ht-m:not(.ht-vist) {display:none}
+  #systemet .sy-fig-tlf {align-items:center;perspective:1200px;padding-block:18px 26px}
+  #systemet .sy-rad {padding-block:50px 64px;gap:30px}
+  #systemet .sy-t {max-width:20ch;font-size:clamp(26px,7vw,34px)}
+  #systemet .sy-h2 {font-size:clamp(30px,8vw,38px)}
+  #systemet .sy-dash {touch-action:manipulation}
+  #systemet .sy-lys-inn {overflow:auto;display:block}
+  #systemet .sy-lys-inn img {width:1100px;max-width:none;height:auto}
+  .ht h1 {font-size:clamp(32px,8.7vw,46px);max-width:15ch}
+  .ht-grid {padding-bottom:48px}
+  .ht-bevis {margin-top:40px}
+}
+@media (max-width:899px) {
+  #systemet.sy-har-scene .sy-rad {display:none}
+  #systemet .sy-scene {display:block;height:320svh;position:relative;margin-top:36px}
+  #systemet .sy-scene-viewport {
+    position:sticky;top:72px;height:calc(100svh - 84px);min-height:540px;
+    display:grid;grid-template-rows:auto minmax(0,1fr) 44px;gap:12px;
+  }
+  #systemet .sy-steg {display:grid;position:relative}
+  #systemet .sy-stegboks {grid-area:1 / 1;min-width:0;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .3s}
+  #systemet .sy-stegboks.aktiv {opacity:1;visibility:visible;pointer-events:auto}
+  #systemet .sy-stegboks .sy-t {font-size:clamp(23px,6vw,29px);line-height:1.18;margin-top:8px;max-width:24ch}
+  #systemet .sy-stegboks .sy-tekst p {font-size:15px;line-height:1.45;margin-top:10px}
+  #systemet .sy-stegboks .sy-sitat,#systemet .sy-stegboks .sy-knapp2 {display:none}
+  #systemet .sy-buhne {position:relative;min-height:0;isolation:isolate}
+  #systemet .sy-buhne-inn {position:absolute;inset:0}
+  #systemet .sy-scene-tlf {
+    position:absolute;inset:6px 0 8px;width:fit-content;margin:auto;opacity:0;visibility:hidden;pointer-events:none;
+    transform:translate3d(0,24px,0);transition:transform .55s var(--ease),opacity .3s,visibility .3s;
+  }
+  #systemet .sy-scene-tlf .phone {
+    --ph-h:520px;height:100%;width:min(260px,70vw);transform:perspective(1500px) rotateY(-12deg) rotateX(3deg);
+  }
+  #systemet .sy-scene-tlf .ph-screen {font-size:14px}
+  #systemet .sy-scene[data-steg="1"] .sy-t1,#systemet .sy-scene[data-steg="2"] .sy-t2,#systemet .sy-scene[data-steg="3"] .sy-t3 {
+    opacity:1;visibility:visible;pointer-events:auto;transform:translate3d(0,0,0);
+  }
+  #systemet .sy-scene[data-steg="2"] .sy-t2 {transform:translate3d(-16%,0,0) scale(.82);transform-origin:bottom left}
+  #systemet .sy-bak {position:absolute;inset:14% 0 auto;opacity:.28;transform:scale(.88);transition:transform .55s,opacity .4s}
+  #systemet .sy-bak .sy-dash {pointer-events:none}
+  #systemet .sy-bak img {filter:none;box-shadow:0 18px 32px -20px #14273f66}
+  #systemet .sy-bak picture source {display:none}
+  #systemet .sy-bak .sy-ramme,#systemet .sy-bak .sy-forstorr {display:none}
+  #systemet .sy-bak-merke {font-size:11px;letter-spacing:.08em;color:var(--vda-grey)}
+  #systemet .sy-scene[data-steg="2"] .sy-bak {opacity:1;transform:scale(1)}
+  #systemet .sy-scene .tgr.skjult {display:none}
+  #systemet .sy-scene .tg-msgs {transition:none}
+  .mobil-scene-nav {display:flex;align-items:center;justify-content:space-between;gap:8px}
+  .mobil-scene-nav button {min-height:44px;min-width:44px;border:1px solid var(--vda-border);background:var(--vda-creme);color:var(--vda-navy);font:14px var(--fb);padding:8px 12px}
+  .mobil-scene-nav button:focus-visible {outline:2px solid var(--vda-navy);outline-offset:2px}
+  .mobil-scene-nav button:disabled {opacity:.35}
+  .mobil-scene-nav output {font:13px var(--fb);font-variant-numeric:tabular-nums}
+  .mobil-scene-ekstra {margin:32px 0}
+  #systemet .mobil-scene-ekstra .sy-knapp2 {margin-top:24px}
+  #systemet .sy-scene-tlf .tg-chat {overscroll-behavior-y:auto}
+}
+@media (min-width:900px) {.mobil-scene-nav,.mobil-scene-ekstra {display:none}}
+@media (max-width:899px) and (prefers-reduced-motion:reduce) {
+  #top .phone,#systemet .sy-ph .phone {transform:none!important}
+  #top .ht-klar .ht-m:not(.ht-vist) {display:flex}
+}
+
+</style>
 </head>
 <body>
 <a class="hopp-til" href="#innhold">Skip to content</a>
@@ -5329,13 +5426,13 @@ function byggScene(){
     }
     venstre.appendChild(boks);
   }
-  sc.appendChild(venstre);sc.appendChild(buhne);
+  var viewport=document.createElement('div');viewport.className='sy-scene-viewport';viewport.appendChild(venstre);viewport.appendChild(buhne);sc.appendChild(viewport);
   rader[0].parentNode.insertBefore(sc,rader[0]);
   sc.querySelectorAll('.rv').forEach(function(e){e.classList.remove('rv');});
   sek.classList.add('sy-har-scene');
   return sc;
 }
-if(!rm&&desk.matches&&window.IntersectionObserver){
+if(!rm&&window.IntersectionObserver){
   scene=byggScene();
 }
 if(scene){
@@ -5351,7 +5448,7 @@ if(scene){
       var r=rr[i++];
       setTimeout(function(){r.classList.remove('skjult');r.classList.add('nw');
         requestAnimationFrame(function(){requestAnimationFrame(function(){r.classList.remove('nw');});});
-        msgs.scrollTop=msgs.scrollHeight;neste();},+(r.getAttribute('data-t')||700));
+        msgs.scrollTop=msgs.scrollHeight;if(!desk.matches)msgs.parentElement.scrollTop=msgs.parentElement.scrollHeight;neste();},+(r.getAttribute('data-t')||700));
     })();
   }
   function settSteg(n){
@@ -5359,17 +5456,35 @@ if(scene){
     bokser.forEach(function(b){b.classList.toggle('aktiv',b.getAttribute('data-steg')===String(n));});
     spillScene(n);
   }
-  var rTikk=0;
+  var rTikk=0,rReserve=0;
   function rull(){
-    rTikk=0;
+    if(rTikk)cancelAnimationFrame(rTikk);
+    clearTimeout(rReserve);rReserve=0;rTikk=0;
     var midt=innerHeight*.5,best=1,bestD=1e9;
+    if(!desk.matches){
+      var bounds=scene.getBoundingClientRect();
+      var shell=scene.querySelector('.sy-scene-viewport');
+      var travel=Math.max(1,scene.offsetHeight-shell.offsetHeight);
+      var position=Math.max(0,Math.min(1,(72-bounds.top)/travel));
+      best=Math.min(3,Math.floor(position*3)+1);
+      inn.style.transform='';
+      if(bounds.top<innerHeight*.7)settSteg(best);
+      scene.querySelector('.sy-buhne').removeAttribute('aria-hidden');
+      bokser.forEach(function(b,i){b.inert=i!==best-1;});
+      scene.querySelectorAll('.sy-scene-tlf').forEach(function(t,i){t.inert=i!==best-1;});
+      return;
+    }
+    bokser.forEach(function(b){b.inert=false;});
+    scene.querySelectorAll('.sy-scene-tlf').forEach(function(t){t.inert=false;});
+    scene.querySelector('.sy-buhne').setAttribute('aria-hidden','true');
     bokser.forEach(function(b){var r=b.getBoundingClientRect(),d=Math.abs((r.top+r.bottom)/2-midt);if(d<bestD){bestD=d;best=+b.getAttribute('data-steg');}});
     var sr=scene.getBoundingClientRect(),p=Math.min(1,Math.max(0,(midt-sr.top)/Math.max(1,sr.height)));
     inn.style.transform='translate3d(0,'+((.5-p)*40).toFixed(1)+'px,0)';
     if(sr.top<innerHeight*.75)settSteg(best);
   }
-  addEventListener('scroll',function(){if(!rTikk)rTikk=requestAnimationFrame(rull);},{passive:true});
-  addEventListener('resize',function(){if(!rTikk)rTikk=requestAnimationFrame(rull);},{passive:true});
+  function planleggScene(){if(!rTikk){rTikk=requestAnimationFrame(rull);rReserve=setTimeout(rull,100);}}
+  addEventListener('scroll',planleggScene,{passive:true});
+  addEventListener('resize',planleggScene,{passive:true});
   rull();
   bokser.forEach(function(b){b.classList.toggle('aktiv',b.getAttribute('data-steg')===scene.getAttribute('data-steg'));});
   /* går vinduet under 900 px: scenen skjules av CSS, og radene vises med alle boblene */
@@ -5498,6 +5613,112 @@ if(location.hash==='#lista')aapne();
 addEventListener('hashchange',function(){if(location.hash==='#lista')aapne();});
 
 })();}catch(e){console.error("v5 lista",e);}
+</script>
+<script>
+/* Scrollbevegelse med samme telefon og samtaler som PC-utgaven. */
+(() => {
+  const mobile = matchMedia('(max-width:899px)');
+  const reduced = matchMedia('(prefers-reduced-motion:reduce)');
+  const language = document.documentElement.lang.slice(0, 2);
+  const labels = ({en: ['Conversation with the assistant. Scroll to read all messages.', 'Choose a product section', 'Previous section', 'View larger', 'Next section'],de: ['Gespräch mit dem Assistenten. Scrollen Sie, um alle Nachrichten zu lesen.', 'Produktabschnitt wählen', 'Vorheriger Abschnitt', 'Vergrößern', 'Nächster Abschnitt']})[language] || ['Samtale med assistenten. Rull for å lese alle meldingene.', 'Velg del av produktvisningen', 'Forrige del', 'Se større', 'Neste del'];
+  const phones = [...document.querySelectorAll('#top .phone, #systemet .sy-rad .phone')];
+  const moved = new WeakSet();
+  let frame = 0;
+  function draw() {
+    frame = 0;
+    phones.forEach(phone => {
+      if (!mobile.matches || reduced.matches) {
+        if (moved.has(phone)) {phone.style.removeProperty('transform');moved.delete(phone);}
+        return;
+      }
+      const rect = phone.parentElement.getBoundingClientRect();
+      if (rect.bottom < -100 || rect.top > innerHeight + 100) return;
+      const progress = Math.max(-1, Math.min(1, (rect.top + rect.height / 2 - innerHeight / 2) / innerHeight));
+      phone.style.transform = `perspective(1500px) translate3d(0,${progress * 16}px,0) rotateY(${-8 - progress * 12}deg) rotateX(${3 + progress * 3}deg) rotateZ(${progress}deg)`;
+      moved.add(phone);
+    });
+  }
+  const schedule = () => {if (!frame) frame = requestAnimationFrame(draw);};
+  addEventListener('scroll', schedule, {passive:true});
+  addEventListener('resize', schedule, {passive:true});
+  mobile.addEventListener('change', schedule);
+  reduced.addEventListener('change', schedule);
+  phones.forEach(phone => {
+    const chat = phone.querySelector('.tg-chat');
+    if (!chat) return;
+    chat.tabIndex = 0;
+    chat.setAttribute('aria-label', labels[0]);
+    const messages = phone.querySelector('.tg-msgs');
+    if (messages) new MutationObserver(() => {
+      if (mobile.matches) chat.scrollTop = chat.scrollHeight;
+    }).observe(messages, {subtree:true,attributes:true,childList:true});
+  });
+  schedule();
+  function connectScene() {
+    const scene = document.querySelector('#systemet .sy-scene');
+    if (!scene) return;
+    const shell = scene.querySelector('.sy-scene-viewport');
+    scene.querySelectorAll('.sy-bak picture source').forEach(source => source.remove());
+    const extra = document.createElement('div');
+    extra.className = 'mobil-scene-ekstra';
+    document.querySelectorAll('#systemet .sy-rad-2 .sy-sitat, #systemet .sy-rad-2 .sy-knapp2').forEach(element => {
+      const copy = element.cloneNode(true);
+      copy.classList.remove('rv');
+      extra.append(copy);
+    });
+    scene.after(extra);
+    const nav = document.createElement('nav');
+    nav.className = 'mobil-scene-nav';
+    nav.setAttribute('aria-label', labels[1]);
+    nav.innerHTML = '<button type="button">←</button><output aria-live="polite">1 / 3</output><button type="button" class="mobil-dash"></button><button type="button">→</button>';
+    shell.append(nav);
+    const buttons = nav.querySelectorAll('button');
+    buttons[0].setAttribute('aria-label', labels[2]);
+    buttons[1].textContent = labels[3];
+    buttons[2].setAttribute('aria-label', labels[4]);
+    function go(delta) {
+      const index = Math.max(0, Math.min(2, Number(scene.dataset.steg) - 1 + delta));
+      const travel = scene.offsetHeight - shell.offsetHeight;
+      scrollTo({top: scrollY + scene.getBoundingClientRect().top - 72 + travel * ((index + .5) / 3),behavior: 'instant'});
+    }
+    buttons[0].addEventListener('click', () => go(-1));
+    buttons[2].addEventListener('click', () => go(1));
+    const dialog = document.querySelector('#sy-lys');
+    const conversation = document.createElement('dialog');
+    conversation.className = 'mobil-samtale';
+    conversation.setAttribute('aria-label', labels[0]);
+    const close = document.createElement('button');
+    close.type = 'button';close.textContent = '×';
+    close.setAttribute('aria-label', language === 'de' ? 'Schließen' : language === 'en' ? 'Close' : 'Lukk');
+    const content = document.createElement('div');content.className = 'mobil-samtale-inn';
+    conversation.append(close,content);document.body.append(conversation);
+    close.addEventListener('click', () => conversation.close());
+    conversation.addEventListener('click', event => {if(event.target===conversation) conversation.close();});
+    conversation.addEventListener('close', () => buttons[1].focus({preventScroll:true}));
+    buttons[1].addEventListener('click', () => {
+      if (scene.dataset.steg === '2') {
+        if (dialog && typeof dialog.showModal === 'function') dialog.showModal();
+      } else {
+        const chat = scene.querySelector(`.sy-t${scene.dataset.steg} .tg-msgs`).cloneNode(true);
+        chat.querySelectorAll('.skjult,.nw').forEach(row => row.classList.remove('skjult','nw'));
+        content.replaceChildren(chat);
+        conversation.showModal();content.scrollTop=0;
+      }
+    });
+    dialog?.addEventListener('close', () => {if (mobile.matches) buttons[1].focus({preventScroll:true});});
+    function sync() {
+      const step = Number(scene.dataset.steg);
+      nav.querySelector('output').textContent = `${step} / 3`;
+      buttons[0].disabled = step === 1;
+      buttons[2].disabled = step === 3;
+    }
+    new MutationObserver(sync).observe(scene, {attributes:true,attributeFilter:['data-steg']});
+    sync();
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', connectScene);
+  else connectScene();
+})();
+
 </script>
 </body>
 </html>
