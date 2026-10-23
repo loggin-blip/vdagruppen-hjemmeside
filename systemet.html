@@ -3031,13 +3031,46 @@ main a.btn{--bs-btn-border-radius:0;border-radius:0!important;font-family:var(--
 main a.btn.sy-liten{padding:13px 22px;font-size:11.5px!important}
 .actions,.tro-cta,.sv-cta,.sv-cta-hode,.ml5-cta,.ht-knapp,.cta-rad{display:flex!important;flex-direction:column!important;align-items:flex-start!important;gap:0!important}
 html body .trygg{display:flex;align-items:center;gap:12px;width:auto!important;margin:20px 0 0!important;font-family:var(--fd);font-size:11px;font-weight:400;font-style:normal;letter-spacing:.16em;text-transform:uppercase;line-height:1.5;color:var(--vda-brass-tekst,#7A5822)}
-html body .trygg::before{content:"";flex:none;width:28px;height:1px;background:var(--vda-brass,#B08D57)}
+
 html body .sec-navy .trygg,html body [class*="navy"] .trygg,html body #tro .trygg,html body #kontakt .trygg{color:#C9B48A}
 @media (max-width:899px){
   .actions,.tro-cta,.sv-cta,.sv-cta-hode,.ml5-cta,.ht-knapp,.cta-rad{align-items:stretch!important}
   main a.btn{padding:16px 20px}
   html body .trygg{font-size:10.5px;letter-spacing:.13em;margin-top:16px!important}
 }
+
+
+/* ===== Streker på tvers av siden (Leon 23.10): samme bølgelinjer som heroen, i hver seksjon ===== */
+#eieren,#tro,#slik-virker-det,#systemet,#massivlust,#pris,#lista,#faq,#om{position:relative;isolation:isolate}
+.mo-flyt.mo-tvers{inset:0;height:100%;z-index:-1}
+.mo-flyt path{stroke-dasharray:none!important;animation:none!important}
+#top .mo-flyt circle{display:none}
+.mo-flyt.mo-lys{color:var(--vda-creme,#EDE3CE)}
+.mo-flyt.mo-lys path{opacity:.09}
+@media (prefers-reduced-motion:reduce){.mo-flyt path,.mo-flyt circle{animation:none!important}}
+
+/* ===== Ekte 3D-telefon (Leon 23.10): tykkelse i kanten, glans på glasset, skygge under ===== */
+@media (min-width:900px){
+  .tlf3d{transform-style:preserve-3d;will-change:transform;transform:perspective(1500px) rotateY(-18deg) rotateX(7deg) rotateZ(2.2deg)}
+  .tlf3d::before,.tlf3d::after{content:"";position:absolute;inset:0;border-radius:calc(var(--ph-h) * .078);pointer-events:none}
+  .tlf3d::before{background:linear-gradient(100deg,#1a1b1f,#4a4d54 30%,#232429 70%,#101114);transform:translateZ(-14px)}
+  .tlf3d::after{background:linear-gradient(100deg,#2b2c31,#7a7e87 35%,#3a3c42);transform:translateZ(-7px)}
+  .tlf3d .ph-frame{box-shadow:0 0 0 1.5px #5a5e66,0 0 0 3px #17181b,inset 0 0 0 1px rgba(255,255,255,.08)}
+  .tlf3d .ph-screen::after{content:"";position:absolute;inset:0;z-index:20;pointer-events:none;border-radius:inherit;
+    background:linear-gradient(118deg,rgba(255,255,255,0) 30%,rgba(255,255,255,.17) 44%,rgba(255,255,255,.04) 52%,rgba(255,255,255,0) 62%)}
+  .ht-tlf .ph-wrap{position:relative}
+  .ht-tlf .ph-wrap::after{content:"";position:absolute;left:12%;right:4%;bottom:-34px;height:46px;border-radius:50%;
+    background:radial-gradient(closest-side,rgba(20,39,63,.32),rgba(20,39,63,0));filter:blur(6px);z-index:-1}
+  #systemet .sy-scene-tlf .phone.tlf3d{transform:perspective(1500px) rotateY(-14deg) rotateX(5deg);box-shadow:none;border-radius:calc(var(--ph-h) * .078)}
+  #systemet .sy-scene-tlf .phone.tlf3d::before{box-shadow:30px 46px 60px -26px rgba(20,39,63,.5)}
+  #systemet .sy-t2 .phone.tlf3d{transform:perspective(1500px) rotateY(10deg) rotateX(4deg)}
+}
+/* bildeteksten under hero-telefonen er skjult; den ga før figuren bredden på mobil */
+@media (max-width:899px){#top .ht-tlf{justify-self:stretch;width:100%}}
+
+/* Ingen pyntestreker (Leon 23.10: «strekene du har putta over alt for null grunn … ser AI-slop ut») */
+.ht-res-tx::before,#systemet .sy-nr::after{content:none!important;display:none!important}
+.ht-res-tx{padding-left:0!important}
 </style>
 </head>
 <body>
