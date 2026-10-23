@@ -3042,35 +3042,40 @@ html body .sec-navy .trygg,html body [class*="navy"] .trygg,html body #tro .tryg
 
 /* ===== Streker på tvers av siden (Leon 23.10): samme bølgelinjer som heroen, i hver seksjon ===== */
 #eieren,#tro,#slik-virker-det,#systemet,#massivlust,#pris,#lista,#faq,#om{position:relative;isolation:isolate}
-.mo-flyt.mo-tvers{inset:0;height:100%;z-index:-1}
+.mo-flyt.mo-tvers{inset:0 0 auto;height:640px;z-index:-1}
 .mo-flyt path{stroke-dasharray:none!important;animation:none!important}
 #top .mo-flyt circle{display:none}
 .mo-flyt.mo-lys{color:var(--vda-creme,#EDE3CE)}
 .mo-flyt.mo-lys path{opacity:.09}
 @media (prefers-reduced-motion:reduce){.mo-flyt path,.mo-flyt circle{animation:none!important}}
 
-/* ===== Ekte 3D-telefon (Leon 23.10): tykkelse i kanten, glans på glasset, skygge under ===== */
-@media (min-width:900px){
-  .tlf3d{transform-style:preserve-3d;will-change:transform;transform:perspective(1500px) rotateY(-18deg) rotateX(7deg) rotateZ(2.2deg)}
-  .tlf3d::before,.tlf3d::after{content:"";position:absolute;inset:0;border-radius:calc(var(--ph-h) * .078);pointer-events:none}
-  .tlf3d::before{background:linear-gradient(100deg,#1a1b1f,#4a4d54 30%,#232429 70%,#101114);transform:translateZ(-14px)}
-  .tlf3d::after{background:linear-gradient(100deg,#2b2c31,#7a7e87 35%,#3a3c42);transform:translateZ(-7px)}
-  .tlf3d .ph-frame{box-shadow:0 0 0 1.5px #5a5e66,0 0 0 3px #17181b,inset 0 0 0 1px rgba(255,255,255,.08)}
-  .tlf3d .ph-screen::after{content:"";position:absolute;inset:0;z-index:20;pointer-events:none;border-radius:inherit;
-    background:linear-gradient(118deg,rgba(255,255,255,0) 30%,rgba(255,255,255,.17) 44%,rgba(255,255,255,.04) 52%,rgba(255,255,255,0) 62%)}
-  .ht-tlf .ph-wrap{position:relative}
-  .ht-tlf .ph-wrap::after{content:"";position:absolute;left:12%;right:4%;bottom:-34px;height:46px;border-radius:50%;
-    background:radial-gradient(closest-side,rgba(20,39,63,.32),rgba(20,39,63,0));filter:blur(6px);z-index:-1}
-  #systemet .sy-scene-tlf .phone.tlf3d{transform:perspective(1500px) rotateY(-14deg) rotateX(5deg);box-shadow:none;border-radius:calc(var(--ph-h) * .078)}
-  #systemet .sy-scene-tlf .phone.tlf3d::before{box-shadow:30px 46px 60px -26px rgba(20,39,63,.5)}
-  #systemet .sy-t2 .phone.tlf3d{transform:perspective(1500px) rotateY(10deg) rotateX(4deg)}
-}
 /* bildeteksten under hero-telefonen er skjult; den ga før figuren bredden på mobil */
 @media (max-width:899px){#top .ht-tlf{justify-self:stretch;width:100%}}
 
 /* Ingen pyntestreker (Leon 23.10: «strekene du har putta over alt for null grunn … ser AI-slop ut») */
 .ht-res-tx::before,#systemet .sy-nr::after{content:none!important;display:none!important}
 .ht-res-tx{padding-left:0!important}
+
+
+/* ===== Ingen inntoning ved scroll (Leon 23.10: «lagger … blir blank også kommer teksten tilbake») ===== */
+.rv,.rv.in,#faq .faq-acc>.accordion-item.rv{opacity:1!important;transform:none!important;transition:none!important}
+
+/* ===== iPhone i 3D (Leon 23.10: «ikke nok dybde, ser ikke ut som en ekte iPhone») =====
+   Rammen er ekstrudert: lag bak fronten (.tlf-lag, lages i JS) gir en massiv titankant med ekte dybde.
+   Ingen filter, ingen animasjon per lag; bare telefonen som helhet får transform. */
+.tlf-lag{display:none}
+@media (min-width:900px){
+  .tlf3d{transform:perspective(1800px) rotateY(-26deg) rotateX(9deg) rotateZ(2deg)}
+  .tlf3d .tlf-lag{display:block;position:absolute;inset:0;border-radius:calc(var(--ph-h) * .078);pointer-events:none;backface-visibility:visible}
+  .tlf3d .ph-btn{transform:translateX(calc(var(--ph-h) * .014))}
+  .tlf3d .ph-frame{box-shadow:0 0 0 1.5px #9a9ca2,0 0 0 3px #2b2c30,inset 0 0 0 1px rgba(255,255,255,.1)}
+  .tlf3d .ph-screen::after{content:"";position:absolute;inset:0;z-index:20;pointer-events:none;border-radius:inherit;
+    background:linear-gradient(120deg,rgba(255,255,255,0) 28%,rgba(255,255,255,.14) 42%,rgba(255,255,255,.03) 50%,rgba(255,255,255,0) 60%)}
+  .tlf3d .tlf-skygge{display:block;position:absolute;left:6%;right:6%;bottom:-6%;height:12%;border-radius:50%;
+    background:radial-gradient(closest-side,rgba(20,39,63,.34),rgba(20,39,63,0));transform:translate(6%,4%)}
+  #systemet .sy-scene-tlf .phone.tlf3d{box-shadow:none;transform:perspective(1800px) rotateY(-20deg) rotateX(7deg)}
+  #systemet .sy-t2 .phone.tlf3d{transform:perspective(1800px) rotateY(-14deg) rotateX(6deg)}
+}
 </style>
 </head>
 <body>
