@@ -6,6 +6,10 @@
 <title>Hele systemet · VDA Gruppen</title>
 <meta name="description" content="Alle 51 punktene, vist i chatten og i dashbordet med eksempeldata. Se hva assistenten gjør for prosjektleder og eier hos en entreprenør.">
 <link rel="canonical" href="https://vdagruppen.com/systemet.html">
+<link rel="alternate" hreflang="nb" href="https://vdagruppen.com/systemet.html">
+<link rel="alternate" hreflang="en" href="https://vdagruppen.com/en/systemet.html">
+<link rel="alternate" hreflang="de" href="https://vdagruppen.com/de/systemet.html">
+<link rel="alternate" hreflang="x-default" href="https://vdagruppen.com/systemet.html">
 <meta name="theme-color" content="#EDE3CE">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="VDA Gruppen">
@@ -3076,6 +3080,21 @@ html body .sec-navy .trygg,html body [class*="navy"] .trygg,html body #tro .tryg
   #systemet .sy-scene-tlf .phone.tlf3d{box-shadow:none;transform:perspective(1800px) rotateY(-20deg) rotateX(7deg)}
   #systemet .sy-t2 .phone.tlf3d{transform:perspective(1800px) rotateY(-14deg) rotateX(6deg)}
 }
+
+/* ===== Språkbryter (Leon 23.10: «liten knapp», alt oversettes): «NO ▾» åpner EN og DE ===== */
+.spraak{position:relative;font-family:var(--fd);font-size:11px;letter-spacing:.12em}
+.spraak summary{list-style:none;display:inline-flex;align-items:center;gap:5px;min-height:40px;padding:0 6px;cursor:pointer;color:var(--vda-navy);user-select:none}
+.spraak summary::-webkit-details-marker{display:none}
+.spraak summary svg{width:9px;height:6px;transition:transform .2s}
+.spraak[open] summary svg{transform:rotate(180deg)}
+.spraak summary:focus-visible{outline:2px solid var(--vda-navy);outline-offset:2px}
+.spraak-meny{position:absolute;right:0;top:100%;z-index:1060;min-width:150px;padding:6px 0;background:var(--vda-creme,#EDE3CE);border:.5px solid var(--vda-border,#cfc3a8);box-shadow:0 14px 30px -18px rgba(20,39,63,.45)}
+.spraak-meny a{display:flex;align-items:center;gap:12px;min-height:40px;padding:0 16px;color:var(--vda-navy);text-decoration:none}
+.spraak-meny a span{font-family:var(--fb);font-size:13.5px;letter-spacing:0;color:var(--vda-grey)}
+.spraak-meny a:hover,.spraak-meny a:focus-visible{background:rgba(176,131,65,.12);outline:none}
+.spraak-desk{display:none}
+@media (min-width:900px){.spraak-desk{display:block}.spraak-mobil{display:none}}
+.spraak-mobil{margin-left:auto}
 </style>
 </head>
 <body>
@@ -3087,6 +3106,7 @@ html body .sec-navy .trygg,html body [class*="navy"] .trygg,html body #tro .tryg
       <span class="nav-logo-sub" aria-hidden="true"><span>G</span><span>R</span><span>U</span><span>P</span><span>P</span><span>E</span><span>N</span></span>
     </a>
     <div class="vda-navbar-mobil d-flex d-lg-none align-items-center">
+      <details class="spraak spraak-mobil"><summary aria-label="Språk: Norsk">NO<svg viewBox="0 0 10 6" aria-hidden="true"><path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.2"/></svg></summary><div class="spraak-meny"><a href="/en/systemet.html" lang="en" hreflang="en">EN <span>English</span></a><a href="/de/systemet.html" lang="de" hreflang="de">DE <span>Deutsch</span></a></div></details>
       <a href="#kontakt" class="btn nav-cta vda-bar-cta"><span class="lang">Book det første møtet</span><span class="kort-tekst">Book møte</span></a>
       <button class="navbar-toggler vda-burger" id="vda-meny-knapp" type="button" data-bs-toggle="offcanvas" data-bs-target="#vda-meny" aria-controls="vda-meny" aria-expanded="false"><span class="navbar-toggler-icon" aria-hidden="true"></span><span class="vda-burger-t">Meny</span></button>
     </div>
@@ -3105,6 +3125,7 @@ html body .sec-navy .trygg,html body [class*="navy"] .trygg,html body #tro .tryg
           <li class="nav-item"><a class="nav-link" href="#om">Om oss</a></li>
           <li class="nav-item kun-mobil"><a class="nav-link nav-side" href="/systemet.html">Hele systemet<svg viewBox="0 0 18 18" aria-hidden="true" focusable="false"><path d="M3 9h11M10 5l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li>
         </ul>
+        <details class="spraak spraak-desk"><summary aria-label="Språk: Norsk">NO<svg viewBox="0 0 10 6" aria-hidden="true"><path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.2"/></svg></summary><div class="spraak-meny"><a href="/en/systemet.html" lang="en" hreflang="en">EN <span>English</span></a><a href="/de/systemet.html" lang="de" hreflang="de">DE <span>Deutsch</span></a></div></details>
         <a href="#kontakt" class="btn nav-cta">Book det første møtet</a>
       </div>
     </div>
