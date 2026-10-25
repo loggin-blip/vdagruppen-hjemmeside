@@ -4082,7 +4082,7 @@ html body .sec-navy .trygg,html body [class*="navy"] .trygg,html body #tro .tryg
     display:grid;grid-template-rows:auto minmax(0,1fr) 44px;gap:12px;
   }
   #systemet .sy-steg {display:grid;position:relative}
-  #systemet .sy-stegboks {grid-area:1 / 1;min-width:0;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .3s}
+  #systemet .sy-stegboks {grid-area:1 / 1;min-width:0;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .14s linear}
   #systemet .sy-stegboks.aktiv {opacity:1;visibility:visible;pointer-events:auto}
   #systemet .sy-stegboks .sy-t {font-size:clamp(23px,6vw,29px);line-height:1.18;margin-top:8px;max-width:24ch}
   #systemet .sy-stegboks .sy-tekst p {font-size:15px;line-height:1.45;margin-top:10px}
@@ -4091,7 +4091,7 @@ html body .sec-navy .trygg,html body [class*="navy"] .trygg,html body #tro .tryg
   #systemet .sy-buhne-inn {position:absolute;inset:0}
   #systemet .sy-scene-tlf {
     position:absolute;inset:6px 0 8px;width:fit-content;margin:auto;opacity:0;visibility:hidden;pointer-events:none;
-    transform:translate3d(0,24px,0);transition:transform .55s var(--ease),opacity .3s,visibility .3s;
+    transform:translate3d(0,24px,0);transition:transform .3s var(--ease),opacity .14s linear,visibility .14s linear;   /* kort, så to steg ikke står lesbare samtidig (rettet 25.10) */
   }
   #systemet .sy-scene-tlf .phone {
     --ph-h:520px;height:100%;width:min(260px,70vw);transform:perspective(1500px) rotateY(-12deg) rotateX(3deg);
@@ -4101,7 +4101,7 @@ html body .sec-navy .trygg,html body [class*="navy"] .trygg,html body #tro .tryg
     opacity:1;visibility:visible;pointer-events:auto;transform:translate3d(0,0,0);
   }
   #systemet .sy-scene[data-steg="2"] .sy-t2 {transform:translate3d(-16%,0,0) scale(.82);transform-origin:bottom left}
-  #systemet .sy-bak {position:absolute;inset:14% 0 auto;opacity:.28;transform:scale(.88);transition:transform .55s,opacity .4s}
+  #systemet .sy-bak {position:absolute;inset:14% 0 auto;opacity:.28;transform:scale(.88);transition:transform .3s,opacity .2s}
   #systemet .sy-bak .sy-dash {pointer-events:none}
   #systemet .sy-bak img {filter:none;box-shadow:0 18px 32px -20px #14273f66}
   #systemet .sy-bak picture source {display:none}
@@ -5439,6 +5439,7 @@ if(scene){
   var inn=scene.querySelector('.sy-buhne-inn');
   var bokser=Array.prototype.slice.call(scene.querySelectorAll('.sy-stegboks'));
   var spilt={};
+  var mobilSteg=1;
   function spillScene(n){
     if(spilt[n])return;spilt[n]=1;
     var t=scene.querySelector('.sy-t'+n),msgs=t.querySelector('.sy-msgs');
@@ -5452,7 +5453,8 @@ if(scene){
     })();
   }
   function settSteg(n){
-    if(scene.getAttribute('data-steg')!==String(n))scene.setAttribute('data-steg',n);
+    if(scene.getAttribute('data-steg')===String(n))return;                 /* ingen endring: ikke rør klassene, så en pågående overgang ikke forstyrres */
+    scene.setAttribute('data-steg',n);
     bokser.forEach(function(b){b.classList.toggle('aktiv',b.getAttribute('data-steg')===String(n));});
     spillScene(n);
   }
@@ -5466,7 +5468,14 @@ if(scene){
       var shell=scene.querySelector('.sy-scene-viewport');
       var travel=Math.max(1,scene.offsetHeight-shell.offsetHeight);
       var position=Math.max(0,Math.min(1,(72-bounds.top)/travel));
-      best=Math.min(3,Math.floor(position*3)+1);
+      var rawSteg=position*3;                              /* hysterese: må krysse en grense MED margin for å skifte,
+         ellers flimrer steget (og dermed to telefoner samtidig synlige) når scrollposisjonen ligger rett på en grense */
+      var kandidat=Math.min(3,Math.floor(rawSteg)+1);
+      if(kandidat!==mobilSteg){
+        var grense=kandidat>mobilSteg?mobilSteg:mobilSteg-1,margin=.1;
+        if(kandidat>mobilSteg?rawSteg>grense+margin:rawSteg<grense-margin)mobilSteg=kandidat;
+      }
+      best=mobilSteg;
       inn.style.transform='translate3d(0,'+((.5-position)*22).toFixed(1)+'px,0)';
       if(bounds.top<innerHeight*.7)settSteg(best);
       scene.querySelector('.sy-buhne').removeAttribute('aria-hidden');
