@@ -174,6 +174,67 @@ footer a:hover{color:var(--vda-on-navy)}
 </style>
 <link rel="stylesheet" href="/assets/motion.css">
 <script src="/assets/motion.js" defer></script>
+<style id="vda-farger">
+/* ===== VDA fargelag (11.11.2026) =====
+   To farger bygger stemningen (krem + navy), gull er aksenten som trekker blikket.
+   1) Dybde: fint papirkorn i kremflatene, lys og gradient i navyflatene.
+   2) Aksent: gull på hovedknappen der bakgrunnen er navy, gullpil på navyknappen, gull markering.
+   3) Det anbefalte priskortet er navy, så valget skiller seg ut med farge, ikke bare en strek.
+   Samme blokk ligger på alle sider. Merkefargene (#14273F, #EDE3CE, #B08341) er urørt. */
+:root{
+  --vda-gull:#D6A851;--vda-gull-lys:#E6C079;--vda-navy-dyp:#0E1C30;
+  --vda-aksent-stor:#94610F;
+  --vda-korn-m:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .08 0 0 0 0 .15 0 0 0 0 .25 0 0 0 .4 -.2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  --vda-korn-l:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 .93 0 0 0 0 .8 0 0 0 .28 -.142'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+::selection{background:var(--vda-gull);color:var(--vda-navy)}
+
+/* --- krem: papirkorn, og et varmt lys bak telefonen i heroen --- */
+body{background-image:var(--vda-korn-m)}
+html body .sec-deep,html body #slik-virker-det,html body #massivlust,html body #eieren{background-image:var(--vda-korn-m)}
+html body .ht{background-image:radial-gradient(ellipse 34% 56% at 77% 47%,rgba(214,168,81,.44),rgba(214,168,81,.14) 55%,rgba(214,168,81,0) 78%)}
+@media (max-width:899px){html body .ht{background-image:radial-gradient(ellipse 85% 30% at 50% 78%,rgba(214,168,81,.3),rgba(214,168,81,0) 76%)}}
+
+/* --- navy: dybde ovenfra og ned, og et kjølig lys fra øvre høyre hjørne (gull holdes til detaljene) --- */
+html body #tro,html body #kontakt,html body #om #kontakt,html body .cta-blokk{
+  background-color:var(--vda-navy);
+  background-image:var(--vda-korn-l),radial-gradient(ellipse 60% 75% at 92% 0%,rgba(52,92,140,.5),rgba(52,92,140,0) 72%),linear-gradient(180deg,var(--vda-navy) 0%,var(--vda-navy) 35%,var(--vda-navy-dyp) 100%)}
+html body .site-footer,html body>footer{background-color:var(--vda-navy-dyp);background-image:var(--vda-korn-l),linear-gradient(180deg,var(--vda-navy-dyp),#0A1626)}
+html body .site-footer a:hover,html body>footer a:hover{color:var(--vda-gull-lys)}
+html body :is(#tro,#kontakt,.site-footer,.cta-blokk) :focus-visible{outline-color:var(--vda-gull)}
+
+/* --- knapper: gull er hovedknappen på navy; navyknappen får gullpil --- */
+html body .btn-creme,html body .cta-blokk .btn{
+  --bs-btn-color:var(--vda-navy);--bs-btn-bg:var(--vda-gull);--bs-btn-border-color:var(--vda-gull);
+  --bs-btn-hover-color:var(--vda-navy);--bs-btn-hover-bg:var(--vda-gull-lys);--bs-btn-hover-border-color:var(--vda-gull-lys);
+  --bs-btn-active-color:var(--vda-navy);--bs-btn-active-bg:var(--vda-gull-lys);--bs-btn-active-border-color:var(--vda-gull-lys);
+  background:var(--vda-gull);color:var(--vda-navy);box-shadow:0 16px 32px -16px rgba(214,168,81,.6)}
+html body .btn-creme:hover,html body .cta-blokk .btn:hover{background:var(--vda-gull-lys);color:var(--vda-navy)}
+html body .btn-navy{--bs-btn-hover-color:var(--vda-gull-lys);--bs-btn-hover-bg:var(--vda-navy-dyp);--bs-btn-hover-border-color:var(--vda-navy-dyp);--bs-btn-active-color:var(--vda-gull-lys);--bs-btn-active-bg:var(--vda-navy-dyp);--bs-btn-active-border-color:var(--vda-navy-dyp);box-shadow:0 14px 26px -16px rgba(20,39,63,.6)}
+html body .btn-navy:hover{background:var(--vda-navy-dyp);color:var(--vda-gull-lys)}
+html body .btn-navy .pil{color:var(--vda-gull-lys)}
+
+/* --- aksentordene i store overskrifter: gyllen i stedet for brun (4,1:1, stor tekst) --- */
+html body .ht h1 em,html body #eieren .ei-slutt em,html body #om .om5-h2 em{color:var(--vda-aksent-stor)}
+
+/* --- priskortet vi anbefaler: navy med gull --- */
+html body #pris .pris-kort.valgt{--bs-card-bg:var(--vda-navy);--bs-card-color:var(--vda-on-navy,#EDE3CE);background-color:var(--vda-navy);
+  background-image:var(--vda-korn-l),radial-gradient(ellipse 110% 40% at 90% 0%,rgba(52,92,140,.55),rgba(52,92,140,0) 72%),linear-gradient(180deg,var(--vda-navy),var(--vda-navy) 40%,var(--vda-navy-dyp));
+  border-top-color:var(--vda-gull);color:#EDE3CE;box-shadow:0 34px 54px -30px rgba(20,39,63,.6)}
+html body #pris .pris-kort.valgt :is(.card-title,.anbefalt){color:var(--vda-gull-lys)}
+html body #pris .pris-kort.valgt .tall-b{color:#EDE3CE}
+html body #pris .pris-kort.valgt :is(.enhet,.card-text){color:#B3BAC6}
+html body #pris .pris-kort.valgt .inkl li{color:#EDE3CE}
+html body #pris .pris-kort.valgt .inkl li::before{background:var(--vda-gull);border-color:var(--vda-gull)}
+html body #pris .pris-kort.valgt .inkl a{color:#EDE3CE;border-bottom-color:var(--vda-gull);text-decoration-color:var(--vda-gull)}
+html body #pris .pris-kort.valgt .btn-navy{--bs-btn-color:var(--vda-navy);--bs-btn-bg:var(--vda-gull);--bs-btn-border-color:var(--vda-gull);--bs-btn-hover-color:var(--vda-navy);--bs-btn-hover-bg:var(--vda-gull-lys);--bs-btn-hover-border-color:var(--vda-gull-lys);--bs-btn-active-color:var(--vda-navy);--bs-btn-active-bg:var(--vda-gull-lys);background:var(--vda-gull);color:var(--vda-navy);box-shadow:0 16px 32px -16px rgba(214,168,81,.6)}
+html body #pris .pris-kort.valgt .btn-navy:hover{background:var(--vda-gull-lys);color:var(--vda-navy)}
+html body #pris .pris-kort.valgt .btn-navy .pil{color:var(--vda-navy)}
+html body #pris .pris-kort.valgt :focus-visible{outline-color:var(--vda-gull)}
+
+/* --- systemsiden: varmt lys bak dashbordet, så den mørke skjermen løfter seg fra kremen --- */
+@media (min-width:1100px){html body .sys-dash .dash-stage{isolation:isolate}html body .sys-dash .dash-stage::before{content:"";position:absolute;inset:-150px -90px -170px;z-index:-1;pointer-events:none;background:radial-gradient(ellipse 55% 55% at 40% 50%,rgba(214,168,81,.5),rgba(214,168,81,.36) 48%,rgba(214,168,81,.13) 68%,rgba(214,168,81,0) 84%)}}
+</style>
 </head>
 <body>
 
