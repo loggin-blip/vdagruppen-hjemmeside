@@ -4126,6 +4126,34 @@ html body .sec-navy .trygg,html body [class*="navy"] .trygg,html body #tro .tryg
 }
 
 </style>
+<style id="ht-bevis-topp">
+/* ===== kundebeviset i hero (12.11): ingressen er tatt ut, og «I bruk hos» + logoene
+   står mellom resultatlinja og knappen, bygd likt som «Resultatet». ===== */
+#top .ht-tekst{align-self:center}
+#top .ht-res{margin-top:30px}
+#top .ht-bevis{display:flex;flex-direction:column;align-items:flex-start;gap:14px;margin:30px 0 0;padding:0;border:0}
+#top .ht-bevis-et{font:500 11px/1.3 var(--fb);letter-spacing:.16em;text-transform:uppercase;color:var(--vda-brass-tekst,#7A5822);white-space:nowrap}
+#top .ht-bevis-logoer{display:flex;align-items:center;gap:30px;min-width:0}
+#top .ht-bevis-logo{display:block;flex:none;background:var(--vda-navy);-webkit-mask:var(--l) center/contain no-repeat;mask:var(--l) center/contain no-repeat}
+#top .ht-bevis-nf{--l:url(/assets/entreprenor/logo/nordflo.webp);width:165px;height:30px}
+#top .ht-bevis-ml{--l:url(/assets/entreprenor/massivlust.webp);width:137px;height:60px}
+#top .ht-bevis-skille{flex:none;width:.5px;height:38px;background:var(--vda-dust,rgba(20,39,63,.3))}
+#top .ht-knapp{margin-top:34px}
+@media (max-width:899px){
+  #top .ht-res{margin-top:24px}
+  #top .ht-bevis{margin-top:26px;gap:12px}
+  #top .ht-bevis-logoer{gap:22px}
+  #top .ht-bevis-nf{width:143px;height:26px}
+  #top .ht-bevis-ml{width:114px;height:50px}
+  #top .ht-bevis-skille{height:32px}
+  #top .ht-knapp{margin-top:28px}
+}
+@media (max-width:359px){
+  #top .ht-bevis-logoer{gap:16px}
+  #top .ht-bevis-nf{width:121px;height:22px}
+  #top .ht-bevis-ml{width:96px;height:42px}
+}
+</style>
 <style id="vda-farger">
 /* ===== VDA fargelag (11.11.2026) =====
    To farger bygger stemningen (krem + navy), gull er aksenten som trekker blikket.
@@ -4302,8 +4330,12 @@ html body #pris .pris-kort.valgt :focus-visible{outline-color:var(--vda-gull)}
         <span class="w" style="--d:.45s"><span>take</span></span>
         <span class="w" style="--d:.5s"><span>on.</span></span>
       </h1>
-      <p class="ht-ingress rv" style="--d:.5s">So we connect to everything you use today and make the paperwork more efficient, so the same people can take on more projects. You don't have to switch anything, but you can cut apps you don't need.</p>
       <p class="ht-res rv" style="--d:.6s"><span class="ht-res-et">The result</span><span class="ht-res-tx">Grow from 20 to 30 without hiring more admin staff.</span></p>
+      <!-- kundebeviset: står i stedet for ingressen, og logoene står bare her på hele siden -->
+      <div class="ht-bevis" role="group" aria-label="In use at Nordflo, Massivlust">
+        <span class="ht-bevis-et">In use at</span>
+        <div class="ht-bevis-logoer"><span class="ht-bevis-logo ht-bevis-nf" role="img" aria-label="Nordflo"></span><span class="ht-bevis-skille" aria-hidden="true"></span><span class="ht-bevis-logo ht-bevis-ml" role="img" aria-label="Massivlust"></span></div>
+      </div>
       <div class="ht-knapp rv" style="--d:.7s">
         <a class="btn btn-navy" href="#kontakt">Book the first meeting <span class="pil" aria-hidden="true">→</span></a>
         <p class="trygg">60 minutes on video or phone · free, no obligation</p>
@@ -4358,11 +4390,6 @@ Changes since last time:
     </figure>
     <script>(function(){try{var c=document.getElementById('ht-msgs');if(!c||matchMedia('(prefers-reduced-motion: reduce)').matches)return;c.classList.add('ht-klar');setTimeout(function(){if(!c.classList.contains('ht-styrt'))c.classList.remove('ht-klar');},5000);}catch(e){}})();</script>
 
-    <!-- kundelinja: logoene står bare her på hele siden -->
-    <div class="proof ht-bevis rv" style="--d:.8s">
-      <div class="proof-logos"><img class="nf" src="/assets/entreprenor/logo/nordflo.webp" alt="Nordflo" width="193" height="35"><img src="/assets/entreprenor/massivlust.webp" alt="Massivlust" width="300" height="131"></div>
-      <p>In use at Nordflo and Massivlust. Now we are opening up for more.</p>
-    </div>
 
   </div>
 </section>
