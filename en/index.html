@@ -4119,6 +4119,23 @@ html body .sec-navy .trygg,html body [class*="navy"] .trygg,html body #tro .tryg
   #systemet .mobil-scene-ekstra .sy-knapp2 {margin-top:24px}
   #systemet .sy-scene-tlf .tg-chat {overscroll-behavior-y:auto}
 }
+/* ===== #systemet på mobil, tenkt på nytt (12.11): ingen telefon-i-telefonen og ingen
+   låst rullescene. Tre vanlige steg under hverandre: tekst, så samtalen som et rent
+   chatkort i full bredde (steg 1 og 3) eller dashbordet (steg 2, trykk for å se større). ===== */
+@media (max-width:899px){
+  #systemet.sy-har-scene .sy-rad{display:flex}
+  #systemet.sy-har-scene .sy-scene,#systemet .mobil-scene-ekstra{display:none}
+  #systemet .sy-rad{padding-block:44px 48px;gap:24px}
+  #systemet .sy-fig-tlf{align-items:stretch;perspective:none;padding-block:0}
+  #systemet .sy-rad .sy-ph{display:block;width:100%;max-width:none;margin:0}
+  #systemet .sy-rad .sy-ph .phone{height:auto;width:100%;max-width:none;transform:none!important;isolation:auto}
+  #systemet .sy-rad .sy-ph .ph-frame,#systemet .sy-rad .sy-ph .ph-btn,#systemet .sy-rad .sy-ph .ph-island,#systemet .sy-rad .sy-ph .ph-status,#systemet .sy-rad .sy-ph .tg-input,#systemet .sy-rad .sy-ph .ph-home{display:none}
+  #systemet .sy-rad .sy-ph .ph-screen{position:relative;inset:auto;border-radius:16px;overflow:hidden;font-size:15px;line-height:1.36;box-shadow:0 0 0 .5px rgba(20,39,63,.22),0 22px 34px -26px rgba(20,39,63,.5)}
+  #systemet .sy-rad .sy-ph .tg-nav{height:3.1em}
+  #systemet .sy-rad .sy-ph .tg-chat{flex:none;min-height:0;overflow:visible}
+  #systemet .sy-rad .sy-ph .tg-msgs{position:static;min-height:0;padding:.9em .8em 1em;transform:none}
+  #systemet .sy-rad .tgr.skjult{display:flex}
+}
 @media (min-width:900px) {.mobil-scene-nav,.mobil-scene-ekstra {display:none}}
 @media (max-width:899px) and (prefers-reduced-motion:reduce) {
   #top .phone,#systemet .sy-ph .phone {transform:none!important}
