@@ -4099,14 +4099,15 @@ html body .sec-navy .trygg,html body [class*="navy"] .trygg,html body #tro .tryg
   #systemet .sy-scene[data-steg="1"] .sy-t1,#systemet .sy-scene[data-steg="2"] .sy-t2,#systemet .sy-scene[data-steg="3"] .sy-t3 {
     opacity:1;visibility:visible;pointer-events:auto;transform:translate3d(0,0,0);
   }
-  #systemet .sy-scene[data-steg="2"] .sy-t2 {transform:translate3d(-16%,0,0) scale(.82);transform-origin:bottom left}
-  #systemet .sy-bak {position:absolute;inset:14% 0 auto;opacity:.28;transform:scale(.88);transition:transform .3s,opacity .2s}
+  /* steg 2 på mobil: dashbordet alene i full bredde. Telefonen oppå dekket det meste og ble uleselig (12.11) */
+  #systemet .sy-scene[data-steg="2"] .sy-t2 {opacity:0;visibility:hidden;pointer-events:none}
+  #systemet .sy-bak {position:absolute;inset:50% 0 auto;opacity:0;transform:translate3d(0,-50%,0) scale(.94);transition:transform .3s var(--ease),opacity .2s}
   #systemet .sy-bak .sy-dash {pointer-events:none}
   #systemet .sy-bak img {filter:none;box-shadow:0 18px 32px -20px #14273f66}
   #systemet .sy-bak picture source {display:none}
   #systemet .sy-bak .sy-ramme,#systemet .sy-bak .sy-forstorr {display:none}
   #systemet .sy-bak-merke {font-size:11px;letter-spacing:.08em;color:var(--vda-grey)}
-  #systemet .sy-scene[data-steg="2"] .sy-bak {opacity:1;transform:scale(1)}
+  #systemet .sy-scene[data-steg="2"] .sy-bak {opacity:1;transform:translate3d(0,-50%,0) scale(1)}
   #systemet .sy-scene .tgr.skjult {display:none}
   #systemet .sy-scene .tg-msgs {transition:none}
   .mobil-scene-nav {display:flex;align-items:center;justify-content:space-between;gap:8px}
