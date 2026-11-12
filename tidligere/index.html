@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#EDE3CE">
 <title>VDA Gruppen — AI-konsulenter og KI-rådgivning for norske bedrifter</title>
 <meta name="description" content="Vi finner ut hvor bedriften din mister mest tid og penger, og bygger det som trengs. Gratis kartlegging, fast månedspris, og dere eier alt vi lager.">
 <link rel="canonical" href="https://vdagruppen.com/tidligere/">
@@ -272,26 +273,26 @@ nav.krympet .nav-logo-sub{opacity:0;height:0;margin-top:0}
   /* samme snitt som GRUPPEN i lockupen: Baskerville, sperret, store bokstaver */
   font-family:var(--vda-font-display);font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;
 }
-.nav-links a:hover{color:var(--vda-brass)}
+@media (hover:hover) and (pointer:fine){.nav-links a:hover{color:var(--vda-brass)}}
 /* nedtrekk for artikler */
 .nav-drop{position:relative}
 .nav-drop-knapp{font-family:var(--vda-font-display);font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--vda-navy);background:none;border:none;cursor:pointer;padding:0;display:inline-flex;align-items:center;gap:6px;transition:color .2s}
-.nav-drop-knapp:hover{color:var(--vda-brass)}
+@media (hover:hover) and (pointer:fine){.nav-drop-knapp:hover{color:var(--vda-brass)}}
 .drop-pil{font-size:9px;transition:transform .2s}
 /* usynlig bro mellom knapp og meny så hover overlever gapet */
 .nav-drop::after{content:"";position:absolute;left:-20px;right:-20px;top:100%;height:22px}
 .nav-drop-meny{position:absolute;top:calc(100% + 18px);left:50%;transform:translate(-50%,4px);min-width:290px;background:var(--vda-creme);border:var(--vda-border-w) solid var(--vda-dust);padding:8px 0;opacity:0;visibility:hidden;transition:opacity .18s ease,transform .18s ease,visibility .18s}
-.nav-drop:hover .nav-drop-meny,.nav-drop:focus-within .nav-drop-meny,.nav-drop.apen .nav-drop-meny{opacity:1;visibility:visible;transform:translate(-50%,0)}
-.nav-drop:hover .drop-pil,.nav-drop.apen .drop-pil{transform:rotate(180deg)}
+.nav-drop:focus-within .nav-drop-meny,.nav-drop.apen .nav-drop-meny{opacity:1;visibility:visible;transform:translate(-50%,0)}@media (hover:hover) and (pointer:fine){.nav-drop:hover .nav-drop-meny{opacity:1;visibility:visible;transform:translate(-50%,0)}}
+.nav-drop.apen .drop-pil{transform:rotate(180deg)}@media (hover:hover) and (pointer:fine){.nav-drop:hover .drop-pil{transform:rotate(180deg)}}
 .nav-links .nav-drop-meny a{display:block;padding:11px 20px;font-family:var(--vda-font-body);font-size:14px;letter-spacing:0;text-transform:none}
-.nav-links .nav-drop-meny a:hover{background:var(--vda-creme-deep);color:var(--vda-navy)}
+@media (hover:hover) and (pointer:fine){.nav-links .nav-drop-meny a:hover{background:var(--vda-creme-deep);color:var(--vda-navy)}}
 .nav-drop-alle{border-top:var(--vda-border-w) solid var(--vda-border);margin-top:8px;padding-top:13px!important;color:var(--vda-dust-deep)!important}
 .nav-cta{
   border:var(--vda-border-w) solid var(--vda-navy);
   border-radius:var(--vda-radius-sm);
   padding:9px 20px;
 }
-.nav-cta:hover{background:var(--vda-navy);color:var(--vda-creme)!important}
+@media (hover:hover) and (pointer:fine){.nav-cta:hover{background:var(--vda-navy);color:var(--vda-creme)!important}}
 @media(max-width:780px){.nav-links a:not(.nav-cta),.nav-drop{display:none}}
 
 /* ---------- HERO ---------- */
@@ -314,7 +315,7 @@ h1{
 /* to portrettkort, lett rotert fra hverandre som utlagte fotografier */
 .hero-kort{display:block;width:212px;text-decoration:none;background:var(--vda-creme);border:var(--vda-border-w) solid var(--vda-dust);box-shadow:0 18px 40px -22px rgba(20,39,63,.28);transform:rotate(-2deg);transition:transform .35s cubic-bezier(.16,1,.3,1),box-shadow .35s ease,border-color .25s ease}
 .hero-kort:nth-child(2){transform:rotate(2deg);margin-top:72px}
-.hero-kort:hover{transform:rotate(0deg) translateY(-6px);box-shadow:0 26px 48px -20px rgba(20,39,63,.35);border-color:var(--vda-brass)}
+@media (hover:hover) and (pointer:fine){.hero-kort:hover{transform:rotate(0deg) translateY(-6px);box-shadow:0 26px 48px -20px rgba(20,39,63,.35);border-color:var(--vda-brass)}}
 .hero-kort-foto{aspect-ratio:4/5;background:var(--vda-creme-deep);overflow:hidden;display:flex;align-items:flex-end}
 .hero-kort-foto img{width:100%;height:auto;display:block}
 .hero-kort-tekst{display:block;padding:13px 16px 15px;border-top:var(--vda-border-w) solid var(--vda-dust)}
@@ -333,7 +334,7 @@ h1{
   .hero-kort-navn{font-size:14px}
   .hero-kort-rolle{font-size:8.5px;letter-spacing:.08em;white-space:normal}
 }
-@media (prefers-reduced-motion:reduce){.hero-kort,.hero-kort:hover{transform:none;transition:none}}
+@media (prefers-reduced-motion:reduce){.hero-kort{transform:none;transition:none}@media (hover:hover) and (pointer:fine){.hero-kort:hover{transform:none;transition:none}}}
 .btn{
   display:inline-block;
   font-family:var(--vda-font-body);font-size:15px;font-weight:500;
@@ -342,16 +343,16 @@ h1{
   transition:background .2s,color .2s,border-color .2s;
 }
 .btn .pil{display:inline-block;transition:transform .25s ease}
-.btn:hover .pil{transform:translateX(5px)}
+@media (hover:hover) and (pointer:fine){.btn:hover .pil{transform:translateX(5px)}}
 .btn-navy{background:var(--vda-navy);color:var(--vda-creme)}
-.btn-navy:hover{background:var(--vda-brass);color:var(--vda-navy)}
+@media (hover:hover) and (pointer:fine){.btn-navy:hover{background:var(--vda-brass);color:var(--vda-navy)}}
 .btn-creme{background:var(--vda-creme);color:var(--vda-navy)}
-.btn-creme:hover{background:var(--vda-brass);color:var(--vda-navy)}
+@media (hover:hover) and (pointer:fine){.btn-creme:hover{background:var(--vda-brass);color:var(--vda-navy)}}
 /* ---- Bli ringt opp ---- */
 .hero-actions{display:flex;flex-wrap:wrap;gap:12px 14px;align-items:center}
 .btn-linje{position:relative;background:none;color:var(--vda-navy);border:var(--vda-border-w) solid var(--vda-navy);padding-left:44px}
 .btn-linje::before{content:"";position:absolute;left:20px;top:50%;width:8px;height:8px;margin-top:-4px;border-radius:50%;background:var(--vda-brass);box-shadow:0 0 0 0 rgba(176,131,65,.55);animation:ring-puls 2.2s ease-out infinite}
-.btn-linje:hover{background:var(--vda-navy);color:var(--vda-creme)}
+@media (hover:hover) and (pointer:fine){.btn-linje:hover{background:var(--vda-navy);color:var(--vda-creme)}}
 @keyframes ring-puls{0%{box-shadow:0 0 0 0 rgba(176,131,65,.55)}70%{box-shadow:0 0 0 9px rgba(176,131,65,0)}100%{box-shadow:0 0 0 0 rgba(176,131,65,0)}}
 
 .ring-modal{position:fixed;inset:0;z-index:310;display:flex;align-items:center;justify-content:center;padding:24px}
@@ -385,7 +386,7 @@ h1{
 /* høyre: skjema */
 .ring-innhold{position:relative;padding:38px 40px 32px}
 .ring-lukk{position:absolute;top:14px;right:14px;width:34px;height:34px;background:none;border:var(--vda-border-w) solid var(--vda-dust);color:var(--vda-navy);font-size:20px;line-height:1;cursor:pointer;font-family:var(--vda-font-body);border-radius:var(--vda-radius-sm);transition:transform .25s,color .2s,border-color .2s}
-.ring-lukk:hover{color:var(--vda-brass);border-color:var(--vda-brass);transform:rotate(90deg)}
+@media (hover:hover) and (pointer:fine){.ring-lukk:hover{color:var(--vda-brass);border-color:var(--vda-brass);transform:rotate(90deg)}}
 .ring-kicker{font-family:var(--vda-font-display);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--vda-grey);margin:0 0 8px}
 .ring-innhold h4{font-family:var(--vda-font-display);font-weight:400;font-size:22px;line-height:1.2;color:var(--vda-navy);margin:0 0 22px}
 
@@ -476,7 +477,7 @@ h1{
   background:none;border:var(--vda-border-w) solid var(--vda-border);border-radius:var(--vda-radius-sm);
   padding:8px 15px;cursor:pointer;transition:background .2s,color .2s,border-color .2s;
 }
-.int-tab:hover{border-color:var(--vda-dust)}
+@media (hover:hover) and (pointer:fine){.int-tab:hover{border-color:var(--vda-dust)}}
 .int-tab.er-aktiv{background:var(--vda-navy);border-color:var(--vda-navy);color:var(--vda-creme)}
 .int-marquee{
   margin-top:20px;overflow:hidden;width:100vw;margin-left:calc(50% - 50vw);
@@ -515,7 +516,7 @@ h2{font-size:clamp(25px,3vw,34px);line-height:1.3;max-width:26ch}
 .sec-lede{margin-top:14px;font-size:17px;color:var(--vda-grey);max-width:52ch}
 .sec-cta{margin-top:44px}
 .sec-cta a{color:var(--vda-brass);text-decoration:none;font-size:15px;font-weight:500}
-.sec-cta a:hover{text-decoration:underline}
+@media (hover:hover) and (pointer:fine){.sec-cta a:hover{text-decoration:underline}}
 @media(max-width:640px){.sec{padding:56px 0}}
 /* .sec-shorthanden nuller .wrap-sidepaddingen (samme spesifisitet, senere i kaskaden).
    Over 1184px skjuler auto-margene det; under lå alt innhold kant i kant. */
@@ -547,7 +548,7 @@ h2{font-size:clamp(25px,3vw,34px);line-height:1.3;max-width:26ch}
 .prose p+p{margin-top:24px}
 .prose .muted{color:var(--vda-grey);font-size:16px}
 .prose p a,.about-lede a{color:var(--vda-navy);text-decoration:none;border-bottom:var(--vda-border-w) solid var(--vda-brass);transition:background .2s}
-.prose p a:hover,.about-lede a:hover{background:var(--vda-creme-deep)}
+@media (hover:hover) and (pointer:fine){.prose p a:hover,.about-lede a:hover{background:var(--vda-creme-deep)}}
 
 /* ---------- CASER (skall — aktiveres når casetekstene er klare) ---------- */
 #caser{background:var(--vda-creme-deep)}
@@ -577,7 +578,7 @@ h2{font-size:clamp(25px,3vw,34px);line-height:1.3;max-width:26ch}
 .person-foto img{width:100%;height:auto;display:block}
 .person-kontakt{margin-top:12px;font-size:13.5px}
 .person-kontakt a{color:var(--vda-grey);text-decoration:none}
-.person-kontakt a:hover{color:var(--vda-brass)}
+@media (hover:hover) and (pointer:fine){.person-kontakt a:hover{color:var(--vda-brass)}}
 /* klikk på et kompaktkort åpner hele kortet stort i overlay (glir opp) */
 .person{cursor:pointer}
 .person-modal{position:fixed;inset:0;z-index:300;display:flex;align-items:center;justify-content:center;padding:24px}
@@ -587,7 +588,7 @@ h2{font-size:clamp(25px,3vw,34px);line-height:1.3;max-width:26ch}
 .person-modal.apen .person-scrim{opacity:1}
 .person-modal.apen .person-stor{transform:none;opacity:1}
 .person-lukk{position:absolute;top:14px;right:14px;width:36px;height:36px;background:none;border:var(--vda-border-w) solid var(--vda-dust);color:var(--vda-navy);font-size:20px;line-height:1;cursor:pointer;font-family:var(--vda-font-body)}
-.person-lukk:hover{color:var(--vda-brass);border-color:var(--vda-brass)}
+@media (hover:hover) and (pointer:fine){.person-lukk:hover{color:var(--vda-brass);border-color:var(--vda-brass)}}
 .person-stor-innhold{display:grid;grid-template-columns:340px 1fr;gap:36px;align-items:start}
 .person-stor-innhold .person-foto{width:100%}
 .person-stor-innhold h3{font-size:clamp(26px,2.6vw,34px);margin-top:0}
@@ -620,7 +621,7 @@ h2{font-size:clamp(25px,3vw,34px);line-height:1.3;max-width:26ch}
 .faq-item h3{font-size:19px;line-height:1.4;margin-bottom:8px}
 .faq-item p{font-size:15.5px;color:var(--vda-grey);max-width:60ch}
 .faq-item p a{color:var(--vda-navy);text-decoration:none;border-bottom:var(--vda-border-w) solid var(--vda-brass);transition:background .2s}
-.faq-item p a:hover{background:var(--vda-creme-deep)}
+@media (hover:hover) and (pointer:fine){.faq-item p a:hover{background:var(--vda-creme-deep)}}
 
 /* ---------- CTA / KONTAKT ---------- */
 #kontakt{background:var(--vda-navy)}
@@ -632,7 +633,7 @@ h2{font-size:clamp(25px,3vw,34px);line-height:1.3;max-width:26ch}
 .contact-actions{margin-top:44px}
 .contact-mail{margin-top:32px;font-size:14px;color:var(--vda-on-navy-dim)}
 .contact-mail a{color:var(--vda-on-navy);text-decoration:none;border-bottom:var(--vda-border-w) solid var(--vda-on-navy-dim)}
-.contact-mail a:hover{border-color:var(--vda-on-navy)}
+@media (hover:hover) and (pointer:fine){.contact-mail a:hover{border-color:var(--vda-on-navy)}}
 
 /* ---------- OM OSS ---------- */
 .about-lede{
@@ -652,7 +653,7 @@ footer{background:var(--vda-navy);color:var(--vda-on-navy-dim);padding:72px 0 56
 .footer-left b{color:var(--vda-on-navy);font-weight:500}
 .footer-links{display:flex;flex-direction:column;gap:10px;font-size:13px}
 .footer-links a{color:var(--vda-on-navy-dim);text-decoration:none;transition:color .2s}
-.footer-links a:hover{color:var(--vda-on-navy)}
+@media (hover:hover) and (pointer:fine){.footer-links a:hover{color:var(--vda-on-navy)}}
 .footer-bottom{
   margin-top:56px;padding-top:24px;
   border-top:var(--vda-border-w) solid rgba(237,227,206,.2);
@@ -680,14 +681,14 @@ transition-delay:var(--mo-d,0s)}
 .mo .mo-photo.mo-in{clip-path:inset(0 0% 0 0)}
 .mo .mo-photo.mo-in img{transform:none}
 .person{transition:transform .22s var(--mo-ease),box-shadow .22s var(--mo-ease)}
-.person:hover{transform:translateY(-6px);box-shadow:0 16px 32px -12px rgba(20,39,63,.22)}
+@media (hover:hover) and (pointer:fine){.person:hover{transform:translateY(-6px);box-shadow:0 16px 32px -12px rgba(20,39,63,.22)}}
 .person:active{transform:translateY(-6px) scale(.985)}
 .btn{transition:background .2s,color .2s,border-color .2s,transform .3s cubic-bezier(.34,1.56,.64,1)}
-.btn:hover{transform:scale(1.02)}
+@media (hover:hover) and (pointer:fine){.btn:hover{transform:scale(1.02)}}
 .btn:active{transform:scale(.97)}
 .cookie-btn:active{transform:scale(.97)}
 .faq-item,.case,.step{transition:border-color .3s var(--mo-ease)}
-.faq-item:hover,.case:hover,.step:hover{border-top-color:var(--vda-brass)}
+@media (hover:hover) and (pointer:fine){.faq-item:hover,.case:hover,.step:hover{border-top-color:var(--vda-brass)}}
 .nav-links{position:relative}
 .mo-navstrek{position:absolute;bottom:-6px;height:1.5px;background:var(--vda-brass);
 opacity:0;pointer-events:none;
@@ -715,7 +716,7 @@ header#top>.wrap{position:relative}
 .mo .mo-photo img{transform:none!important;transition:none!important}
 .mo-flyt path,.mo-flyt circle{animation:none!important}
 .mo-flyt circle{display:none}
-.person:hover,.btn:hover,.btn:active{transform:none}
+.btn:active{transform:none}@media (hover:hover) and (pointer:fine){.person:hover,.btn:hover{transform:none}}
 .mo-navstrek{transition:none}
 }
 </style>
@@ -746,7 +747,7 @@ html body #tro,html body #kontakt,html body #om #kontakt,html body .cta-blokk{
   background-color:var(--vda-navy);
   background-image:var(--vda-korn-l),radial-gradient(ellipse 60% 75% at 92% 0%,rgba(52,92,140,.5),rgba(52,92,140,0) 72%),linear-gradient(180deg,var(--vda-navy) 0%,var(--vda-navy) 35%,var(--vda-navy-dyp) 100%)}
 html body .site-footer,html body>footer{background-color:var(--vda-navy-dyp);background-image:var(--vda-korn-l),linear-gradient(180deg,var(--vda-navy-dyp),#0A1626)}
-html body .site-footer a:hover,html body>footer a:hover{color:var(--vda-gull-lys)}
+@media (hover:hover) and (pointer:fine){html body .site-footer a:hover,html body>footer a:hover{color:var(--vda-gull-lys)}}
 html body :is(#tro,#kontakt,.site-footer,.cta-blokk) :focus-visible{outline-color:var(--vda-gull)}
 
 /* --- knapper: gull er hovedknappen på navy; navyknappen får gullpil --- */
@@ -755,9 +756,9 @@ html body .btn-creme,html body .cta-blokk .btn{
   --bs-btn-hover-color:var(--vda-navy);--bs-btn-hover-bg:var(--vda-gull-lys);--bs-btn-hover-border-color:var(--vda-gull-lys);
   --bs-btn-active-color:var(--vda-navy);--bs-btn-active-bg:var(--vda-gull-lys);--bs-btn-active-border-color:var(--vda-gull-lys);
   background:var(--vda-gull);color:var(--vda-navy);box-shadow:0 16px 32px -16px rgba(214,168,81,.6)}
-html body .btn-creme:hover,html body .cta-blokk .btn:hover{background:var(--vda-gull-lys);color:var(--vda-navy)}
+@media (hover:hover) and (pointer:fine){html body .btn-creme:hover,html body .cta-blokk .btn:hover{background:var(--vda-gull-lys);color:var(--vda-navy)}}
 html body .btn-navy{--bs-btn-hover-color:var(--vda-gull-lys);--bs-btn-hover-bg:var(--vda-navy-dyp);--bs-btn-hover-border-color:var(--vda-navy-dyp);--bs-btn-active-color:var(--vda-gull-lys);--bs-btn-active-bg:var(--vda-navy-dyp);--bs-btn-active-border-color:var(--vda-navy-dyp);box-shadow:0 14px 26px -16px rgba(20,39,63,.6)}
-html body .btn-navy:hover{background:var(--vda-navy-dyp);color:var(--vda-gull-lys)}
+@media (hover:hover) and (pointer:fine){html body .btn-navy:hover{background:var(--vda-navy-dyp);color:var(--vda-gull-lys)}}
 html body .btn-navy .pil{color:var(--vda-gull-lys)}
 
 /* --- aksentordene i store overskrifter: gyllen i stedet for brun (4,1:1, stor tekst) --- */
@@ -774,12 +775,32 @@ html body #pris .pris-kort.valgt .inkl li{color:#EDE3CE}
 html body #pris .pris-kort.valgt .inkl li::before{background:var(--vda-gull);border-color:var(--vda-gull)}
 html body #pris .pris-kort.valgt .inkl a{color:#EDE3CE;border-bottom-color:var(--vda-gull);text-decoration-color:var(--vda-gull)}
 html body #pris .pris-kort.valgt .btn-navy{--bs-btn-color:var(--vda-navy);--bs-btn-bg:var(--vda-gull);--bs-btn-border-color:var(--vda-gull);--bs-btn-hover-color:var(--vda-navy);--bs-btn-hover-bg:var(--vda-gull-lys);--bs-btn-hover-border-color:var(--vda-gull-lys);--bs-btn-active-color:var(--vda-navy);--bs-btn-active-bg:var(--vda-gull-lys);background:var(--vda-gull);color:var(--vda-navy);box-shadow:0 16px 32px -16px rgba(214,168,81,.6)}
-html body #pris .pris-kort.valgt .btn-navy:hover{background:var(--vda-gull-lys);color:var(--vda-navy)}
+@media (hover:hover) and (pointer:fine){html body #pris .pris-kort.valgt .btn-navy:hover{background:var(--vda-gull-lys);color:var(--vda-navy)}}
 html body #pris .pris-kort.valgt .btn-navy .pil{color:var(--vda-navy)}
 html body #pris .pris-kort.valgt :focus-visible{outline-color:var(--vda-gull)}
 
 /* --- systemsiden: varmt lys bak dashbordet, så den mørke skjermen løfter seg fra kremen --- */
 @media (min-width:1100px){html body .sys-dash .dash-stage{isolation:isolate}html body .sys-dash .dash-stage::before{content:"";position:absolute;inset:-150px -90px -170px;z-index:-1;pointer-events:none;background:radial-gradient(ellipse 55% 55% at 40% 50%,rgba(214,168,81,.5),rgba(214,168,81,.36) 48%,rgba(214,168,81,.13) 68%,rgba(214,168,81,0) 84%)}}
+</style>
+<style id="vda-mobil">
+/* ===== mobil-grunnlag (12.11): det som skiller «nettside i en nettleser» fra noe som
+   kjennes installert. Hover-regler er i tillegg lagt bak (hover:hover) and (pointer:fine)
+   i resten av stilarket, så de ikke henger igjen etter et trykk. ===== */
+/* ingen grå blink ved trykk, ingen skriftoppblåsing i liggende format */
+html{-webkit-tap-highlight-color:transparent;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+/* ingen ventetid på dobbelttrykk-zoom på det som er trykkbart */
+a,button,summary,label,[role="button"]{touch-action:manipulation}
+/* langt trykk skal ikke markere teksten på kontroller (lenker i brødtekst er fortsatt innhold) */
+button,[role="button"],.btn,.nav-cta,.navbar-toggler,.accordion-button{-webkit-user-select:none;user-select:none}
+.btn,.nav-cta{-webkit-touch-callout:none}
+/* respons i det fingeren lander, ikke når den slipper */
+html .btn:active,html .nav-cta:active{transform:scale(.97);transition-duration:.12s}
+@media (hover:none){
+  a:not(.btn):not(.nav-cta):active,.accordion-button:active,.navbar-toggler:active,.nav-drop-knapp:active{opacity:.6}
+}
+@media (prefers-reduced-motion:reduce){html .btn:active,html .nav-cta:active{transform:none}}
+/* iOS zoomer inn på felt under 16px og zoomer ikke ut igjen */
+@media (pointer:coarse){input,textarea,select{font-size:max(16px,1em)}}
 </style>
 </head>
 <body>
@@ -1617,7 +1638,7 @@ function vdaStartTracking(fullConsent){
 .cookie-text em{font-style:normal;color:var(--vda-on-navy)}
 .cookie-more{display:inline-block;margin-top:10px;font-size:12px;
   color:var(--vda-on-navy);text-decoration:none;border-bottom:var(--vda-border-w) solid var(--vda-on-navy-dim)}
-.cookie-more:hover{border-color:var(--vda-on-navy)}
+@media (hover:hover) and (pointer:fine){.cookie-more:hover{border-color:var(--vda-on-navy)}}
 #cookie-details{display:none;margin-top:14px}
 #cookie-details ul{list-style:none;padding:0;margin:0;display:grid;gap:8px}
 #cookie-details li{font-size:12.5px;color:var(--vda-on-navy-dim);padding-left:16px;position:relative;line-height:1.5;max-width:80ch}
@@ -1629,9 +1650,9 @@ function vdaStartTracking(fullConsent){
   padding:12px 24px;cursor:pointer;border-radius:var(--vda-radius-sm);
   border:var(--vda-border-w) solid var(--vda-on-navy-dim);transition:all .2s;white-space:nowrap}
 .cookie-btn.ghost{background:none;color:var(--vda-on-navy-dim)}
-.cookie-btn.ghost:hover{color:var(--vda-on-navy);border-color:var(--vda-on-navy)}
+@media (hover:hover) and (pointer:fine){.cookie-btn.ghost:hover{color:var(--vda-on-navy);border-color:var(--vda-on-navy)}}
 .cookie-btn.solid{background:var(--vda-creme);color:var(--vda-navy);border-color:var(--vda-creme);font-weight:500}
-.cookie-btn.solid:hover{background:var(--vda-creme-deep)}
+@media (hover:hover) and (pointer:fine){.cookie-btn.solid:hover{background:var(--vda-creme-deep)}}
 @media(max-width:780px){.cookie-inner{flex-direction:column;align-items:stretch;gap:18px;padding:20px}
   .cookie-actions{justify-content:stretch}.cookie-btn{flex:1;text-align:center}}
 </style>

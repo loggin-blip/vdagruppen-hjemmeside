@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#EDE3CE">
 <title>Artikler om AI i norske bedrifter | VDA Gruppen</title>
 <meta name="description" content="Det vi har skrevet om å ta i bruk AI i en bedrift: hva en AI-konsulent koster, hva som pleier å ende i automatisering, og metoden vi bruker selv.">
 <link rel="canonical" href="https://vdagruppen.com/artikler/">
@@ -137,19 +138,19 @@ nav{position:sticky;top:0;z-index:100;background:var(--vda-creme);border-bottom:
 .nav-logo img{height:30px;width:auto;display:block}
 .nav-cta{font-size:14px;color:var(--vda-navy);text-decoration:none;border:var(--vda-border-w) solid var(--vda-navy);
   border-radius:var(--vda-radius-sm);padding:9px 20px;transition:background .2s,color .2s}
-.nav-cta:hover{background:var(--vda-navy);color:var(--vda-creme)}
+@media (hover:hover) and (pointer:fine){.nav-cta:hover{background:var(--vda-navy);color:var(--vda-creme)}}
 .nav-hoyre{display:flex;align-items:center;gap:32px}
 @media(max-width:480px){.nav-hoyre{gap:14px}.nav-drop-meny{right:-90px}}
 .nav-drop{position:relative}
 .nav-drop-knapp{font-family:var(--vda-font-display);font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--vda-navy);background:none;border:none;cursor:pointer;padding:0;display:inline-flex;align-items:center;gap:6px;transition:color .2s}
-.nav-drop-knapp:hover{color:var(--vda-brass)}
+@media (hover:hover) and (pointer:fine){.nav-drop-knapp:hover{color:var(--vda-brass)}}
 .drop-pil{font-size:9px;transition:transform .2s}
 .nav-drop::after{content:"";position:absolute;left:-20px;right:-20px;top:100%;height:22px}
 .nav-drop-meny{position:absolute;top:calc(100% + 16px);right:-12px;min-width:290px;background:var(--vda-creme);border:var(--vda-border-w) solid var(--vda-dust);padding:8px 0;opacity:0;visibility:hidden;transform:translateY(4px);transition:opacity .18s ease,transform .18s ease,visibility .18s}
-.nav-drop:hover .nav-drop-meny,.nav-drop:focus-within .nav-drop-meny,.nav-drop.apen .nav-drop-meny{opacity:1;visibility:visible;transform:translateY(0)}
-.nav-drop:hover .drop-pil,.nav-drop.apen .drop-pil{transform:rotate(180deg)}
+.nav-drop:focus-within .nav-drop-meny,.nav-drop.apen .nav-drop-meny{opacity:1;visibility:visible;transform:translateY(0)}@media (hover:hover) and (pointer:fine){.nav-drop:hover .nav-drop-meny{opacity:1;visibility:visible;transform:translateY(0)}}
+.nav-drop.apen .drop-pil{transform:rotate(180deg)}@media (hover:hover) and (pointer:fine){.nav-drop:hover .drop-pil{transform:rotate(180deg)}}
 .nav-drop-meny a{display:block;padding:11px 20px;font-size:14px;color:var(--vda-navy);text-decoration:none}
-.nav-drop-meny a:hover{background:var(--vda-creme-deep)}
+@media (hover:hover) and (pointer:fine){.nav-drop-meny a:hover{background:var(--vda-creme-deep)}}
 .nav-drop-alle{border-top:var(--vda-border-w) solid var(--vda-border);margin-top:8px;padding-top:13px!important;color:var(--vda-dust-deep)!important}
 header.art{padding:80px 0 56px;border-bottom:var(--vda-border-w) solid var(--vda-border)}
 h1{font-size:clamp(28px,4.4vw,42px);line-height:1.28;max-width:22ch}
@@ -163,7 +164,7 @@ h3{font-size:18px;margin:26px 0 8px}
 article p{max-width:62ch;margin-top:12px}
 article p:first-of-type{margin-top:0}
 article p a,ul.punkter a{color:var(--vda-navy);text-decoration:none;border-bottom:var(--vda-border-w) solid var(--vda-brass);transition:background .2s}
-article p a:hover,ul.punkter a:hover{background:var(--vda-creme-deep)}
+@media (hover:hover) and (pointer:fine){article p a:hover,ul.punkter a:hover{background:var(--vda-creme-deep)}}
 .muted{color:var(--vda-grey)}
 ul.punkter{margin:14px 0 0 18px;max-width:60ch}
 ul.punkter li{margin-top:10px}
@@ -174,17 +175,17 @@ ul.punkter b{font-weight:600}
 .cta-blokk p{color:var(--vda-on-navy-dim);max-width:52ch}
 .btn{display:inline-block;font-size:15px;font-weight:500;text-decoration:none;
   padding:14px 28px;border-radius:var(--vda-radius-sm);background:var(--vda-creme);color:var(--vda-navy);margin-top:24px;transition:background .2s}
-.btn:hover{background:var(--vda-creme-deep)}
+@media (hover:hover) and (pointer:fine){.btn:hover{background:var(--vda-creme-deep)}}
 .tilbake{display:inline-block;margin-top:32px;font-size:14px;color:var(--vda-navy);text-decoration:none;border-bottom:var(--vda-border-w) solid var(--vda-brass)}
-.tilbake:hover{background:var(--vda-creme-deep)}
+@media (hover:hover) and (pointer:fine){.tilbake:hover{background:var(--vda-creme-deep)}}
 footer{background:var(--vda-navy);color:var(--vda-on-navy-dim);padding:40px 0;margin-top:56px;font-size:13px}
 footer a{color:var(--vda-on-navy-dim);text-decoration:none}
-footer a:hover{color:var(--vda-on-navy)}
+@media (hover:hover) and (pointer:fine){footer a:hover{color:var(--vda-on-navy)}}
 .f-inner{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 .artkort{padding:32px 0;border-bottom:var(--vda-border-w) solid var(--vda-border)}
 .artkort h2{font-size:24px}
 .artkort h2 a{color:var(--vda-navy);text-decoration:none;border-bottom:var(--vda-border-w) solid transparent;transition:border-color .2s}
-.artkort h2 a:hover{border-color:var(--vda-brass)}
+@media (hover:hover) and (pointer:fine){.artkort h2 a:hover{border-color:var(--vda-brass)}}
 .artkort p{max-width:62ch;margin-top:10px;color:var(--vda-grey)}
 .artkort .meta{margin-top:12px}
 </style>
@@ -216,7 +217,7 @@ html body #tro,html body #kontakt,html body #om #kontakt,html body .cta-blokk{
   background-color:var(--vda-navy);
   background-image:var(--vda-korn-l),radial-gradient(ellipse 60% 75% at 92% 0%,rgba(52,92,140,.5),rgba(52,92,140,0) 72%),linear-gradient(180deg,var(--vda-navy) 0%,var(--vda-navy) 35%,var(--vda-navy-dyp) 100%)}
 html body .site-footer,html body>footer{background-color:var(--vda-navy-dyp);background-image:var(--vda-korn-l),linear-gradient(180deg,var(--vda-navy-dyp),#0A1626)}
-html body .site-footer a:hover,html body>footer a:hover{color:var(--vda-gull-lys)}
+@media (hover:hover) and (pointer:fine){html body .site-footer a:hover,html body>footer a:hover{color:var(--vda-gull-lys)}}
 html body :is(#tro,#kontakt,.site-footer,.cta-blokk) :focus-visible{outline-color:var(--vda-gull)}
 
 /* --- knapper: gull er hovedknappen på navy; navyknappen får gullpil --- */
@@ -225,9 +226,9 @@ html body .btn-creme,html body .cta-blokk .btn{
   --bs-btn-hover-color:var(--vda-navy);--bs-btn-hover-bg:var(--vda-gull-lys);--bs-btn-hover-border-color:var(--vda-gull-lys);
   --bs-btn-active-color:var(--vda-navy);--bs-btn-active-bg:var(--vda-gull-lys);--bs-btn-active-border-color:var(--vda-gull-lys);
   background:var(--vda-gull);color:var(--vda-navy);box-shadow:0 16px 32px -16px rgba(214,168,81,.6)}
-html body .btn-creme:hover,html body .cta-blokk .btn:hover{background:var(--vda-gull-lys);color:var(--vda-navy)}
+@media (hover:hover) and (pointer:fine){html body .btn-creme:hover,html body .cta-blokk .btn:hover{background:var(--vda-gull-lys);color:var(--vda-navy)}}
 html body .btn-navy{--bs-btn-hover-color:var(--vda-gull-lys);--bs-btn-hover-bg:var(--vda-navy-dyp);--bs-btn-hover-border-color:var(--vda-navy-dyp);--bs-btn-active-color:var(--vda-gull-lys);--bs-btn-active-bg:var(--vda-navy-dyp);--bs-btn-active-border-color:var(--vda-navy-dyp);box-shadow:0 14px 26px -16px rgba(20,39,63,.6)}
-html body .btn-navy:hover{background:var(--vda-navy-dyp);color:var(--vda-gull-lys)}
+@media (hover:hover) and (pointer:fine){html body .btn-navy:hover{background:var(--vda-navy-dyp);color:var(--vda-gull-lys)}}
 html body .btn-navy .pil{color:var(--vda-gull-lys)}
 
 /* --- aksentordene i store overskrifter: gyllen i stedet for brun (4,1:1, stor tekst) --- */
@@ -244,12 +245,32 @@ html body #pris .pris-kort.valgt .inkl li{color:#EDE3CE}
 html body #pris .pris-kort.valgt .inkl li::before{background:var(--vda-gull);border-color:var(--vda-gull)}
 html body #pris .pris-kort.valgt .inkl a{color:#EDE3CE;border-bottom-color:var(--vda-gull);text-decoration-color:var(--vda-gull)}
 html body #pris .pris-kort.valgt .btn-navy{--bs-btn-color:var(--vda-navy);--bs-btn-bg:var(--vda-gull);--bs-btn-border-color:var(--vda-gull);--bs-btn-hover-color:var(--vda-navy);--bs-btn-hover-bg:var(--vda-gull-lys);--bs-btn-hover-border-color:var(--vda-gull-lys);--bs-btn-active-color:var(--vda-navy);--bs-btn-active-bg:var(--vda-gull-lys);background:var(--vda-gull);color:var(--vda-navy);box-shadow:0 16px 32px -16px rgba(214,168,81,.6)}
-html body #pris .pris-kort.valgt .btn-navy:hover{background:var(--vda-gull-lys);color:var(--vda-navy)}
+@media (hover:hover) and (pointer:fine){html body #pris .pris-kort.valgt .btn-navy:hover{background:var(--vda-gull-lys);color:var(--vda-navy)}}
 html body #pris .pris-kort.valgt .btn-navy .pil{color:var(--vda-navy)}
 html body #pris .pris-kort.valgt :focus-visible{outline-color:var(--vda-gull)}
 
 /* --- systemsiden: varmt lys bak dashbordet, så den mørke skjermen løfter seg fra kremen --- */
 @media (min-width:1100px){html body .sys-dash .dash-stage{isolation:isolate}html body .sys-dash .dash-stage::before{content:"";position:absolute;inset:-150px -90px -170px;z-index:-1;pointer-events:none;background:radial-gradient(ellipse 55% 55% at 40% 50%,rgba(214,168,81,.5),rgba(214,168,81,.36) 48%,rgba(214,168,81,.13) 68%,rgba(214,168,81,0) 84%)}}
+</style>
+<style id="vda-mobil">
+/* ===== mobil-grunnlag (12.11): det som skiller «nettside i en nettleser» fra noe som
+   kjennes installert. Hover-regler er i tillegg lagt bak (hover:hover) and (pointer:fine)
+   i resten av stilarket, så de ikke henger igjen etter et trykk. ===== */
+/* ingen grå blink ved trykk, ingen skriftoppblåsing i liggende format */
+html{-webkit-tap-highlight-color:transparent;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+/* ingen ventetid på dobbelttrykk-zoom på det som er trykkbart */
+a,button,summary,label,[role="button"]{touch-action:manipulation}
+/* langt trykk skal ikke markere teksten på kontroller (lenker i brødtekst er fortsatt innhold) */
+button,[role="button"],.btn,.nav-cta,.navbar-toggler,.accordion-button{-webkit-user-select:none;user-select:none}
+.btn,.nav-cta{-webkit-touch-callout:none}
+/* respons i det fingeren lander, ikke når den slipper */
+html .btn:active,html .nav-cta:active{transform:scale(.97);transition-duration:.12s}
+@media (hover:none){
+  a:not(.btn):not(.nav-cta):active,.accordion-button:active,.navbar-toggler:active,.nav-drop-knapp:active{opacity:.6}
+}
+@media (prefers-reduced-motion:reduce){html .btn:active,html .nav-cta:active{transform:none}}
+/* iOS zoomer inn på felt under 16px og zoomer ikke ut igjen */
+@media (pointer:coarse){input,textarea,select{font-size:max(16px,1em)}}
 </style>
 </head>
 <body>
