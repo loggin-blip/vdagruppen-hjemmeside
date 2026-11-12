@@ -4136,6 +4136,21 @@ html body .sec-navy .trygg,html body [class*="navy"] .trygg,html body #tro .tryg
   #systemet .sy-rad .sy-ph .tg-msgs{position:static;min-height:0;padding:.9em .8em 1em;transform:none}
   #systemet .sy-rad .tgr.skjult{display:flex}
 }
+/* ===== hero-samtalen på mobil (12.11): samme grep som i #systemet. Ingen telefon-i-
+   telefonen, samtalen står som et rent chatkort i full bredde under knappen. ===== */
+@media (max-width:899px){
+  #top .ht-tlf{align-items:stretch;margin:34px 0 0;perspective:none}
+  #top .ht-tlf .ph-wrap{display:block;width:100%;max-width:none;margin:0}
+  #top .ht-tlf .phone{height:auto;width:100%;max-width:none;transform:none!important;isolation:auto}
+  #top .ht-tlf .ph-frame,#top .ht-tlf .ph-btn,#top .ht-tlf .ph-island,#top .ht-tlf .ph-status,#top .ht-tlf .tg-input,#top .ht-tlf .ph-home{display:none}
+  #top .ht-tlf .ph-screen{position:relative;inset:auto;border-radius:16px;overflow:hidden;font-size:15px;line-height:1.36;box-shadow:0 0 0 .5px rgba(20,39,63,.22),0 22px 34px -26px rgba(20,39,63,.5)}
+  #top .ht-tlf .tg-nav{height:3.1em}
+  #top .ht-tlf .tg-chat{flex:none;min-height:0;overflow:visible}
+  #top .ht-tlf .tg-msgs{position:static;min-height:0;padding:.9em .8em 1em;transform:none}
+  /* plassen holdes av, så kortet ikke vokser mens meldingene kommer */
+  #top .ht-tlf .ht-klar .ht-m:not(.ht-vist){display:flex;visibility:hidden;opacity:0}
+  #top .ht-note{text-align:left;max-width:none;margin-top:12px}
+}
 @media (min-width:900px) {.mobil-scene-nav,.mobil-scene-ekstra {display:none}}
 @media (max-width:899px) and (prefers-reduced-motion:reduce) {
   #top .phone,#systemet .sy-ph .phone {transform:none!important}
